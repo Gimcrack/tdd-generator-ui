@@ -1,0 +1,24 @@
+{
+  "name": "tdd-generator-ui",
+  "version": "1.0.0",
+  "description": "UI Components For TDD Scaffolding Generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gimcrack/tdd-generator-ui.git"
+  },
+  "keywords": [
+    "Vue",
+    "Laravel",
+    "TDD"
+  ],
+  "author": "Jeremy Bloomstrom <jeremy.bloomstrom@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Gimcrack/tdd-generator-ui/issues"
+  },
+  "homepage": "https://github.com/Gimcrack/tdd-generator-ui#readme"
+}
