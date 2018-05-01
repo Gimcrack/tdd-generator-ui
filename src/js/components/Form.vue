@@ -333,7 +333,7 @@
             max-width: 960px;
             padding: 15px;
 
-            background: $white;
+            background: $brand-white;
             border: 1px solid $laravel-border-color;
             border-bottom: 3px solid $brand-success;
             border-radius: 6px;
