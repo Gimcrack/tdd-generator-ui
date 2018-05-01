@@ -1,6 +1,6 @@
 {
   "name": "tdd-generator-ui",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "UI Components For TDD Scaffolding Generator",
   "main": "index.js",
   "repository": {
