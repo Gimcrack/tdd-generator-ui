@@ -308,8 +308,6 @@
 </script>
 
 <style lang="scss">
-    @import "../../sass/variables";
-
     .form-wrapper {
         position: fixed;
         top:0;
@@ -332,14 +330,9 @@
             width: 90vw;
             max-width: 960px;
             padding: 15px;
-
-            background: $brand-white;
-            border: 1px solid $laravel-border-color;
-            border-bottom: 3px solid $brand-success;
             border-radius: 6px;
 
             .page-header {
-                border-color: $brand-success;
                 margin-top: 24px;
             }
 

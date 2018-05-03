@@ -4,8 +4,21 @@
 // Variables
 @import "variables";
 @import "themes";
-@import "buttons";
 
+@import "bootstrap-sass/assets/stylesheets/bootstrap";
+@import "buttons";
+@import "forms";
+
+// Vertical Tabs
+@import "vertical-tabs";
+
+// SWAL
+@import "swal/sweetalert2";
+
+// Font Awesome
+@import "font-awesome/scss/font-awesome";
+
+// Everything else
 
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
@@ -29,7 +42,6 @@
     position: absolute;
     bottom: 8px;
     right: 17px;
-    background: $body-bg;
     border-radius: 50%;
     padding: 2px;
 }
@@ -49,6 +61,14 @@
     top: 0;
     border-radius: 0;
     z-index: 1;
+    transition: all 0.3s linear;
+}
+
+.navbar-header {
+    margin-left: 325px;
+}
+.navbar-right {
+    margin-right: 335px;
 }
 
 .tab-content {
@@ -59,20 +79,6 @@
 
 .content {
     margin-top: 50px;
-}
-
-
-body {
-    //background: linear-gradient(to right, #f5f8fa 40%, white 40%);
-    background: $body-bg;
-    color: $body-color;
-}
-
-.table-striped > tbody > tr:nth-of-type(odd) {
-    background-color: $body-bg;
-}
-.table-striped > tbody > tr:nth-of-type(even) {
-    background-color: lighten($body-bg,5%);
 }
 
 .table > thead > tr > th {
@@ -89,49 +95,44 @@ body {
 
 .table-hover {
     border-collapse: separate;
-    border-color: $body-color !important;
-}
 
-.table-hover tbody tr td {
-    @extend .noselect;
-    transition: all 0.3s linear;
-}
 
-.table-hover tbody tr:hover td,
-.table-hover tbody tr.hover td {
-    background-color: lighten($theme-color,60%);
-}
-
-.table-hover tbody tr.sticky td {
-    background-color: lighten(#FFFF55, 20%);
-}
-
-.table-hover tbody {
-    tr.toggled {
-        td {
-            background-color: #d9edf7;
-            font-weight: bold;
-            color: #31708f;
-        }
-
-        td:first-child {
-            border-left: 1px solid #31708f;
-        }
-
-        td:last-child {
-            border-right: 1px solid #31708f;
-        }
+    tbody tr td {
+        @extend .noselect;
+        transition: all 0.3s linear;
     }
 
-    tr.toggled.top {
-        td {
-            border-top: 1px solid #31708f;
-        }
+    tbody tr.sticky td {
+        background-color: lighten(#FFFF55, 20%);
     }
 
-    tr.toggled.bottom {
-        td {
-            border-bottom: 1px solid #31708f;
+    tbody {
+        tr.toggled {
+            td {
+                background-color: #d9edf7;
+                font-weight: bold;
+                color: #31708f;
+            }
+
+            td:first-child {
+                border-left: 1px solid #31708f;
+            }
+
+            td:last-child {
+                border-right: 1px solid #31708f;
+            }
+        }
+
+        tr.toggled.top {
+            td {
+                border-top: 1px solid #31708f;
+            }
+        }
+
+        tr.toggled.bottom {
+            td {
+                border-bottom: 1px solid #31708f;
+            }
         }
     }
 }

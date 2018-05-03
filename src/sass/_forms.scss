@@ -1,0 +1,19 @@
+
+
+.form-wrapper {
+    .form {
+        background: $brand-white;
+        border: 1px solid $laravel-border-color;
+        border-bottom: 3px solid $brand-success;
+
+        .page-header {
+            border-color: $brand-success;
+        }
+
+        .field-group {
+            background: lighten($body-bg,30%);
+            border: 1px solid $laravel-border-color;
+            border-bottom: 3px solid $brand-success;
+        }
+    }
+}

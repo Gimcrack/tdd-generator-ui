@@ -47,14 +47,10 @@
 </script>
 
 <style lang="scss">
-    @import "../../sass/variables";
-
     .field-group {
         margin-top: 3em;
         padding: 1.5em;
-        background: white;
-        border: 1px solid $laravel-border-color;
-        border-bottom: 3px solid $brand-success;
+
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         display: flex;
 

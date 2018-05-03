@@ -9,7 +9,7 @@
 // colors
 $lighten1: 10%;
 $lighten2: 15%;
-$lighten3: 60%;
+$lighten3: 25%;
 $darken1: 5%;
 $darken2: 10%;
 $darken3: 20%;
@@ -23,11 +23,11 @@ $spin5 : 300;
 $desaturate : 10%;
 
 // theme 1
-$base-color: darken(#03CEA4,5%); //#A3F3DF;
-$global-border-width : 3;
+$base-color: darken(#03CEA4,5%) !default; //#A3F3DF;
+
+$global-border-width: 3 !default;
 
 $brand-teal: $base-color; //saturate($base-color, $desaturate);
-
 $brand-blue: lighten(adjust_hue(#16926C, $spin1),20%);
 $brand-purple: adjust_hue($brand-teal, $spin2);
 $brand-red: #D81E5B;// adjust_hue($brand-teal, $spin3);
@@ -103,9 +103,10 @@ $brand-dark-gray: #272A2F;
 $brand-darker-gray: darken($brand-dark-gray, 20%);
 $brand-darkest-gray: darken($brand-dark-gray, 30%);
 $brand-gray: lighten($brand-dark-gray,20%);
+$brand-medium-gray: lighten($brand-dark-gray,10%);
 $brand-light-gray: lighten($brand-dark-gray,40%);
 $brand-lighter-gray: lighten($brand-dark-gray,60%);
-$brand-lightest-gray: lighten($brand-dark-gray,70%);
+$brand-lightest-gray: lighten($brand-dark-gray,75%);
 $brand-white: ghostwhite;// lighten(#F4F3F3,5%);
 
 // Main Theme Color
@@ -119,17 +120,8 @@ $brand-warning: $brand-orange;
 $brand-danger: $brand-red;
 
 // Body
-$body-bg: $brand-white;
-$body-color: darken($theme-color,15%);
 $border-color: desaturate(lighten($theme-color, 50%),60%);
-
-// navbar
-$navbar-custom-background: $brand-dark-gray;
-$navbar-custom-brand-color: $brand-lighter-teal;
-$navbar-custom-active-color: $brand-dark-teal;
-$navbar-custom-color: $brand-lighter-teal;
 $navbar-custom-border-width: $global-border-width + 0px;
-$navbar-custom-tab-color: $body-bg;
 
 // sidebar
 $sidebar-height: (50-$global-border-width) + px;
@@ -142,9 +134,6 @@ $list-group-border: $laravel-border-color;
 $navbar-default-border: $laravel-border-color;
 $panel-default-border: $laravel-border-color;
 $panel-inner-border: $laravel-border-color;
-
-
-
 
 // Typography
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
@@ -180,7 +169,7 @@ $state-warning-bg:               desaturate($brand-lightest-orange,10%) !default
 $state-warning-border:           darken(adjust-hue($state-warning-bg, -10), 5%) !default;
 
 $state-danger-text:              $brand-darkest-red !default;
-$state-danger-bg:                desaturate($brand-lightest-red,10%) !default;
+$state-danger-bg:                $brand-red !default;
 $state-danger-border:            darken(adjust-hue($state-danger-bg, -10), 5%) !default;
 
 // SWAL

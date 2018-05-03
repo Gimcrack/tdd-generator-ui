@@ -1,124 +1,319 @@
 @import "variables";
 
-// top navbar
-.navbar-custom {
-    background-color: $navbar-custom-background;
-    color: $navbar-custom-color;
-    border-bottom: $navbar-custom-border-width solid $navbar-custom-color !important;
+// dark theme
+$body-bg-dark: $brand-medium-gray;
+$body-color-dark: $brand-white;
+$table-hover-bg-dark: darken($theme-color,20%);
+$navbar-custom-background-dark: $brand-dark-gray;
+$navbar-custom-brand-color-dark: $brand-lighter-teal;
+$navbar-custom-active-color-dark: $brand-light-teal;
+$navbar-custom-color-dark: $brand-lighter-teal;
+$navbar-custom-tab-color-dark: $body-bg-dark;
 
-    .navbar-nav > li > a {
-        color: $navbar-custom-color;
+body.dark-theme {
+    background: $body-bg-dark;
+    color: $body-color-dark;
+
+    // top navbar
+    .navbar-custom {
+        background-color: $navbar-custom-background-dark;
+        color: $navbar-custom-color-dark;
+        border-bottom: $navbar-custom-border-width solid $navbar-custom-color-dark !important;
+
+        .navbar-nav > li > a {
+            color: $navbar-custom-color-dark;
+        }
+
+        .navbar-nav > .active > a {
+            color: $navbar-custom-color-dark;
+            background-color: $body-bg-dark;
+        }
+
+        .navbar-nav > li > a:hover,
+        .navbar-nav > li > a:focus,
+        .navbar-nav > .active > a:hover,
+        .navbar-nav > .active > a:focus,
+        .navbar-nav > .open > a {
+            background-color: lighten($navbar-custom-background-dark,10%) !important;
+        }
+
+        .navbar-brand {
+            color: $navbar-custom-brand-color-dark;
+        }
+        .navbar-toggle {
+            background-color: $navbar-custom-brand-color-dark;
+        }
+        .icon-bar {
+            background-color: lighten($navbar-custom-background-dark,10%);
+        }
     }
 
-    .navbar-nav > .active > a {
-        color: $navbar-custom-color;
-        background-color: $body-bg;
+    .page-header {
+        border-color: $border-color !important;
     }
 
-    .navbar-nav > li > a:hover,
-    .navbar-nav > li > a:focus,
-    .navbar-nav > .active > a:hover,
-    .navbar-nav > .active > a:focus,
-    .navbar-nav > .open > a {
-        background-color: lighten($navbar-custom-background,10%) !important;
+    // tabs
+    .tabs-left, .tabs-right {
+        background-color: $navbar-custom-background-dark;
     }
 
-    .navbar-brand {
-        color: $navbar-custom-brand-color;
-    }
-    .navbar-toggle {
-        background-color: $navbar-custom-brand-color;
-    }
-    .icon-bar {
-        background-color: lighten($navbar-custom-background,10%);
-    }
-}
-
-.page-header {
-    border-color: $border-color !important;
-}
-
-// tabs
-.tabs-left, .tabs-right {
-    background-color: $navbar-custom-background;
-}
-
-.tabs-left {
-    border-right: $navbar-custom-border-width solid $navbar-custom-color !important;
-}
-
-.tabs-right {
-    border-left: $navbar-custom-border-width solid $navbar-custom-color !important;
-}
-
-.tab-content {
-    background: $body-bg;
-}
-
-.tabs-left.nav-tabs {
-
-    & > li > a {
-        color: $navbar-custom-tab-color;
-        border: none !important;
-        margin-right: -$navbar-custom-border-width;
-        padding:10px 15px 4px !important;
-
-        display: flex;
-        flex-direction: column;
-        height:100px;
-        width: 100px;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
+    .tabs-left {
+        border-right: $navbar-custom-border-width solid $navbar-custom-color-dark !important;
     }
 
-
-
-    & > li > a:hover,
-    & > li > a:focus {
-        color: lighten($navbar-custom-color,10%);
-        background: rgba(255,255,255,0.1) !important;
-        border-color : $body-bg !important;
-        margin-right: -$navbar-custom-border-width;
-        //border: 1px solid $navbar-custom-color !important;
-        border-right: none !important;
-        //margin-right: -$navbar-custom-border-width !important;
+    .tabs-right {
+        border-left: $navbar-custom-border-width solid $navbar-custom-color-dark !important;
     }
 
-    & > li.active > a,
-    & > li.active > a:hover,
-    & > li.active > a:focus {
-        background: $body-bg !important;
-        border: $navbar-custom-border-width solid $navbar-custom-color !important;
-        border-right: $navbar-custom-border-width solid $body-bg !important;
-        color: $navbar-custom-active-color !important;
-        margin-right: -$navbar-custom-border-width !important;
-        padding-left: $navbar-custom-border-width;
+    .tab-content {
+        background: $body-bg-dark;
     }
-}
 
-.vinput {
-    input {
-        background: lighten($body-bg,10%);
-        color: $body-color;
-        border-color: $border-color;
+    .tabs-left.nav-tabs {
+
+        & > li > a {
+            color: $navbar-custom-tab-color-dark;
+            border: none !important;
+            margin-right: -$navbar-custom-border-width;
+            padding:10px 15px 4px !important;
+
+            display: flex;
+            flex-direction: column;
+            height:100px;
+            width: 100px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+
+
+        & > li > a:hover,
+        & > li > a:focus {
+            color: lighten($navbar-custom-color-dark,10%);
+            background: rgba(255,255,255,0.1) !important;
+            border-color : $body-bg-dark !important;
+            margin-right: -$navbar-custom-border-width;
+            //border: 1px solid $navbar-custom-color !important;
+            border-right: none !important;
+            //margin-right: -$navbar-custom-border-width !important;
+        }
+
+        & > li.active > a,
+        & > li.active > a:hover,
+        & > li.active > a:focus {
+            background: $body-bg-dark !important;
+            border: $navbar-custom-border-width solid $navbar-custom-color-dark !important;
+            border-right: $navbar-custom-border-width solid $body-bg-dark !important;
+            color: $navbar-custom-active-color-dark !important;
+            margin-right: -$navbar-custom-border-width !important;
+            padding-left: $navbar-custom-border-width;
+        }
     }
-}
 
-.form-wrapper .form {
-    background: $body-bg !important;
-
-    .field-group {
-        background: lighten($body-bg, 5%);
-
-        input.form-control {
-            background: lighten($body-bg,10%);
-            color: $body-color;
+    .vinput {
+        input {
+            background: lighten($body-bg-dark,10%);
+            color: $body-color-dark;
             border-color: $border-color;
+        }
+    }
+
+    .form-wrapper .form {
+        background: $body-bg-dark !important;
+
+        .field-group {
+            background: lighten($body-bg-dark, 5%);
+
+            input.form-control {
+                background: lighten($body-bg-dark,10%);
+                color: $body-color-dark;
+                border-color: $border-color;
+            }
+        }
+    }
+
+    .btn-default {
+        border-color: $border-color !important;
+    }
+
+    .fa-badge {
+        background: $body-bg-dark;
+    }
+
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: $body-bg-dark;
+    }
+
+    .table-striped > tbody > tr:nth-of-type(even) {
+        background-color: lighten($body-bg-dark,5%);
+    }
+
+    .table-hover {
+        border-color: $body-color-dark !important;
+
+        tbody tr:hover td,
+        tbody tr.hover td {
+            background-color: $table-hover-bg-dark;
         }
     }
 }
 
-.btn-default {
-    border-color: $border-color !important;
+// light theme
+$body-bg-light: desaturate(lighten($theme-color,60%),10%);
+$body-color-light: $brand-dark-gray;
+$table-hover-bg-light: lighten($theme-color,20%);
+$navbar-custom-background-light: desaturate(lighten($theme-color,57%),20%);
+$navbar-custom-brand-color-light: $brand-darkest-gray;
+$navbar-custom-active-color-light: $brand-gray;
+$navbar-custom-color-light: $brand-gray;
+$navbar-custom-tab-color-light: $brand-dark-gray;
+
+body.light-theme {
+    background: $body-bg-light;
+    color: $body-color-light;
+
+    // top navbar
+    .navbar-custom {
+        background-color: $navbar-custom-background-light;
+        color: $navbar-custom-color-light;
+        border-bottom: $navbar-custom-border-width solid $navbar-custom-color-light !important;
+
+        .navbar-nav > li > a {
+            color: $navbar-custom-color-light;
+        }
+
+        .navbar-nav > .active > a {
+            color: $navbar-custom-color-light;
+            background-color: $body-bg-light;
+        }
+
+        .navbar-nav > li > a:hover,
+        .navbar-nav > li > a:focus,
+        .navbar-nav > .active > a:hover,
+        .navbar-nav > .active > a:focus,
+        .navbar-nav > .open > a {
+            background-color: lighten($navbar-custom-background-light,10%) !important;
+        }
+
+        .navbar-brand {
+            color: $navbar-custom-brand-color-light;
+        }
+        .navbar-toggle {
+            background-color: $navbar-custom-brand-color-light;
+        }
+        .icon-bar {
+            background-color: lighten($navbar-custom-background-light,10%);
+        }
+    }
+
+    .page-header {
+        border-color: $border-color !important;
+    }
+
+    // tabs
+    .tabs-left, .tabs-right {
+        background-color: $navbar-custom-background-light;
+    }
+
+    .tabs-left {
+        border-right: $navbar-custom-border-width solid $navbar-custom-color-light !important;
+    }
+
+    .tabs-right {
+        border-left: $navbar-custom-border-width solid $navbar-custom-color-light !important;
+    }
+
+    .tab-content {
+        background: $body-bg-light;
+    }
+
+    .tabs-left.nav-tabs {
+
+        & > li > a {
+            color: $navbar-custom-tab-color-light;
+            border: none !important;
+            margin-right: -$navbar-custom-border-width;
+            padding:10px 15px 4px !important;
+
+            display: flex;
+            flex-direction: column;
+            height:100px;
+            width: 100px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+
+
+        & > li > a:hover,
+        & > li > a:focus {
+            color: lighten($navbar-custom-color-light,10%);
+            background: rgba(255,255,255,0.1) !important;
+            border-color : $body-bg-light !important;
+            margin-right: -$navbar-custom-border-width;
+            //border: 1px solid $navbar-custom-color !important;
+            border-right: none !important;
+            //margin-right: -$navbar-custom-border-width !important;
+        }
+
+        & > li.active > a,
+        & > li.active > a:hover,
+        & > li.active > a:focus {
+            background: $body-bg-light !important;
+            border: $navbar-custom-border-width solid $navbar-custom-color-light !important;
+            border-right: $navbar-custom-border-width solid $body-bg-light !important;
+            color: $navbar-custom-active-color-light !important;
+            margin-right: -$navbar-custom-border-width !important;
+            padding-left: $navbar-custom-border-width;
+        }
+    }
+
+    .vinput {
+        input {
+            background: lighten($body-bg-light,10%);
+            color: $body-color-light;
+            border-color: $border-color;
+        }
+    }
+
+    .form-wrapper .form {
+        background: $body-bg-light !important;
+
+        .field-group {
+            background: lighten($body-bg-light, 5%);
+
+            input.form-control {
+                background: lighten($body-bg-light,10%);
+                color: $body-color-light;
+                border-color: $border-color;
+            }
+        }
+    }
+
+    .btn-default {
+        border-color: $border-color !important;
+    }
+
+    .fa-badge {
+        background: $body-bg-light;
+    }
+
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: $body-bg-light;
+    }
+
+    .table-striped > tbody > tr:nth-of-type(even) {
+        background-color: lighten($body-bg-light,5%);
+    }
+
+    .table-hover {
+        border-color: $body-color-light !important;
+
+        tbody tr:hover td,
+        tbody tr.hover td {
+            background-color: $table-hover-bg-light;
+        }
+    }
 }
