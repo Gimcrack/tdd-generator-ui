@@ -14,6 +14,23 @@ body.dark-theme {
     background: $body-bg-dark;
     color: $body-color-dark;
 
+    .panel {
+        &.panel-default {
+            .panel-heading {
+                background: rgba(0,0,0,0.6);
+                color: $navbar-custom-brand-color-dark;
+                border-color: $navbar-custom-brand-color-dark;
+            }
+
+            .btn-link {
+                color: $navbar-custom-brand-color-dark;
+            }
+        }
+
+        background: rgba(0,0,0,0.3);
+        border-color: $navbar-custom-brand-color-dark;
+    }
+
     // top navbar
     .navbar-custom {
         background-color: $navbar-custom-background-dark;
