@@ -1,7 +1,7 @@
 <template>
     <th nowrap="nowrap" v-if="column != '__blank__'">
         {{ column_title }}
-        <button :class="{active, 'btn-outline' : ! active}" class="btn btn-xs btn-primary " @click="$parent.sortBy(column_key)"> 
+        <button :class="{active, 'btn-outline' : ! active}" class="btn btn-xs btn-primary " @click="$parent.sortBy(column_key)">
             <i class="fa fa-fw" :class="active_asc ? 'fa-sort-amount-asc' : 'fa-sort-amount-desc' "></i> 
         </button>
     </th>

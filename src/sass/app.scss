@@ -6,7 +6,7 @@
 @import "themes";
 //
 @import "~bootstrap/scss/bootstrap";
-//@import "buttons";
+@import "buttons";
 //@import "forms";
 //
 //// Vertical Tabs
@@ -20,6 +20,9 @@
 
 .h-full {
     min-height: calc(100vh - 55px);
+}
+.tabs-right {
+    overflow: hidden;
 }
 //
 //// Everything else
@@ -58,15 +61,15 @@
 //    margin-top: 2em;
 //}
 //
-//.navbar-custom {
-//    margin-bottom: 0 !important;
-//    position: fixed;
-//    width: 100vw;
-//    top: 0;
-//    border-radius: 0;
-//    z-index: 1;
-//    transition: all 0.3s linear;
-//}
+.navbar-custom {
+    margin-bottom: 0 !important;
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    border-radius: 0;
+    z-index: 1 !important;
+    transition: all 0.3s linear;
+}
 //
 //.navbar-header {
 //    margin-left: 325px;
@@ -75,15 +78,15 @@
 //    margin-right: 335px;
 //}
 //
-//.tab-content {
-//    min-height: calc(100vh - 80px) !important;
-//    padding-top: 2em !important;
-//    margin-top: 50px;
-//}
-//
-//.content {
-//    margin-top: 50px;
-//}
+.tab-content {
+    min-height: calc(100vh - 80px) !important;
+    padding-top: 2em !important;
+    margin-top: 50px;
+}
+
+.content {
+    margin-top: 50px;
+}
 //
 //.table > thead > tr > th {
 //    border-color: $border-color !important;

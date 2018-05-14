@@ -6,14 +6,6 @@
         <slot name="pre"></slot>
         <td class="relative">
             <div class="btn-group">
-                <button @click.prevent.stop="show_menu = !show_menu" class="btn btn-xs btn-default btn-outline" :class="{ active : show_menu }">
-                    <i class="fa fa-bars"></i>
-                </button>
-                <button @click.prevent="" style="min-width: 30px;" class="btn btn-xs btn-default btn-outline mono j-r">
-                    {{ id }}
-                </button>
-            </div>
-            <div v-if="show_menu" class="btn-submenu">
                 <button v-if="toggles.info" @click.prevent.stop="$emit('view')" :disabled="busy" class="btn btn-info btn-xs btn-outline" :class="{disabled : busy}">
                     <i class="fa fa-fw fa-info"></i>
                 </button>
@@ -23,6 +15,9 @@
                 <slot name="menu"></slot>
                 <button v-if="toggles.delete" @click.prevent.stop="$emit('destroy')" :disabled="busy" class="btn btn-danger btn-xs btn-outline" :class="{disabled : busy}">
                     <i class="fa fa-fw fa-times" :class="{'fa-spin' : deleting}"></i>
+                </button>
+                <button @click.prevent="" style="min-width: 30px;" class="btn btn-xs btn-default btn-outline mono j-r">
+                    {{ id }}
                 </button>
             </div>
         </td>
@@ -63,7 +58,6 @@
 
         data() {
             return {
-                show_menu : false,
                 toggled : false
             }
         },

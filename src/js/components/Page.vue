@@ -31,7 +31,7 @@
         </div>
         <div class="alert alert-info" v-text="params.help" v-show="params.help">
         </div>
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover" :class="{'table-sm' : compact}">
             <thead>
             <tr>
                 <th class="table-header">
@@ -55,9 +55,9 @@
             <tfoot>
             <tr>
                 <td colspan="100">
-                        <span class="label label-primary">
-                            Viewing {{ filtered.length }} Records
-                        </span>
+                    <span class="badge badge-primary">
+                        Viewing {{ filtered.length }} Records
+                    </span>
                 </td>
             </tr>
             </tfoot>
@@ -73,6 +73,10 @@
 
         mounted() {
             this.$parent.page = this;
+
+            Bus.$on('ToggleCompactView', () => {
+                this.compact = !this.compact;
+            })
         },
 
         props : {
@@ -95,7 +99,7 @@
                             global : null
                         },
                         where : {},
-                        reject : { placeholder : 'some-nonsense-value'}
+                        reject : { placeholder : 'some-nonsense-value'},
                     }
                 }
             },
@@ -114,6 +118,7 @@
                 asc : ( this.params.orderDir !== null ) ? this.params.orderDir : true,
                 toggled : this.getToggled(),
                 models : this.getInitialState(),
+                compact : false
             }
         },
 

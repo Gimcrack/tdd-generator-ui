@@ -4,7 +4,7 @@
         <div class="vinput__icon">
             <i class="fa fa-fw fa-2x" :class="this.icon"></i>
         </div>
-        <button @click.prevent.stop="reset" v-show="value" class="vinput__reset btn btn-sm btn-danger btn-outline">
+        <button @click.prevent.stop="reset" v-show="value" class="vinput__reset btn btn-xs btn-danger btn-outline">
             <i class="fa fa-fw fa-times"></i>
         </button>    
     </div>
@@ -38,8 +38,8 @@
         flex: 1;
 
         .vinput__input {
-            text-indent: 34px;
-            font-size: 20px;
+            text-indent: 30px;
+            /*font-size: 20px;*/
             // height:40px; 
             // border-style: solid;
             // border: 1px solid #ccd0d2;
@@ -50,7 +50,7 @@
         .vinput__icon {
             position: absolute;
             top: 4px;
-            left: 0px;
+            left: 2px;
             color: #ccc;
             font-size: inherit;
         }
