@@ -32,10 +32,29 @@ body.dark-theme {
     background: $body-bg-dark;
     color: $body-color-dark;
 
-    .card {
-        
+    .nav.nav-jeremy {
 
-     
+        color: $theme-color;
+
+        .nav-item {
+            .nav-link {
+                color: $theme-color;
+                border-bottom: 1px solid $navbar-custom-color-dark;
+
+                &.active {
+                    border-bottom-width: 2px;
+                    color: lighten($theme-color,30%);
+                    cursor: default;
+                }
+
+                &:hover {
+                    color: lighten($theme-color,10%);
+                }
+            }
+        }
+    }
+
+    .card {
         .card-header {
             background: rgba(0,0,0,0.6);
             color: $navbar-custom-brand-color-dark;
@@ -208,6 +227,28 @@ $navbar-custom-tab-color-light: $brand-dark-gray;
 body.light-theme {
     background: $body-bg-light;
     color: $body-color-light;
+
+    .nav.nav-jeremy {
+
+        color: $body-color-light;
+
+        .nav-item {
+            .nav-link {
+                color: $body-color-light;
+                border-bottom: 1px solid $navbar-custom-color-light;
+
+                &.active {
+                    border-bottom-width: 2px;
+                    color: lighten($body-color-light,30%);
+                    cursor: default;
+                }
+
+                &:hover {
+                    color: lighten($body-color-light,10%);
+                }
+            }
+        }
+    }
 
     // top navbar
     .navbar-custom {
