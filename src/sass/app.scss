@@ -174,3 +174,34 @@
 //    width: 100%;
 //}
 //
+
+@keyframes color {
+    0% {
+        background-color: $brand-info;
+    }
+    25% {
+        background-color: $brand-warning;
+    }
+    50% {
+        background-color: $brand-primary;
+    }
+    75% {
+        background-color: $brand-danger;
+    }
+    100% {
+        background-color: $brand-info;
+    }
+}
+
+
+@keyframes color-tab {
+    0% {
+        background-color: transparent
+    }
+    50% {
+        background-color: $brand-info;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
