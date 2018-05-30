@@ -2,19 +2,15 @@
     <div :class="['form-group', (show_invalid) ? 'is-invalid' : '']">
         <label :for="name" v-if="label">{{ label }}</label>
 
-        <input
-            @keydown.enter.stop.prevent="enter"
+        <textarea
             @input="update"
-            :value="value"
+            @keydown.enter="enter"
             :class="class_object"
-            :type="type"
             :placeholder="placeholder"
             :ref="name"
-        >
-
-        <div class="icon is-small">
-            <i :class="['fa', (show_invalid) ? 'fa-warning' : icon ]"></i>
-        </div>
+            rows="4"
+            v-text="value"
+        ></textarea>
 
         <div v-if="show_invalid && !! invalid_rule.help" class="invalid-feedback">
             {{ invalid_rule.help }}
@@ -92,13 +88,7 @@
             },
 
             focus() {
-                if ( this.type !== 'textarea' ) {
-                    this.$el.querySelector('input').focus();
-                }
-                else
-                {
-                    this.$el.querySelector('textarea').focus();
-                }
+                this.$el.querySelector('textarea').focus();
             },
 
             check_validation_settings() {
@@ -113,12 +103,12 @@
                 }
             },
 
-            populate_rules() { 
+            populate_rules() {
 
                 this.check_validation_settings();
-                
+
                 if ( ! this.should_validate ) return false;
-                
+
                 this.validation.rules = [];
 
                 this.validation.settings.forEach( args => {
@@ -134,16 +124,7 @@
             },
 
             update($event) {
-                if ( this.type !== 'select' ) {
-                    return Bus.$emit('UpdateFormControl', { key : this.name, value : $event.target.value });
-                }
-
-                let value = this.selectOptionsData.multiple ?
-                    this.selectOptionsData.value.map( o => o.id ) :
-                    this.selectOptionsData.value.id;
-
-                Bus.$emit('UpdateFormControl', { key : this.name, value } );
-
+                return Bus.$emit('UpdateFormControl', { key : this.name, value : $event.target.value });
             },
         },
 
@@ -186,11 +167,11 @@
             },
 
             class_object() {
-                return [ 
-                    this.className, 
-                    { 
-                        'form-control' : true, 
-                        'has-success' : this.valid, 
+                return [
+                    this.className,
+                    {
+                        'form-control' : true,
+                        'has-success' : this.valid,
                         'is-invalid' : this.show_invalid
                     }
                 ];
@@ -199,7 +180,7 @@
             should_validate() {
                 return this.required && this.validation.settings.length;
             },
-            
+
             valid() {
                 if ( ! this.should_validate ) return true;
 
@@ -219,7 +200,7 @@
                 if ( this.valid ) return new Rule();
 
                 return _(this.validation.rules)
-                        .find( rule => { return ! rule.valid } )
+                    .find( rule => { return ! rule.valid } )
             },
         },
 
@@ -227,26 +208,5 @@
 </script>
 
 <style lang="scss">
-    .form-group {
-        position: relative;
-        font-size: 16px;
 
-        .form-control {
-            font-size: 16px;
-        }
-
-        input[type=text],
-        input[type=email],
-        input[type=password] {
-            text-indent: 20px;
-        }
-
-        .icon {
-            position: absolute;
-            top: 40px;
-            left: 10px;
-            color: #ccc;
-            font-size: inherit;
-        }
-    }
 </style>

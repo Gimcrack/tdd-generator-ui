@@ -17,6 +17,8 @@ export default function(Vue) {
     Vue.component('formFieldGroup',require('./src/js/components/FormFieldGroup.vue') );
     Vue.component('formMenu',require('./src/js/components/FormMenu.vue'));
     Vue.component('formControl', require('./src/js/components/FormControl.vue'));
+    Vue.component('formSelect', require('./src/js/components/FormSelect.vue'));
+    Vue.component('formTextarea', require('./src/js/components/FormTextarea.vue'));
     Vue.component('batchUpdateSelected', require('./src/js/components/BatchUpdateSelected.vue'));
     Vue.component('headerSortButton', require('./src/js/components/HeaderSortButton.vue'));
 }

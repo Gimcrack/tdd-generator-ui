@@ -1,8 +1,8 @@
 <template>
     <div v-if="show" class="form-wrapper">
         <div class="form">
-            <div class="page">
-                <div class="page-header">
+            <div class="page p-2">
+                <div class="page-header m-2">
                     <h2>{{ heading }}</h2>
                 </div>
 
@@ -41,7 +41,7 @@
                     @reset="revert"
                     @cancel="cancel"
                     @destroy="destroy"
-                    class="m-t-3"
+                    class="mt-3 mb-2 mr-2"
                 ></form-menu>
             </div>
         </div>
@@ -318,10 +318,6 @@
 
         background: rgba(0,0,0,0.3);
 
-        .m-t-3 {
-            margin-top: 3em;
-        }
-
         .form {
             position: relative;
             height: auto;
@@ -329,18 +325,10 @@
             margin: 5vh auto;
             width: 90vw;
             max-width: 960px;
-            padding: 15px;
             border-radius: 6px;
 
-            .page-header {
-                margin-top: 24px;
-            }
 
-            .field-groups {
-                margin-top: 2em;
-            }
-
-            .form-control-feedback {
+            .invalid-feedback {
                 position: relative;
                 width: unset;
                 text-align: left;

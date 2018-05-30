@@ -1,20 +1,21 @@
 <template>
-    <div class="field-group">
-        <div class="field-group-header">
+    <div class="field-group row m-2">
+        <div class="col-lg-3 field-group-header mb-4">
             <span class="heading">{{group.name}}</span><br/>
             <small v-show="group.help">
                 <em>{{group.help}}</em>
             </small>
         </div>
-        <div v-if="group.fields.length" class="field-group-fields">
-            <form-control
+        <div v-if="group.fields.length" class="col-lg-9 field-group-fields">
+            <component
+                :is="componentType(def)"
                 v-for="def,key in group.fields"
                 v-if=" ! editing || ! def.uneditable"
                 :key="key"
                 :definition="def"
                 :value="form[def.name]"
                 :errors="errors"
-            ></form-control>
+            ></component>
         </div>
     </div>
 </template>
@@ -41,7 +42,18 @@
         },
 
         methods : {
+            componentType(def) {
+                switch(def.type) {
+                    case 'select':
+                        return 'formSelect';
 
+                    case 'textarea' :
+                        return 'formTextarea';
+
+                    default :
+                        return 'formControl';
+                }
+            }
         }
     }
 </script>
@@ -52,19 +64,16 @@
         padding: 1.5em;
 
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        display: flex;
 
         border-radius: 6px;
 
         .field-group-header {
-            flex: 1;
             .heading {
                 font-size: 20px;
             }
         }
 
         .field-group-fields {
-            flex: 2;
 
             .form-control {
                 width: 100%;

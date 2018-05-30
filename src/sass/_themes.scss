@@ -32,6 +32,14 @@ body.dark-theme {
     background: $body-bg-dark;
     color: $body-color-dark;
 
+    .btn-ui {
+        background: $navbar-custom-color-dark;
+    }
+
+    .border-ui {
+        border-color: $navbar-custom-color-dark;
+    }
+
     .nav.nav-jeremy {
 
         color: $theme-color;
@@ -54,7 +62,7 @@ body.dark-theme {
         }
     }
 
-    .card {
+    .card.card-custom {
         .card-header {
             background: rgba(0,0,0,0.6);
             color: $navbar-custom-brand-color-dark;
@@ -185,6 +193,11 @@ body.dark-theme {
                 color: $body-color-dark;
                 border-color: $border-color;
             }
+
+            .multiselect {
+                background: lighten($body-bg-dark,10%);
+                border-color: $border-color;
+            }
         }
     }
 
@@ -215,7 +228,7 @@ body.dark-theme {
 }
 
 // light theme
-$body-bg-light: desaturate(lighten($theme-color,60%),10%);
+$body-bg-light: white; //ghostwhite; //#f8f9fa;
 $body-color-light: $brand-dark-gray;
 $table-hover-bg-light: lighten($theme-color,20%);
 $navbar-custom-background-light: desaturate(lighten($theme-color,57%),20%);
@@ -366,6 +379,11 @@ body.light-theme {
                 color: $body-color-light;
                 border-color: $border-color;
             }
+
+            .multiselect {
+                border-color: $border-color;
+                background: lighten($body-bg-light,10%);
+            }
         }
     }
 
@@ -378,11 +396,11 @@ body.light-theme {
     }
 
     .table-striped > tbody > tr:nth-of-type(odd) {
-        background-color: $body-bg-light;
+        background-color: darken($body-bg-light,1%);
     }
 
     .table-striped > tbody > tr:nth-of-type(even) {
-        background-color: lighten($body-bg-light,5%);
+        background-color: darken($body-bg-light,5%);
     }
 
     .table-hover {

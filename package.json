@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Gimcrack/tdd-generator-ui#readme",
   "devDependencies": {
     "bootstrap": "^4.1.1",
-    "laravel-mix": "^2.1.11"
+    "laravel-mix": "^2.1.11",
+    "vue-multiselect": "^2.1.0"
   }
 }
