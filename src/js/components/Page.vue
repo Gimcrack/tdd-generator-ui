@@ -7,17 +7,16 @@
                 {{ refresh_btn_text }}
             </button>
 
-            <span v-if="toggles.do_with_selected" class="dropdown">
-                <a v-if="toggled.length" data-toggle="dropdown" role="button" aria-expanded="false" :class="busy ? 'disabled' : ''" class="dropdown-toggle btn-success btn">
-                    <i class="fa fa-fw fa-bars" :class="{'fa-spin' : busy}"></i>
+            <template v-if="toggles.do_with_selected">
+                <button :id="`dropdown_toggle_${params.component}`" v-if="toggled.length" data-toggle="dropdown" role="button" aria-expanded="false" :class="busy ? 'disabled' : ''" class="dropdown-toggle btn-success btn">
+                    <i class="fa fa-fw fa-check-square-o" :class="{'fa-spin' : busy}"></i>
                     Do With Selected
-                    <span class="caret"></span>
-                </a>
+                </button>
 
-                <ul class="dropdown-menu" role="menu">
+                <div class="dropdown-menu" role="menu" :aria-labelledby="`dropdown_toggle_${params.component}`">
                     <slot name="selection-dropdown-menu"></slot>
-                </ul>
-            </span>
+                </div>
+            </template>
 
             <button v-if="toggles.new" :class="{ disabled : busy }" @click.prevent="$emit('new')" :disabled="busy" class="btn btn-success">
                 <i class="fa fa-fw fa-circle-o-notch" :class="{'fa-spin' : busy}"></i>
@@ -34,8 +33,8 @@
         <table class="table table-striped table-hover" :class="{'table-sm' : compact}">
             <thead>
             <tr>
-                <th class="table-header">
-                    <i @click="toggleAll" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw" :class="toggleAllClass"></i>
+                <th style="width:30px">
+                    <i v-if="toggles.do_with_selected" @click="toggleAll" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw" :class="toggleAllClass"></i>
                 </th>
                 <header-sort-button
                         v-for="(col,index) in params.columns"
@@ -43,8 +42,9 @@
                         :asc="asc"
                         :column="col"
                         :key="index"
-                        class="table-header">
-                </header-sort-button>
+                        :options="filtered.map(o => o[col])"
+                        class="table-header"
+                ></header-sort-button>
             </tr>
             </thead>
             <tbody v-if="filtered.length">
@@ -55,7 +55,7 @@
             <tfoot>
             <tr>
                 <td colspan="100">
-                    <span class="badge badge-primary">
+                    <span class="badge badge-primary p-2">
                         Viewing {{ filtered.length }} Records
                     </span>
                 </td>
@@ -136,7 +136,11 @@
                 if ( this.allToggled ) return ['fa-check-square-o'];
                 if ( this.hasToggled ) return ['fa-minus-square-o'];
                 return ['fa-square-o'];
-            }
+            },
+
+            toggledCount() {
+                return this.toggled.length;
+            },
 
         },
 
@@ -182,6 +186,12 @@
 
                 return this.getUntoggled().forEach( child => { child.$children[0].toggle() } );
             },
+
+            update() {
+                if ( ! this.hasToggled ) return false;
+
+                Bus.$emit('ShowForm', { type : this.params.type, model : this.toggled[0].model })
+            }
         }
     }
 </script>

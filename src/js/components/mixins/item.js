@@ -143,7 +143,7 @@ export default {
 
         listen() {
             Echo.channel(this.item.channel)
-                .listen(this.item.updated, this.updatedEvent)
+                .listen(this.item.updated, this.updatedEvent);
 
             if ( !! this.item.events ) {
                 // console.log('Binding custom events');

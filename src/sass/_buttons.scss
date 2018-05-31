@@ -11,3 +11,10 @@ $input-btn-line-height-xs: 1.1 !default;
     @include button-size($btn-padding-y-xs, $btn-padding-x-xs, $font-size-sm, $input-btn-line-height-xs, $btn-border-radius-sm);
 }
 
+.dropdown-item {
+    cursor: pointer;
+}
+
+.dropdown-item.disabled {
+    cursor:default;
+}

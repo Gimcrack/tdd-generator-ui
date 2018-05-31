@@ -122,8 +122,11 @@ export default {
             }
         },
 
-        sortBy(key) {
-            if ( key === this.orderBy ) {
+        sortBy(key, asc) {
+            if ( asc ) {
+                this.asc = asc;
+            }
+            else if ( key === this.orderBy ) {
                 this.asc = ! this.asc;
             }
             this.orderBy = key;
