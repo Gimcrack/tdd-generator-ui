@@ -20,9 +20,11 @@ export default {
     computed : {
         filtered() {
             let reject = ( _.isEmpty(this.params.reject) ) ? { placeholder : 'gibberish-value' } : this.params.reject,
+                filters = this.filters,
                 models = _(this.models)
                     .filter( this.searchModel )
                     .filter( this.params.where )
+                    .filter( o => this.applyFilters(filters,o) )
                     .reject( reject )
                     .sortBy(this.orderBy);
 
@@ -211,5 +213,22 @@ export default {
             this.busy = false;
             this.refresh_btn_text = 'Refresh';
         },
+
+        applyFilters(filters,row) {
+            for( let prop in filters ) {
+
+                //console.log(filters[prop], row[prop]);
+
+                if ( filters[prop].length > 1 ) {
+                    if ( filters[prop].indexOf(row[prop]) === -1 )
+                        return false;
+                }
+
+                else if ( row[prop] != filters[prop] )
+                    return false;
+            }
+
+            return true;
+        }
     }
 }

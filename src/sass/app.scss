@@ -19,6 +19,12 @@
 @import "font-awesome/scss/font-awesome";
 @import "navs";
 
+body.no-effects {
+    * {
+        transition: none !important;
+    }
+}
+
 .h-full {
     min-height: calc(100vh - 55px);
 }

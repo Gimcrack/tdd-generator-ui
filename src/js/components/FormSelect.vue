@@ -129,7 +129,7 @@
         methods : {
 
             reset() {
-                console.log('Resetting');
+                //console.log('Resetting');
                 $(this.$el).find(':input').val('');
                 this.$emit('input',this.value);
             },

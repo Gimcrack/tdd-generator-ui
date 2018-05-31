@@ -37,13 +37,15 @@
                     <i v-if="toggles.do_with_selected" @click="toggleAll" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw" :class="toggleAllClass"></i>
                 </th>
                 <header-sort-button
-                        v-for="(col,index) in params.columns"
-                        :order-by="orderBy"
-                        :asc="asc"
-                        :column="col"
-                        :key="index"
-                        :options="filtered.map(o => o[col])"
-                        class="table-header"
+                    v-for="(col,index) in params.columns"
+                    :order-by="orderBy"
+                    :asc="asc"
+                    :column="col"
+                    :key="index"
+                    :options="(col.options) ? col.options : models.map(o => o[col])"
+                    :last="index === params.columns.length-1"
+                    class="table-header"
+                    @UpdateFilter="updateFilter"
                 ></header-sort-button>
             </tr>
             </thead>
@@ -55,9 +57,12 @@
             <tfoot>
             <tr>
                 <td colspan="100">
-                    <span class="badge badge-primary p-2">
+                    <span class="badge badge-light p-2 mr-2">
                         Viewing {{ filtered.length }} Records
                     </span>
+                    <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-warning">
+                        <i class="fa fa-fw fa-times"></i> Clear Filters
+                    </button>
                 </td>
             </tr>
             </tfoot>
@@ -118,7 +123,9 @@
                 asc : ( this.params.orderDir !== null ) ? this.params.orderDir : true,
                 toggled : this.getToggled(),
                 models : this.getInitialState(),
-                compact : false
+                compact : false,
+                filters : {},
+                headers : [],
             }
         },
 
@@ -141,6 +148,14 @@
             toggledCount() {
                 return this.toggled.length;
             },
+
+            filterKeys() {
+                return Object.keys(this.filters);
+            },
+
+            showClearFiltersBtn() {
+                return !! this.filterKeys.length;
+            }
 
         },
 
@@ -191,6 +206,21 @@
                 if ( ! this.hasToggled ) return false;
 
                 Bus.$emit('ShowForm', { type : this.params.type, model : this.toggled[0].model })
+            },
+
+            updateFilter(event) {
+                if ( event.value == null ) {
+                    this.$delete(this.filters, event.key);
+                } else {
+                    this.$set(this.filters, event.key, event.value);
+                }
+                this.$forceUpdate();
+            },
+
+            clearFilter() {
+                this.filters = {};
+                this.$forceUpdate();
+                this.headers.forEach( o => { o.selected=[] });
             }
         }
     }

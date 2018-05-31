@@ -241,10 +241,10 @@
                 flash.success("Operation completed successfully");
                 this.busy = false;
 
-                console.log(response.data);
+                //console.log(response.data);
 
                 if ( ! _.isEmpty(response.data.model) ) {
-                    console.log('Getting here');
+                    //console.log('Getting here');
                     this.model = Object.assign({}, response.data.model);
                     this.editing = true;
                     this.checkDirty();
