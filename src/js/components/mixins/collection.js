@@ -26,7 +26,16 @@ export default {
                     .filter( this.params.where )
                     .filter( o => this.applyFilters(filters,o) )
                     .reject( reject )
-                    .sortBy(this.orderBy);
+                    .sortBy( (model) => {
+                            let item = this.getItemByModel(model);
+
+                            if ( !! item && item[this.orderBy] ) {
+                                return item[this.orderBy]
+                            }
+
+                            return model[this.orderBy];
+                        }
+                    );
 
             return (this.asc) ? models.value() : models.reverse().value();
         },
@@ -41,6 +50,15 @@ export default {
     },
 
     methods : {
+
+        getItemByModel(model) {
+            let item = _( this.$children )
+                .reject( o => ! o.model )
+                .filter( o => o.model.id === model.id )
+                .value();
+
+            return item[0]
+        },
 
         selectedIds() {
             return this.toggled.map( o => o.model.id );
@@ -61,7 +79,7 @@ export default {
         },
 
         performFetch() {
-            Api.get( this.params.endpoint )
+            Api.get( this.params.endpoint, { params : this.$parent.fetch_params || null } )
                 .then( this.success, this.error )
         },
 
@@ -220,11 +238,11 @@ export default {
                 //console.log(filters[prop], row[prop]);
 
                 if ( filters[prop].length > 1 ) {
-                    if ( filters[prop].indexOf(row[prop]) === -1 )
+                    if ( filters[prop].indexOf(_.get(row,prop)) === -1 )
                         return false;
                 }
 
-                else if ( row[prop] != filters[prop] )
+                else if ( _.get(row,prop) != filters[prop] )
                     return false;
             }
 

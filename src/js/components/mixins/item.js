@@ -1,7 +1,14 @@
 export default {
-    props : [
-        'initial'
-    ],
+    props : {
+        initial : {
+            required : true,
+        },
+        modelProps : {
+            default() {
+                return {};
+            }
+        }
+    },
 
     watch : {
         initial(value) {
@@ -59,7 +66,7 @@ export default {
                 .addClass('hover');
 
             if ( ! sticky )
-                sleep(2000).then( () => {
+                sleep(500).then( () => {
                     $(this.$item.$refs.row).removeClass('hover');
                 });
         },

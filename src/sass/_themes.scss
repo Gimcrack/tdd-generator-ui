@@ -209,19 +209,19 @@ body.dark-theme {
         background: $body-bg-dark;
     }
 
-    .table-striped > tbody > tr:nth-of-type(odd) {
+    .table-striped > tbody:nth-of-type(odd) > tr {
         background-color: $body-bg-dark;
     }
 
-    .table-striped > tbody > tr:nth-of-type(even) {
+    .table-striped > tbody:nth-of-type(even) > tr {
         background-color: lighten($body-bg-dark,5%);
     }
 
     .table-hover {
         border-color: $body-color-dark !important;
 
-        tbody tr:hover td,
-        tbody tr.hover td {
+        tbody:hover tr td,
+        tbody:hover tr td {
             background-color: $table-hover-bg-dark;
         }
     }
@@ -395,19 +395,19 @@ body.light-theme {
         background: $body-bg-light;
     }
 
-    .table-striped > tbody > tr:nth-of-type(odd) {
+    .table-striped > tbody:nth-of-type(odd) > tr {
         background-color: darken($body-bg-light,1%);
     }
 
-    .table-striped > tbody > tr:nth-of-type(even) {
+    .table-striped > tbody:nth-of-type(even) > tr {
         background-color: darken($body-bg-light,5%);
     }
 
     .table-hover {
         border-color: $body-color-light !important;
 
-        tbody tr:hover td,
-        tbody tr.hover td {
+        tbody:hover tr td,
+        tbody.hover tr td {
             background-color: $table-hover-bg-light;
         }
     }

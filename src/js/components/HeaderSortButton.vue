@@ -12,23 +12,26 @@
                     <i class="fa fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu p-2 w-0 header-menu"
-                     :class="{show : dropdownOpen, 'dropdown-menu-right' : last}"
+                     :class="{show : dropdownOpen, 'dropdown-menu-right' : alignRight}"
                      :aria-labelledby="`dropdown_${column_title}`"
                 >
-                    <button @click="$parent.sortBy(column_key, true)" class="btn" :class="ascBtnClass">
-                        <i class="fa fa-fw fa-sort-amount-asc"></i>
-                        Sort {{ column_title }} Asc
-                    </button>
-                    <button @click="$parent.sortBy(column_key, false)" class="btn" :class="descBtnClass">
-                        <i class="fa fa-fw fa-sort-amount-desc"></i>
-                        Sort {{ column_title }} Desc
-                    </button>
+                    <div class="d-flex">
+                        <button @click="$parent.sortBy(column_key, true)" class="btn mr-1" :class="ascBtnClass">
+                            <i class="fa fa-fw fa-sort-amount-asc"></i>
+                            Sort {{ column_title }} Asc
+                        </button>
+                        <button @click="$parent.sortBy(column_key, false)" class="btn" :class="descBtnClass">
+                            <i class="fa fa-fw fa-sort-amount-desc"></i>
+                            Sort {{ column_title }} Desc
+                        </button>
+                    </div>
 
                     <vue-multiselect
+                        v-if="options!==false"
                         @input="update"
                         v-model="selected"
-                        :track-by="trackBy"
-                        :label="label"
+                        track-by="id"
+                        label="label"
                         :multiple="true"
                         :options="uniqueOptions"
                         :searchable="true"
@@ -61,13 +64,26 @@
             VueMultiselect
         },
 
-        props : [
-            'column',
-            'asc',
-            'orderBy',
-            'options',
-            'last'
-        ],
+        props : {
+            column: {},
+            asc: {},
+            orderBy: {},
+            alignRight: {},
+            options: {
+                default() {
+                    return [{
+                        id: 'placeholder',
+                        value: 'placeholder'
+                    }];
+                }
+            },
+        },
+
+        watch : {
+            options() {
+                this.uniqueOptions = this.getOptions();
+            }
+        },
 
         created() {
             this.$parent.headers.push(this);
@@ -77,7 +93,7 @@
             return {
                 dropdownOpen : false,
                 selected : [],
-                uniqueOptions : _.union(this.options)
+                uniqueOptions : this.getOptions()
             }
         },
 
@@ -104,28 +120,12 @@
                 return this.asc && this.active;
             },
 
-            label() {
-                return ( typeof this.options[0] !== 'object' ) ? null : 'label';
-            },
-
-            trackBy() {
-                return ( typeof this.options[0] !== 'object' ) ? null : 'id';
-            },
-
             mapped_selected() {
-                switch(true) {
-                    case this.selected.length === 1 && typeof this.options[0] !== 'object' :
-                        return this.selected[0];
-
-                    case this.selected.length > 1 && typeof this.options[0] !== 'object' :
-                        return this.selected;
-
-                    case this.selected.length === 1 && typeof this.options[0] === 'object' :
-                        return this.selected[0].id;
-
-                    case this.selected.length > 1 && typeof this.options[0] === 'object' :
-                        return this.selected.map(o => o.id);
-                }
+                if ( ! this.selected.length )
+                    return null;
+                else if ( this.selected.length === 1 )
+                    return this.selected[0].id;
+                return this.selected.map(o => o.id);
             },
 
             btnClass() {
@@ -145,11 +145,11 @@
             },
 
             ascBtnClass() {
-                return (this.active && this.asc) ? ['btn-primary','active'] : ['btn-outline-primary'];
+                return (this.active && this.asc) ? ['btn-primary','active'] : ['btn-link'];
             },
 
             descBtnClass() {
-                return (this.active && ! this.asc) ? ['btn-primary','active'] : ['btn-outline-primary'];
+                return (this.active && ! this.asc) ? ['btn-primary','active'] : ['btn-link'];
             },
         },
 
@@ -168,6 +168,15 @@
                 this.$parent.sortBy(this.$parent.orderBy, ! this.$parent.asc);
                 this.$parent.sortBy(this.$parent.orderBy, ! this.$parent.asc);
             },
+
+            getOptions() {
+                if ( ! this.options.length ) return [{
+                    id: 'placeholder',
+                    value: 'placeholder'
+                }];
+
+                return _.union(this.options);
+            }
         }
     }
 </script>

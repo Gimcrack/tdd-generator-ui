@@ -57,8 +57,8 @@
 
         .vinput__reset {
             position: absolute;
-            top: 3px;
-            right: 3px;
+            top: 6px;
+            right: 6px;
             z-index: 2;
             font-size: 12px;
         }

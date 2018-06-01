@@ -33,6 +33,16 @@
         <table class="table table-striped table-hover" :class="{'table-sm' : compact}">
             <thead>
             <tr>
+                <td colspan="100">
+                    <span class="badge badge-light p-2 mr-2">
+                        Viewing {{ filtered.length }} Records
+                    </span>
+                    <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-warning">
+                        <i class="fa fa-fw fa-times"></i> Clear Filters
+                    </button>
+                </td>
+            </tr>
+            <tr>
                 <th style="width:30px">
                     <i v-if="toggles.do_with_selected" @click="toggleAll" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw" :class="toggleAllClass"></i>
                 </th>
@@ -42,18 +52,24 @@
                     :asc="asc"
                     :column="col"
                     :key="index"
-                    :options="(col.options) ? col.options : models.map(o => o[col])"
-                    :last="index === params.columns.length-1"
+                    :options="getColumnOptions(col)"
+                    :align-right="index >= params.columns.length-2"
                     class="table-header"
                     @UpdateFilter="updateFilter"
                 ></header-sort-button>
             </tr>
             </thead>
-            <tbody v-if="filtered.length">
-            <template v-for="model in filtered" >
-                <component :is="params.component || params.type" :initial="model" :key="model.id" @ToggledHasChanged="setToggled"></component>
+
+            <template v-if="filtered.length" v-for="model in filtered" >
+                <component
+                    :is="params.component || params.type"
+                    :initial="model"
+                    :key="model.id"
+                    :model-props="params.modelProps"
+                    @ToggledHasChanged="setToggled">
+                </component>
             </template>
-            </tbody>
+
             <tfoot>
             <tr>
                 <td colspan="100">
@@ -71,6 +87,8 @@
 </template>
 
 <script>
+    import _ from 'lodash';
+
     export default {
         mixins : [
             mixins.collection
@@ -169,7 +187,7 @@
                     state = state[this.params.data_key];
                 }
 
-                return state;
+                return state || [];
             },
 
             postCreated(event) {
@@ -221,6 +239,27 @@
                 this.filters = {};
                 this.$forceUpdate();
                 this.headers.forEach( o => { o.selected=[] });
+            },
+
+            getColumnOptions(col) {
+                if (col.options === false)
+                    return false;
+
+                return (col.options)
+                    ? col.options :
+                    _(this.models)
+                        .map( o => {
+                            return _.get(o,col.key ? col.key : col);
+                        })
+                        .uniq()
+                        .sortBy(o => o)
+                        .map( val => {
+                            return {
+                                id : val,
+                                label : val
+                            }
+                        })
+                        .value();
             }
         }
     }

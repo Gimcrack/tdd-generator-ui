@@ -31,6 +31,12 @@ body.no-effects {
 .tabs-right {
     overflow: hidden;
 }
+.letter-spacing-wide {
+    letter-spacing: 1.2px;
+}
+.table th, .table td {
+    vertical-align: middle !important;
+}
 //
 //// Everything else
 //
