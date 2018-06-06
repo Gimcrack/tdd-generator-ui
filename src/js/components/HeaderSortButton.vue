@@ -1,11 +1,8 @@
 <template>
-    <th class="header-sort-button" nowrap="nowrap" v-if="column !== '__blank__'">
+    <th class="header-sort-button" nowrap="nowrap" v-if="show && column !== '__blank__'">
         <div @click="toggleDropDown" :class="{active : dropdownOpen}" class="dropdown-wrapper"></div>
 
         <div class="d-flex">
-            <div class="mr-2">
-                {{ column_title }}
-            </div>
             <div class="btn-group">
                 <button :id="`dropdown_${column_title}`" @click="toggleDropDown"
                         :class="btnClass" class="btn btn-xs border-right-0">
@@ -40,18 +37,51 @@
                         select-label=""
                         deselect-label=""
                         :limit="3"
+                        :group-select="groupSelect"
+                        :group-values="groupValues"
+                        :group-label="groupLabel"
                         class="mt-2"
-                    ></vue-multiselect>
+                    >
+                        <template slot="beforeList">
+                            <div class="d-flex w-100 p-1">
+                                <button v-if="selected.length !== flattenedOptions.length" @click="selectAll"
+                                        class="btn btn-primary flex-fill m-1">
+                                    <i class="fa fa-fw fa-check-square-o"></i> Select All
+                                </button>
+                                <button v-if="selected.length" @click="unselectAll"
+                                        class="btn btn-primary flex-fill m-1">
+                                    <i class="fa fa-fw fa-square-o"></i> Unselect All
+                                </button>
+                            </div>
+                        </template>
+
+                        <template v-if="options.length > 6" slot="afterList">
+                            <div class="d-flex w-100 p-1">
+                                <button v-if="selected.length !== flattenedOptions.length" @click="selectAll"
+                                        class="btn btn-primary flex-fill m-1">
+                                    <i class="fa fa-fw fa-check-square-o"></i> Select All
+                                </button>
+                                <button v-if="selected.length" @click="unselectAll"
+                                        class="btn btn-primary flex-fill m-1">
+                                    <i class="fa fa-fw fa-square-o"></i> Unselect All
+                                </button>
+                            </div>
+                        </template>
+
+                    </vue-multiselect>
                 </div>
                 <button :class="btnClass" class="btn btn-xs" @click="$parent.sortBy(column_key)">
-                    <i class="fa fa-fw" :class="active_asc ? 'fa-sort-amount-asc' : 'fa-sort-amount-desc' "></i>
+                    <small>
+                        {{ column_title }}
+                        <i class="fa fa-fw" :class="active_asc ? 'fa-sort-amount-asc' : 'fa-sort-amount-desc' "></i>
+                    </small>
                 </button>
             </div>
 
         </div>
     </th>
 
-    <th v-else>
+    <th v-else-if="show">
         
     </th>
 </template>
@@ -77,6 +107,14 @@
                     }];
                 }
             },
+            type : {
+                default : 'normal'
+            },
+            hiddenColumns : {
+                default() {
+                    return [];
+                }
+            }
         },
 
         watch : {
@@ -87,17 +125,33 @@
 
         created() {
             this.$parent.headers.push(this);
+
+            Bus.$on('UpdateFilters', (e) => {
+                if ( e.key === this.column_key ) {
+                    this.selected = _.map( _.flatten([e.value]), o => {
+                        return {
+                            id : o,
+                            label : o
+                        }
+                    });
+                }
+            });
         },
 
         data() {
             return {
                 dropdownOpen : false,
                 selected : [],
-                uniqueOptions : this.getOptions()
+                uniqueOptions : this.getOptions(),
+                updateTimeout : null,
             }
         },
 
         computed : {
+            show() {
+                return this.hiddenColumns.indexOf( this.column.title || this.column ) === -1;
+            },
+
             column_title() {
                 if ( !! this.column.title )
                     return this.column.title;
@@ -151,29 +205,81 @@
             descBtnClass() {
                 return (this.active && ! this.asc) ? ['btn-primary','active'] : ['btn-link'];
             },
+
+            groupValues() {
+                return ( ! this.shouldGroup ) ? null : 'values';
+            },
+
+            groupLabel() {
+                return ( ! this.shouldGroup ) ? null : 'group';
+            },
+
+            groupSelect() {
+                return ( ! this.shouldGroup ) ? null : true;
+            },
+
+            shouldGroup() {
+                return (this.column.type === 'date');
+            },
+
+            flattenedOptions() {
+                return this.shouldGroup ? _(this.uniqueOptions).map('values').flatten().value() : this.uniqueOptions;
+            }
         },
 
         methods : {
+
+            selectAll() {
+                this.selected = this.flattenedOptions;
+                this.update();
+            },
+
+            unselectAll() {
+                this.selected = [];
+                this.update();
+            },
+
             toggleDropDown() {
                 this.dropdownOpen = ! this.dropdownOpen;
             },
 
             update() {
-                this.$emit( 'UpdateFilter', {
-                    key : this.column_key,
-                    value : this.mapped_selected
-                });
+                if ( this.updateTimeout )
+                    clearTimeout(this.updateTimeout);
 
-                // hack to force updating of computed 'filtered' property
-                this.$parent.sortBy(this.$parent.orderBy, ! this.$parent.asc);
-                this.$parent.sortBy(this.$parent.orderBy, ! this.$parent.asc);
+                this.updateTimeout = setTimeout( () => {
+
+                    this.$emit( 'UpdateFilter', {
+                        key : this.column_key,
+                        value : this.mapped_selected
+                    });
+
+                    // hack to force updating of computed 'filtered' property
+                    this.$parent.sortBy(this.$parent.orderBy, ! this.$parent.asc);
+                    this.$parent.sortBy(this.$parent.orderBy, ! this.$parent.asc);
+                }, 700 );
             },
 
             getOptions() {
                 if ( ! this.options.length ) return [{
                     id: 'placeholder',
-                    value: 'placeholder'
+                    label: 'placeholder'
                 }];
+
+                if ( this.shouldGroup ) {
+                    return _(this.options)
+                        .union([])
+                        .groupBy( o => {
+                            return o.label.slice(0,4);
+                        })
+                        .map( (o,i) => {
+                            return {
+                                group : i,
+                                values : o
+                            }
+                        })
+                        .value();
+                }
 
                 return _.union(this.options);
             }
@@ -201,13 +307,24 @@
             }
         }
 
+        .multiselect__select {
+            //top: 13px;
+        }
+
         .header-menu {
-            min-width: 250px;
+            width: 340px;
+        }
+
+        .multiselect__tags {
+            min-height: 65px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .multiselect__tags-wrap {
             display: flex;
-            flex-direction: column;
+            //flex-direction: column;
         }
     }
 

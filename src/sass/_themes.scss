@@ -138,7 +138,7 @@ body.dark-theme {
             color: $navbar-custom-tab-color-dark;
             border: none !important;
             margin-right: -$navbar-custom-border-width;
-            padding:10px 15px 4px !important;
+            padding:10px 15px 4px;
 
             display: flex;
             flex-direction: column;
@@ -324,7 +324,7 @@ body.light-theme {
             color: $navbar-custom-tab-color-light;
             border: none !important;
             margin-right: -$navbar-custom-border-width;
-            padding:10px 15px 4px !important;
+            padding:10px 15px 4px;
 
             display: flex;
             flex-direction: column;
@@ -356,7 +356,9 @@ body.light-theme {
             border-right: $navbar-custom-border-width solid $body-bg-light !important;
             color: $navbar-custom-active-color-light !important;
             margin-right: -$navbar-custom-border-width !important;
-            padding-left: $navbar-custom-border-width;
+            padding:10px 15px 4px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
         }
     }
 

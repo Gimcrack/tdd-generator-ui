@@ -21,4 +21,5 @@ export default function(Vue) {
     Vue.component('formTextarea', require('./src/js/components/FormTextarea.vue'));
     Vue.component('batchUpdateSelected', require('./src/js/components/BatchUpdateSelected.vue'));
     Vue.component('headerSortButton', require('./src/js/components/HeaderSortButton.vue'));
+    Vue.component('viewSettings',require('./src/js/components/ViewSettings.vue'));
 }

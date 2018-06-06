@@ -1,9 +1,11 @@
+
 export default {
 
     data() {
         return {
             busy : false,
-            //models : [],
+            models : this.getInitialModels(),
+            last_refreshed : this.getInitialLastRefreshed(),
             refresh_btn_text : 'Refresh',
             search : null,
             orderBy : 'name',
@@ -14,6 +16,8 @@ export default {
 
     mounted() {
         this.listen();
+
+        this.models = this.getInitialModels();
         //this.fetch();
     },
 
@@ -86,6 +90,11 @@ export default {
         success(response) {
             let data_key = this.params.data_key;
             this.models = (!! data_key) ? response.data[data_key] : response.data;
+            this.last_refreshed = Date.now();
+
+            if ( ! this.toggles.dont_cache ) {
+                this.cacheModels();
+            }
 
             if ( !! this.postSuccess )
                 this.postSuccess();
@@ -143,7 +152,8 @@ export default {
         },
 
         sortBy(key, asc) {
-            if ( asc ) {
+
+            if ( asc !== null ) {
                 this.asc = asc;
             }
             else if ( key === this.orderBy ) {
@@ -247,6 +257,26 @@ export default {
             }
 
             return true;
+        },
+
+        getInitialModels() {
+            if ( this.toggles.dont_cache ) return [];
+
+            let models = Store.$ls.get(this.getCacheKey('models'),"[]");
+            return (typeof models === "string") ? JSON.parse(models) : models;
+        },
+
+        getInitialLastRefreshed() {
+            return Store.$ls.get(this.getCacheKey('last_refreshed'),'Never');
+        },
+
+        getCacheKey(key) {
+            return `${key}_${this.params.heading}_${window.INITIAL_STATE.user.id}`;
+        },
+
+        cacheModels() {
+            Store.$ls.set(this.getCacheKey('models'), JSON.stringify(this.models) );
+            Store.$ls.set(this.getCacheKey('last_refreshed'), this.last_refreshed );
         }
     }
 }

@@ -1,0 +1,38 @@
+@import "~bootstrap/scss/mixins/breakpoints";
+
+@include media-breakpoint-down(xs) { // < 576 px
+
+}
+
+@include media-breakpoint-down(sm) { // < 768 px
+
+}
+
+@include media-breakpoint-down(md) { // < 992 px
+
+}
+
+@include media-breakpoint-down(lg) { // < 1300 px
+    .tabs-left.nav-tabs > li > a {
+        height: 80px !important;
+        width: 80px !important;
+
+        padding: 10px 0 4px !important;
+    }
+
+    #home-container .column-container {
+
+        .tabs-left {
+            width: 6.75em !important;
+        }
+
+        .left {
+            min-width: 6.75em !important;
+        }
+
+        .main {
+            margin: 0 0 0 1.5em !important;
+        }
+    }
+
+}

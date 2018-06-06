@@ -30,16 +30,26 @@
         </div>
         <div class="alert alert-info" v-text="params.help" v-show="params.help">
         </div>
-        <table class="table table-striped table-hover" :class="{'table-sm' : compact}">
+        <table class="table table-striped table-hover" :class="[ getTableHiddenColumnClasses,  {'table-sm' : compact}]">
             <thead>
             <tr>
                 <td colspan="100">
-                    <span class="badge badge-light p-2 mr-2">
-                        Viewing {{ filtered.length }} Records
-                    </span>
-                    <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-warning">
-                        <i class="fa fa-fw fa-times"></i> Clear Filters
-                    </button>
+                    <div class="d-flex align-items-center header-sort-button">
+                        <span class="badge p-2 mr-2" :class="[ showClearFiltersBtn ? 'badge-warning' : 'badge-light']">
+                            Viewing {{ filtered.length }} Records
+                            <template v-if="showClearFiltersBtn">(Filtered)</template>
+                        </span>
+                        <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning">
+                            <small><i class="fa fa-fw fa-times"></i> Clear Filters</small>
+                        </button>
+                        <span class="badge badge-light p-2 mr-2" v-text="`Updated ${lastRefreshedFormatted}`"></span>
+                        <div class="flex-fill"></div>
+                        <view-settings
+                                :hidden-columns="hiddenColumns"
+                                :options="hiddenColumnsOptions"
+                                @update="updateHiddenColumns"
+                        ></view-settings>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -53,7 +63,7 @@
                     :column="col"
                     :key="index"
                     :options="getColumnOptions(col)"
-                    :align-right="index >= params.columns.length-2"
+                    :align-right="index >= params.columns.length/2"
                     class="table-header"
                     @UpdateFilter="updateFilter"
                 ></header-sort-button>
@@ -73,12 +83,14 @@
             <tfoot>
             <tr>
                 <td colspan="100">
-                    <span class="badge badge-light p-2 mr-2">
+                    <span class="badge p-2 mr-2" :class="[ showClearFiltersBtn ? 'badge-warning' : 'badge-light']">
                         Viewing {{ filtered.length }} Records
+                        <template v-if="showClearFiltersBtn">(Filtered)</template>
                     </span>
-                    <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-warning">
-                        <i class="fa fa-fw fa-times"></i> Clear Filters
+                    <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning">
+                        <small><i class="fa fa-fw fa-times"></i> Clear Filters</small>
                     </button>
+                    <span class="badge badge-light p-2 mr-2" v-text="`Updated ${lastRefreshedFormatted}`"></span>
                 </td>
             </tr>
             </tfoot>
@@ -88,8 +100,11 @@
 
 <script>
     import _ from 'lodash';
+    import moment from 'moment';
+    import VueMultiselect from "../../../node_modules/vue-multiselect/src/Multiselect.vue";
 
     export default {
+        components: {VueMultiselect},
         mixins : [
             mixins.collection
         ],
@@ -99,7 +114,11 @@
 
             Bus.$on('ToggleCompactView', () => {
                 this.compact = !this.compact;
-            })
+            });
+
+            Bus.$on('UpdateFilters', (e) => {
+                this.updateFilter(e);
+            });
         },
 
         props : {
@@ -123,6 +142,7 @@
                         },
                         where : {},
                         reject : { placeholder : 'some-nonsense-value'},
+                        filters : {}
                     }
                 }
             },
@@ -144,6 +164,8 @@
                 compact : false,
                 filters : {},
                 headers : [],
+                hiddenColumns : this.getInitialHiddenColumns(),
+                timeoutHiddenColumnUpdate : null
             }
         },
 
@@ -173,8 +195,32 @@
 
             showClearFiltersBtn() {
                 return !! this.filterKeys.length;
-            }
+            },
 
+            lastRefreshedFormatted() {
+                if ( isNaN(this.last_refreshed)) return this.last_refreshed;
+
+                return moment.unix(this.last_refreshed/1000).fromNow();
+            },
+
+            hiddenColumnsOptions() {
+                return _.map(this.params.columns, o => { return typeof o === 'string' ? o : o.title });
+            },
+
+            getTableHiddenColumnClasses() {
+                return _.map(this.hiddenColumns, (o) => {
+
+                    let index = _.findIndex( this.params.columns, oo => {
+                        return (typeof oo === 'string') ?
+                            oo === o : oo.title === o;
+                    } );
+
+                    if ( isNaN(index) ) return null;
+                    if ( index < 1 ) return null;
+
+                    return 'hide-' + (+index+2);
+                });
+            }
         },
 
         methods : {
@@ -239,6 +285,7 @@
                 this.filters = {};
                 this.$forceUpdate();
                 this.headers.forEach( o => { o.selected=[] });
+                Bus.$emit('ClearFilters');
             },
 
             getColumnOptions(col) {
@@ -260,6 +307,23 @@
                             }
                         })
                         .value();
+            },
+
+            getInitialHiddenColumns() {
+                let hidden = Store.$ls.get( this.getCacheKey('hidden_columns'), [] );
+
+                return ( typeof hidden === 'string' ) ? hidden.split(',') : hidden;
+            },
+
+            updateHiddenColumns( event ) {
+                if ( !! this.timeoutHiddenColumnUpdate )
+                    clearTimeout(this.timeoutHiddenColumnUpdate);
+
+                this.timeoutHiddenColumnUpdate = setTimeout( () => {
+                    this.hiddenColumns = event.hidden;
+                    Store.$ls.set(this.getCacheKey('hidden_columns'), event.hidden);
+                }, 750 );
+
             }
         }
     }
@@ -290,6 +354,69 @@
 
             &:nth-child(2) {
                 width: 80px !important;
+            }
+        }
+
+        .table {
+            &.hide-2 {
+                th:nth-child(2), td:nth-child(2) {
+                    display:none;
+                }
+            }
+            &.hide-3 {
+                th:nth-child(3), td:nth-child(3) {
+                    display:none;
+                }
+            }
+            &.hide-4 {
+                th:nth-child(4), td:nth-child(4) {
+                    display:none;
+                }
+            }
+            &.hide-5 {
+                th:nth-child(5), td:nth-child(5) {
+                    display:none;
+                }
+            }
+            &.hide-6 {
+                th:nth-child(6), td:nth-child(6) {
+                    display:none;
+                }
+            }
+            &.hide-7 {
+                th:nth-child(7), td:nth-child(7) {
+                    display:none;
+                }
+            }
+            &.hide-8 {
+                th:nth-child(8), td:nth-child(8) {
+                    display:none;
+                }
+            }
+            &.hide-9 {
+                th:nth-child(9), td:nth-child(9) {
+                    display:none;
+                }
+            }
+            &.hide-10 {
+                th:nth-child(10), td:nth-child(10) {
+                    display:none;
+                }
+            }
+            &.hide-11 {
+                th:nth-child(11), td:nth-child(11) {
+                    display:none;
+                }
+            }
+            &.hide-12 {
+                th:nth-child(12), td:nth-child(12) {
+                    display:none;
+                }
+            }
+            &.hide-13 {
+                th:nth-child(13), td:nth-child(13) {
+                    display:none;
+                }
             }
         }
     }

@@ -21,6 +21,8 @@
   "devDependencies": {
     "bootstrap": "^4.1.1",
     "laravel-mix": "^2.1.11",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.17",
     "vue-multiselect": "^2.1.0"
   }
 }
