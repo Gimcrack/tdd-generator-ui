@@ -2,7 +2,7 @@
     <div class="view-settings header-sort-button position-relative">
         <div @click="toggleDropDown" :class="{active : dropdownOpen}" class="dropdown-wrapper"></div>
 
-        <button v-if="hidden.length" @click="reset" class="btn btn-xs btn-warning mr-2">
+        <button v-if="showReset" @click="reset" class="btn btn-xs btn-warning mr-2">
             <small><i class="fa fa-fw fa-times"></i> Reset View</small>
         </button>
         <button id="dropdown_view_settings" @click="toggleDropDown"
@@ -27,8 +27,8 @@
                     :searchable="true"
             >
             </vue-multiselect>
-            <button v-if="hidden.length" @click="reset" class="btn btn-warning mt-2">
-                <i class="fa fa-fw fa-times"></i> Reset View
+            <button v-if="showReset" @click="reset" class="btn btn-xs btn-warning mt-2">
+                <small><i class="fa fa-fw fa-times"></i> Reset View</small>
             </button>
         </div>
     </div>
@@ -72,20 +72,26 @@
 
         computed : {
             btnClass() {
+                let hidden = (this.hidden != null) ? this.hidden : [];
+
                 switch(true) {
-                    case this.hidden.length && this.dropdownOpen :
+                    case hidden.length && this.dropdownOpen :
                         return ['btn-warning'];
 
-                    case this.hidden.length && ! this.dropdownOpen :
+                    case hidden.length && ! this.dropdownOpen :
                         return ['btn-outline-warning'];
 
-                    case ! this.hidden.length && this.dropdownOpen :
+                    case ! hidden.length && this.dropdownOpen :
                         return ['btn-primary'];
 
-                    case ! this.hidden.length && ! this.dropdownOpen :
+                    case ! hidden.length && ! this.dropdownOpen :
                         return ['btn-outline-primary'];
                 }
             },
+
+            showReset() {
+                return this.hidden !== null && this.hidden.length > 0;
+            }
         },
 
         methods : {

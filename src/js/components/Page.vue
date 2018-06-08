@@ -39,8 +39,8 @@
                             Viewing {{ filtered.length }} Records
                             <template v-if="showClearFiltersBtn">(Filtered)</template>
                         </span>
-                        <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning">
-                            <small><i class="fa fa-fw fa-times"></i> Clear Filters</small>
+                        <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning mr-2">
+                            <small><i class="fa fa-fw fa-times"></i> Reset All Filters</small>
                         </button>
                         <span class="badge badge-light p-2 mr-2" v-text="`Updated ${lastRefreshedFormatted}`"></span>
                         <div class="flex-fill"></div>
@@ -87,8 +87,8 @@
                         Viewing {{ filtered.length }} Records
                         <template v-if="showClearFiltersBtn">(Filtered)</template>
                     </span>
-                    <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning">
-                        <small><i class="fa fa-fw fa-times"></i> Clear Filters</small>
+                    <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning mr-2">
+                        <small><i class="fa fa-fw fa-times"></i> Reset All Filters</small>
                     </button>
                     <span class="badge badge-light p-2 mr-2" v-text="`Updated ${lastRefreshedFormatted}`"></span>
                 </td>
@@ -142,7 +142,8 @@
                         },
                         where : {},
                         reject : { placeholder : 'some-nonsense-value'},
-                        filters : {}
+                        filters : {},
+                        hidden_columns : []
                     }
                 }
             },
@@ -310,7 +311,7 @@
             },
 
             getInitialHiddenColumns() {
-                let hidden = Store.$ls.get( this.getCacheKey('hidden_columns'), [] );
+                let hidden = Store.$ls.get( this.getCacheKey('hidden_columns'), this.params.hidden_columns );
 
                 return ( typeof hidden === 'string' ) ? hidden.split(',') : hidden;
             },

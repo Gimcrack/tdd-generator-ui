@@ -11,6 +11,10 @@ $input-btn-line-height-xs: 1 !default;
     @include button-size($btn-padding-y-xs, $btn-padding-x-xs, 0.85rem, $input-btn-line-height-xs, $btn-border-radius-sm);
 }
 
+.btn-outline-warning {
+    color: $gray-900;
+}
+
 .dropdown-item {
     cursor: pointer;
 }

@@ -69,6 +69,9 @@
                         </template>
 
                     </vue-multiselect>
+                    <button @click="unselectAll" v-if="selected.length" class="btn btn-warning btn-xs mt-2">
+                        <small><i class="fa fa-fw fa-times"></i> Reset Filter</small>
+                    </button>
                 </div>
                 <button :class="btnClass" class="btn btn-xs" @click="$parent.sortBy(column_key)">
                     <small>
@@ -312,7 +315,7 @@
         }
 
         .header-menu {
-            width: 340px;
+            //width: 340px;
         }
 
         .multiselect__tags {

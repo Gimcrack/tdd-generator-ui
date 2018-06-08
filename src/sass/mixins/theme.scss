@@ -1,0 +1,232 @@
+@mixin theme($body-bg, $body-color, $border-color, $hover-bg, $brand-color, $navbar-bg, $navbar-color, $navbar-tab-color, $navbar-active-color, $card-bg, $menu-color ) {
+
+    background: $body-bg;
+    color: $body-color;
+
+    .btn-ui {
+        background: $navbar-color;
+    }
+
+    .border-ui {
+        border-color: $navbar-color;
+    }
+
+    .nav.nav-jeremy {
+
+        color: $navbar-color;
+
+        .nav-item {
+            .nav-link {
+                color: $navbar-color;
+                border-bottom: 1px solid $border-color;
+
+                &.active {
+                    border-bottom-width: 2px;
+                    color: $navbar-active-color;
+                    cursor: default;
+                }
+
+                &:hover {
+                    color: $hover-bg;
+                }
+            }
+        }
+    }
+
+    .card.card-custom {
+
+        .card-header {
+            background: $navbar-bg;
+            color: $navbar-color;
+            border-color: $border-color;
+        }
+
+        .btn-link {
+            //color: $navbar-custom-brand-color-dark;
+        }
+
+        background: $navbar-bg;
+        border-color: $border-color;
+    }
+
+    // top navbar
+    .navbar-custom {
+        background-color: $navbar-bg;
+        color: $navbar-color;
+        border-bottom: 1px solid $border-color !important;
+
+        .navbar-nav > li > a {
+            color: $navbar-color;
+        }
+
+        .navbar-nav > .active > a {
+            color: $navbar-tab-color;
+            background-color: $navbar-bg;
+        }
+
+        .navbar-nav > li > a:hover,
+        .navbar-nav > li > a:focus,
+        .navbar-nav > .active > a:hover,
+        .navbar-nav > .active > a:focus,
+        .navbar-nav > .open > a {
+            background-color: $hover-bg !important;
+        }
+
+        .navbar-brand {
+            color: $brand-color;
+            font-weight: bold;
+            font-family: "Sansation Regular";
+        }
+        .navbar-toggle {
+            background-color: $navbar-bg;
+        }
+        .icon-bar {
+            background-color: $navbar-bg;
+        }
+    }
+
+    .page-header {
+        border-color: $border-color !important;
+    }
+
+    // tabs
+    .tabs-left, .tabs-right {
+        background-color: $navbar-bg;
+    }
+
+    .tabs-left {
+        border-right: 1px solid $navbar-color !important;
+    }
+
+    .tabs-right {
+        border-left: 1px solid $navbar-color !important;
+    }
+
+    .tab-content {
+        background: $body-bg;
+    }
+
+    .tabs-left.nav-tabs {
+
+        & > li > a {
+            color: $navbar-tab-color;
+            border: none !important;
+            margin-right: -1px;
+            padding:10px 10px 4px;
+
+            display: flex;
+            flex-direction: column;
+            height:100px;
+            width: 100px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+
+            & > div {
+                margin-top: 0.3rem;
+                font-weight: bold;
+            }
+        }
+
+
+
+        & > li > a:hover,
+        & > li > a:focus {
+            color: lighten($navbar-color,10%);
+            background: $hover-bg !important;
+            border-color : $body-bg !important;
+            padding:10px 10px 4px;
+            margin-right: -1px;
+            //border: 1px solid $navbar-custom-color !important;
+            border-right: none !important;
+            //margin-right: -1px !important;
+        }
+
+        & > li.active > a,
+        & > li.active > a:hover,
+        & > li.active > a:focus {
+            background: $body-bg !important;
+            border: 1px solid $navbar-color !important;
+            border-right: 1px solid $body-bg !important;
+            color: $navbar-active-color !important;
+            margin-right: -1px !important;
+            padding-left: 10px 10px 4px 1px;
+        }
+    }
+
+    .vinput {
+        input {
+            background: $body-bg;
+            color: $body-color;
+            border-color: $border-color;
+        }
+    }
+
+    .form-wrapper .form {
+        background: $body-bg !important;
+
+        .field-group {
+            background: lighten($body-bg, 5%);
+
+            input.form-control {
+                background: lighten($body-bg,10%);
+                color: $body-color;
+                border-color: $border-color;
+            }
+
+            .multiselect {
+                background: lighten($body-bg,10%);
+                border-color: $border-color;
+            }
+        }
+    }
+
+    .btn-default {
+        border-color: $border-color !important;
+    }
+
+    .fa-badge {
+        background: $body-bg;
+    }
+
+    .table-striped > tbody:nth-of-type(odd) > tr {
+        background-color: $body-bg;
+    }
+
+    .table-striped > tbody:nth-of-type(even) > tr {
+        background-color: rgba(lighten($hover-bg,15%),0.05);
+    }
+
+    .table-hover {
+        border-color: $body-color !important;
+
+        tbody:hover tr td,
+        tbody:hover tr td {
+            background-color: $hover-bg;
+        }
+    }
+
+    .right-menu {
+        color: $menu-color;
+
+        .nav.nav-jeremy {
+
+            .nav-item {
+                .nav-link {
+
+                    &.active {
+                        color: $menu-color;
+                    }
+
+                    &:hover {
+                        color : rgba($menu-color, 0.8);
+                    }
+                }
+            }
+        }
+    }
+
+}

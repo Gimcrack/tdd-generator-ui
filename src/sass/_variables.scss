@@ -35,6 +35,15 @@ $brand-orange: adjust_hue($brand-teal, $spin4);
 $brand-yellow: #FDCA40; //adjust_hue($brand-teal, 255);
 $brand-green: adjust_hue($brand-teal, $spin5);
 
+$blue: #0095C6;
+$red: adjust_hue($blue, 180); //#EF475B;
+$green: adjust_hue($blue, -60);
+$teal: lighten(adjust_hue($blue, 330),5%);
+$cyan: darken(adjust_hue($blue, 345),5%);
+$yellow: #F5B700;
+$dark: darken(#3C1642,5%);
+$light: lighten(#e8eddf,5%);
+
 // theme 2
 //$base-color: #00D1FF; //#A3F3DF;
 //$global-border-width : 2;

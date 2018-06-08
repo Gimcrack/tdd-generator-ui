@@ -153,10 +153,10 @@ export default {
 
         sortBy(key, asc) {
 
-            if ( asc !== null ) {
+            if ( asc != null ) {
                 this.asc = asc;
             }
-            else if ( key === this.orderBy ) {
+            else if ( key == this.orderBy ) {
                 this.asc = ! this.asc;
             }
             this.orderBy = key;

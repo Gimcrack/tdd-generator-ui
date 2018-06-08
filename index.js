@@ -1,6 +1,7 @@
 // mixins
 import Item from './src/js/components/mixins/item.js';
 import Collection from './src/js/components/mixins/collection.js'
+import TurnDown from 'turndown';
 
 export default function(Vue) {
 
@@ -8,6 +9,8 @@ export default function(Vue) {
         item : Item,
         collection : Collection
     };
+
+    window.turndownService = new TurnDown();
 
     Vue.component('page', require('./src/js/components/Page.vue'));
     Vue.component('item', require('./src/js/components/Item.vue'));
