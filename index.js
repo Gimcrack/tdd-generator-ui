@@ -18,6 +18,10 @@ export default function(Vue) {
     Vue.component('vinput', require('./src/js/components/Vinput.vue'));
     Vue.component('flash', require('./src/js/components/Flash.vue'));
     Vue.component('vform', require('./src/js/components/Form.vue'));
+    Vue.component('badge',require('./src/js/components/Badge.vue'));
+    Vue.component('itemMeta',require('./src/js/components/ItemMeta.vue'));
+    Vue.component('itemHeader',require('./src/js/components/ItemHeader.vue'));
+    Vue.component('dropdownItem',require('./src/js/components/DropdownItem.vue'));
     Vue.component('formFieldGroup',require('./src/js/components/FormFieldGroup.vue') );
     Vue.component('formMenu',require('./src/js/components/FormMenu.vue'));
     Vue.component('formControl', require('./src/js/components/FormControl.vue'));

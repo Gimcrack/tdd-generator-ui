@@ -7,17 +7,6 @@
                 {{ refresh_btn_text }}
             </button>
 
-            <template v-if="toggles.do_with_selected && hasDropdownMenuSlot">
-                <button :id="`dropdown_toggle_${params.component}`" v-if="toggled.length" data-toggle="dropdown" role="button" aria-expanded="false" :class="busy ? 'disabled' : ''" class="dropdown-toggle btn-success btn">
-                    <i class="fa fa-fw fa-check-square-o" :class="{'fa-spin' : busy}"></i>
-                    Do With Selected
-                </button>
-
-                <div class="dropdown-menu" role="menu" :aria-labelledby="`dropdown_toggle_${params.component}`">
-                    <slot name="selection-dropdown-menu"></slot>
-                </div>
-            </template>
-
             <button v-if="toggles.new" :class="{ disabled : busy }" @click.prevent="$emit('new')" :disabled="busy" class="btn btn-success">
                 <i class="fa fa-fw fa-circle-o-notch" :class="{'fa-spin' : busy}"></i>
                 <template v-if="params.newBtnText">{{ params.newBtnText}}</template>
@@ -36,6 +25,16 @@
             :is="page_layout"
             :layout-class="[ getTableHiddenColumnClasses,  {'table-sm' : compact}]"
         >
+            <template slot="selection-dropdown" v-if="toggles.do_with_selected && hasDropdownMenuSlot">
+                <!--<button :id="`dropdown_toggle_${params.component}`" v-if="toggled.length" data-toggle="dropdown" role="button" aria-expanded="false" :class="busy ? 'disabled' : ''" class="dropdown-toggle btn-success btn">-->
+                <!--Do With Selected-->
+                <!--</button>-->
+
+                <div class="dropdown-menu" role="menu">
+                    <slot name="selection-dropdown-menu"></slot>
+                </div>
+            </template>
+
             <template slot="select-all">
                 <i v-if="toggles.do_with_selected" @click="toggleAll" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw" :class="toggleAllClass"></i>
             </template>
@@ -87,13 +86,13 @@
                     <div class="btn-group ml-2">
                         <button class="btn btn-xs"
                                 :class="page_layout === 'page-grid' ? ['active','btn-primary'] : ['btn-outline-primary']"
-                                @click="page_layout = 'page-grid'"
+                                @click="changeLayout('page-grid')"
                         >
                             <i class="fa fa-fw fa-th"></i>
                         </button>
                         <button class="btn btn-xs"
                                 :class="page_layout === 'page-table' ? ['active','btn-primary'] : ['btn-outline-primary']"
-                                @click="page_layout = 'page-table'"
+                                @click="changeLayout('page-table')"
                         >
                             <i class="fa fa-fw fa-bars"></i>
                         </button>
@@ -263,12 +262,20 @@
                     if ( isNaN(index) ) return null;
                     if ( index < 1 ) return null;
 
-                    return 'hide-' + (+index+2);
+                    return 'hide-' + (+index+1);
                 });
             }
         },
 
         methods : {
+            changeLayout(layout) {
+                this.page_layout = layout;
+
+                if ( this.hasToggled ) {
+                    return this.getToggled().forEach( child => { child.$children[0].toggle() } );
+                }
+            },
+
             showMeta() {
                 Bus.$emit('ShowMeta');
             },

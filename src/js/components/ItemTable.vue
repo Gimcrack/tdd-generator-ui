@@ -2,44 +2,29 @@
     <transition name="bounce">
         <tbody v-if="show" ref="row" :class="{sticky, toggled}">
         <tr>
-            <td class="position-relative">
-                <i v-if="page.toggles.do_with_selected" @mouseover.prevent="checkToggle" @mousedown="toggle" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw"
-                   :class="[toggled ? ['fa-check-square-o','text-success'] : 'fa-square-o']">
-                </i>
-            </td>
             <slot name="pre"></slot>
             <td class="relative">
-                <div class="btn-group">
-                    <button :id="`btnGroupDrop${id}`" class="btn btn-xs btn-outline-primary btn-row-menu border-right-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-ellipsis-v"></i>
-                    </button>
-                    <div class="dropdown-menu" :aria-labelledby="`btnGroupDrop${id}`">
-                        <a href="#" v-if="toggles.info" @click.prevent.stop="$emit('view')" :disabled="busy" class="dropdown-item" :class="{disabled : busy}">
-                            <i class="fa fa-fw fa-info"></i> Inspect
-                        </a>
-                        <a href="#" v-if="toggles.update" @click.prevent.stop="$emit('update')" :disabled="busy" class="dropdown-item" :class="{disabled : busy}">
-                            <i class="fa fa-fw fa-edit" :class="{'fa-spin' : updating}"></i> Edit
-                        </a>
-                        <slot name="menu"></slot>
-                        <a href="#" v-if="toggles.delete" @click.prevent.stop="$emit('destroy')" :disabled="busy" class="dropdown-item" :class="{disabled : busy}">
-                            <i class="fa fa-fw fa-times" :class="{'fa-spin' : deleting}"></i> Delete
-                        </a>
-                    </div>
-                    <a target="_blank" :href="externalUrl" v-if="toggles.view_external" rel="noreferrer"
-                            class="btn btn-outline-primary btn-xs text-monospace j-r letter-spacing-wide"
-                    >
-                        {{ id }}<i class="fa fa-fw fa-external-link ml-1"></i>
-                    </a>
-                    <button v-else style="min-width: 30px;" @click="toggle" class="btn btn-outline-primary btn-xs text-monospace j-r">
-                        {{ id }}
-                    </button>
-                </div>
+                <item-header
+                    :id="id"
+                    :busy="busy"
+                    :toggles="toggles"
+                    :toggled="toggled"
+                    :external-url="externalUrl"
+                    @view="$emit('view')"
+                    @update="$emit('update')"
+                    @destroy="$emit('destroy')"
+                    @toggle="toggle"
+                    @checkToggle="checkToggle"
+                >
+                </item-header>
+            </td>
+            <td v-for="cell,i in meta">
+                <item-meta :cell-data="cell" :model="model" :column="$parent.columns[i+1]"></item-meta>
             </td>
             <slot></slot>
         </tr>
         <tr v-if="$slots['row2']">
-            <td></td>
-            <td colspan="100">
+            <td colspan="100" class="p-3">
                 <slot name="row2"></slot>
             </td>
         </tr>
@@ -85,7 +70,13 @@
             },
             externalUrl : {
                 default : null
-            }
+            },
+            meta : {
+                default() {
+                    return [];
+                }
+            },
+
         },
 
         data() {
@@ -101,9 +92,14 @@
             busy() {
                 return this.updating || this.deleting;
             },
+
+            model() {
+                return this.$parent.model;
+            }
         },
 
         methods: {
+
             toggle() {
                 this.toggled = ! this.toggled;
 

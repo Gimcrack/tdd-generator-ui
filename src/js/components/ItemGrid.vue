@@ -6,34 +6,19 @@
             <div class="card-body">
                 <div :class="itemBorder" class="item-grid__controls position-absolute card d-flex align-items-start border-bottom-0">
                     <div class="right-border-cover"></div>
-                    <div class="btn-group">
-                        <button @mouseover.prevent="checkToggle" @mousedown="toggle" class="btn btn-xs btn-outline-primary">
-                            <small><i v-if="page.toggles.do_with_selected" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw"
-                                      :class="[toggled ? ['fa-check-square-o','text-success'] : 'fa-square-o']">
-                            </i></small>
-                        </button>
-                        <button :id="`btnGroupDrop${id}`" class="btn btn-xs btn-outline-primary btn-row-menu border-right-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v"></i>
-                        </button>
-                        <div class="dropdown-menu" :aria-labelledby="`btnGroupDrop${id}`">
-                            <a href="#" v-if="toggles.info" @click.prevent.stop="$emit('view')" :disabled="busy" class="dropdown-item" :class="{disabled : busy}">
-                                <i class="fa fa-fw fa-info"></i> Inspect
-                            </a>
-                            <a href="#" v-if="toggles.update" @click.prevent.stop="$emit('update')" :disabled="busy" class="dropdown-item" :class="{disabled : busy}">
-                                <i class="fa fa-fw fa-edit" :class="{'fa-spin' : updating}"></i> Edit
-                            </a>
-                            <slot name="menu"></slot>
-                            <a href="#" v-if="toggles.delete" @click.prevent.stop="$emit('destroy')" :disabled="busy" class="dropdown-item" :class="{disabled : busy}">
-                                <i class="fa fa-fw fa-times" :class="{'fa-spin' : deleting}"></i> Delete
-                            </a>
-                        </div>
-                        <a target="_blank" :href="externalUrl" v-if="toggles.view_external" rel="noreferrer"
-                           class="btn btn-outline-primary btn-xs text-monospace j-r letter-spacing-wide"
-                        >{{ id }}<i class="fa fa-fw fa-external-link ml-1"></i></a>
-                        <button v-else style="min-width: 30px;" @click="toggle" class="btn btn-outline-primary btn-xs text-monospace j-r">
-                            {{ id }}
-                        </button>
-                    </div>
+                    <item-header
+                        :id="id"
+                        :busy="busy"
+                        :toggles="toggles"
+                        :toggled="toggled"
+                        :external-url="externalUrl"
+                        @view="$emit('view')"
+                        @update="$emit('update')"
+                        @destroy="$emit('destroy')"
+                        @toggle="toggle"
+                        @checkToggle="checkToggle"
+                    >
+                    </item-header>
                 </div>
 
                 <div class="d-flex flex-column flex-fill">
@@ -46,18 +31,19 @@
                     <div v-if="show_meta"
                          class="d-flex mt-2 item-grid__meta align-items-center justify-content-between flex-wrap"
                     >
-                        <div v-if="gridMeta.length" class="d-flex flex-column p-2"
-                             v-for="meta in gridMeta" :key="meta.key.title || meta.key"
-                        >
-                            <span class="border-bottom border-light text-bold text-small">
-                                {{ meta.key.title ? meta.key.title : meta.key.$title_case() }}
-                            </span>
-                            <span v-html="meta.value"></span>
+                        <div class="m-2" v-for="cell,i in meta" :key="i">
+                            <item-meta
+                               :cell-data="cell"
+                               :model="model"
+                               :show-heading="true"
+                               :column="$parent.columns[i+1]"
+                            ></item-meta>
                         </div>
+
                     </div>
                 </transition>
 
-                <div class="d-flex justify-content-center mt-2">
+                <div v-if="$slots['row2']" class="d-flex justify-content-center mt-2">
                     <button @click="show_meta = ! show_meta"
                             class="btn-xs btn btn-show-meta"
                             :class="show_meta ? ['btn-primary','active'] : ['btn-link']"
@@ -124,7 +110,12 @@
                 default() {
                     return [];
                 }
-            }
+            },
+            meta : {
+                default() {
+                    return [];
+                }
+            },
         },
 
         data() {
@@ -142,32 +133,8 @@
                 return this.updating || this.deleting;
             },
 
-            gridMeta() {
-                if ( ! this.$slots.default ) return [];
-
-                return this.$slots.default
-                    .filter(o => o.tag === 'td')
-                    .map( (o,i) => {
-                        let value,classList;
-
-                        if ( o.children && o.children[0] ) {
-                            value = ( o.children[0].children ) ?
-                                 o.children[0].children[0].text :
-                                o.children[0].text;
-
-                            if ( ! value && o.children[0].data && o.children[0].data.domProps )
-                                value = o.children[0].data.domProps.textContent ||
-                                        o.children[0].data.domProps.innerHTML;
-                        }
-
-                        if (o.data && o.data.domProps)
-                            value = o.data.domProps.innerHTML;
-
-                        return {
-                            key : this.$parent.columns[i+1],
-                            value : value.replace(/<br\/>/gi,' | '),
-                        };
-                    } );
+            model() {
+                return this.$parent.model;
             }
         },
 

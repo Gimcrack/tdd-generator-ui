@@ -22,7 +22,9 @@
     .card-columns {
         column-count:  4 !important;
     }
+}
 
+@include media-breakpoint-down(lg) {
     .tabs-left.nav-tabs > li > a {
         height: 80px !important;
         width: 80px !important;
@@ -44,5 +46,4 @@
             margin: 0 0 0 1.5em !important;
         }
     }
-
 }
