@@ -1,18 +1,28 @@
 @import "~bootstrap/scss/mixins/breakpoints";
 
-@include media-breakpoint-down(xs) { // < 576 px
-
+@include media-breakpoint-up(xs) { // > 576 px
+    .card-columns {
+        column-count:  1 !important;
+    }
 }
 
-@include media-breakpoint-down(sm) { // < 768 px
-
+@include media-breakpoint-up(sm) { // > 768 px
+    .card-columns {
+        column-count:  2 !important;
+    }
 }
 
-@include media-breakpoint-down(md) { // < 992 px
-
+@include media-breakpoint-up(md) { // > 992 px
+    .card-columns {
+        column-count:  3 !important;
+    }
 }
 
-@include media-breakpoint-down(lg) { // < 1300 px
+@include media-breakpoint-up(lg) { // > 1300 px
+    .card-columns {
+        column-count:  4 !important;
+    }
+
     .tabs-left.nav-tabs > li > a {
         height: 80px !important;
         width: 80px !important;

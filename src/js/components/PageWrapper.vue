@@ -7,7 +7,7 @@
                 {{ refresh_btn_text }}
             </button>
 
-            <template v-if="toggles.do_with_selected">
+            <template v-if="toggles.do_with_selected && hasDropdownMenuSlot">
                 <button :id="`dropdown_toggle_${params.component}`" v-if="toggled.length" data-toggle="dropdown" role="button" aria-expanded="false" :class="busy ? 'disabled' : ''" class="dropdown-toggle btn-success btn">
                     <i class="fa fa-fw fa-check-square-o" :class="{'fa-spin' : busy}"></i>
                     Do With Selected
@@ -27,35 +27,20 @@
             <slot name="menu"></slot>
 
             <vinput icon="fa-search" placeholder="Search..." v-model="search"></vinput>
-        </div>
-        <div class="alert alert-info" v-text="params.help" v-show="params.help">
-        </div>
-        <table class="table table-striped table-hover" :class="[ getTableHiddenColumnClasses,  {'table-sm' : compact}]">
-            <thead>
-            <tr>
-                <td colspan="100">
-                    <div class="d-flex align-items-center header-sort-button">
-                        <span class="badge p-2 mr-2" :class="[ showClearFiltersBtn ? 'badge-warning' : 'badge-light']">
-                            Viewing {{ filtered.length }} Records
-                            <template v-if="showClearFiltersBtn">(Filtered)</template>
-                        </span>
-                        <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning mr-2">
-                            <small><i class="fa fa-fw fa-times"></i> Reset All Filters</small>
-                        </button>
-                        <span class="badge badge-light p-2 mr-2" v-text="`Updated ${lastRefreshedFormatted}`"></span>
-                        <div class="flex-fill"></div>
-                        <view-settings
-                                :hidden-columns="hiddenColumns"
-                                :options="hiddenColumnsOptions"
-                                @update="updateHiddenColumns"
-                        ></view-settings>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th style="width:30px">
-                    <i v-if="toggles.do_with_selected" @click="toggleAll" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw" :class="toggleAllClass"></i>
-                </th>
+        </div> <!-- page-header -->
+
+        <div class="alert alert-info" v-text="params.help" v-show="params.help"></div>
+
+        <!-- page-body -->
+        <component
+            :is="page_layout"
+            :layout-class="[ getTableHiddenColumnClasses,  {'table-sm' : compact}]"
+        >
+            <template slot="select-all">
+                <i v-if="toggles.do_with_selected" @click="toggleAll" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw" :class="toggleAllClass"></i>
+            </template>
+
+            <template slot="column-headers">
                 <header-sort-button
                     v-for="(col,index) in params.columns"
                     :order-by="orderBy"
@@ -63,26 +48,14 @@
                     :column="col"
                     :key="index"
                     :options="getColumnOptions(col)"
-                    :align-right="index >= params.columns.length/2"
+                    :align-right="page_layout === 'page-table' && index >= params.columns.length/2"
                     class="table-header"
                     @UpdateFilter="updateFilter"
                 ></header-sort-button>
-            </tr>
-            </thead>
-
-            <template v-if="filtered.length" v-for="model in filtered" >
-                <component
-                    :is="params.component || params.type"
-                    :initial="model"
-                    :key="model.id"
-                    :model-props="params.modelProps"
-                    @ToggledHasChanged="setToggled">
-                </component>
             </template>
 
-            <tfoot>
-            <tr>
-                <td colspan="100">
+            <template slot="page-meta-top">
+                <div class="d-flex align-items-center header-sort-button flex-fill">
                     <span class="badge p-2 mr-2" :class="[ showClearFiltersBtn ? 'badge-warning' : 'badge-light']">
                         Viewing {{ filtered.length }} Records
                         <template v-if="showClearFiltersBtn">(Filtered)</template>
@@ -91,10 +64,69 @@
                         <small><i class="fa fa-fw fa-times"></i> Reset All Filters</small>
                     </button>
                     <span class="badge badge-light p-2 mr-2" v-text="`Updated ${lastRefreshedFormatted}`"></span>
-                </td>
-            </tr>
-            </tfoot>
-        </table>
+                    <div class="flex-fill"></div>
+
+                    <!-- right side -->
+
+                    <view-settings
+                        v-if="page_layout === 'page-table'"
+                        :hidden-columns="hiddenColumns"
+                        :options="hiddenColumnsOptions"
+                        @update="updateHiddenColumns"
+                    ></view-settings>
+
+                    <div class="btn-group ml-2" v-else >
+                        <button class="btn btn-xs btn-outline-primary" @click="showMeta">
+                            <small><i class="fa fa-fw fa-plus"></i> Expand All</small>
+                        </button>
+                        <button class="btn btn-xs btn-outline-primary" @click="hideMeta">
+                            <small><i class="fa fa-fw fa-minus"></i> Collapse All</small>
+                        </button>
+                    </div>
+
+                    <div class="btn-group ml-2">
+                        <button class="btn btn-xs"
+                                :class="page_layout === 'page-grid' ? ['active','btn-primary'] : ['btn-outline-primary']"
+                                @click="page_layout = 'page-grid'"
+                        >
+                            <i class="fa fa-fw fa-th"></i>
+                        </button>
+                        <button class="btn btn-xs"
+                                :class="page_layout === 'page-table' ? ['active','btn-primary'] : ['btn-outline-primary']"
+                                @click="page_layout = 'page-table'"
+                        >
+                            <i class="fa fa-fw fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </template>
+
+            <template v-if="filtered.length" v-for="model in filtered" >
+                <component
+                    :is="params.component || params.type"
+                    :item-layout="item_layout"
+                    :initial="model"
+                    :key="model.id"
+                    :model-props="params.modelProps"
+                    :columns="params.columns"
+                    @ToggledHasChanged="setToggled">
+                </component>
+            </template>
+
+            <template slot="page-meta-bottom">
+                <div class="d-flex align-items-center header-sort-button">
+                    <span class="badge p-2 mr-2" :class="[ showClearFiltersBtn ? 'badge-warning' : 'badge-light']">
+                        Viewing {{ filtered.length }} Records
+                        <template v-if="showClearFiltersBtn">(Filtered)</template>
+                    </span>
+                    <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning mr-2">
+                        <small><i class="fa fa-fw fa-times"></i> Reset All Filters</small>
+                    </button>
+                    <span class="badge badge-light p-2 mr-2" v-text="`Updated ${lastRefreshedFormatted}`"></span>
+                </div>
+            </template>
+
+        </component>
     </div>
 </template>
 
@@ -102,9 +134,16 @@
     import _ from 'lodash';
     import moment from 'moment';
     import VueMultiselect from "../../../node_modules/vue-multiselect/src/Multiselect.vue";
+    import PageTable from './PageTable.vue';
+    import PageGrid from './PageGrid.vue';
 
     export default {
-        components: {VueMultiselect},
+        components: {
+            VueMultiselect,
+            PageTable,
+            PageGrid
+        },
+
         mixins : [
             mixins.collection
         ],
@@ -166,11 +205,16 @@
                 filters : {},
                 headers : [],
                 hiddenColumns : this.getInitialHiddenColumns(),
-                timeoutHiddenColumnUpdate : null
+                timeoutHiddenColumnUpdate : null,
+                page : {},
             }
         },
 
         computed : {
+
+            hasDropdownMenuSlot () {
+                return !!this.$slots['selection-dropdown-menu'];
+            },
 
             hasToggled() {
                 return !! this.toggled.length;
@@ -225,6 +269,14 @@
         },
 
         methods : {
+            showMeta() {
+                Bus.$emit('ShowMeta');
+            },
+
+            hideMeta() {
+                Bus.$emit('HideMeta');
+            },
+
             getInitialState() {
                 let key = this.params.endpoint,
                     state = INITIAL_STATE[key] || [];
@@ -250,12 +302,16 @@
             },
 
             getToggled() {
-                return this.$children
+                if ( ! this.page ) return [];
+
+                return this.page.$children
                     .filter( child => { return child.$children.length && child.$children[0].toggled; } );
             },
 
             getUntoggled() {
-                return this.$children
+                if ( ! this.page ) return [];
+
+                return this.page.$children
                     .filter( child => { return child.$children.length && ! child.$children[0].toggled; } );
             },
 
@@ -348,15 +404,15 @@
 
         }
 
-        .table-header {
-            &:first-child {
-                width: 40px !important;
-            }
+        /*.table-header {*/
+            /*&:first-child {*/
+                /*width: 40px !important;*/
+            /*}*/
 
-            &:nth-child(2) {
-                width: 80px !important;
-            }
-        }
+            /*&:nth-child(2) {*/
+                /*width: 80px !important;*/
+            /*}*/
+        /*}*/
 
         .table {
             &.hide-2 {

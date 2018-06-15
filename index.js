@@ -12,8 +12,9 @@ export default function(Vue) {
 
     window.turndownService = new TurnDown();
 
-    Vue.component('page', require('./src/js/components/Page.vue'));
-    Vue.component('item', require('./src/js/components/Item.vue'));
+    Vue.component('page', require('./src/js/components/PageWrapper.vue'));
+    Vue.component('item-table', require('./src/js/components/ItemTable.vue'));
+    Vue.component('item-grid', require('./src/js/components/ItemGrid.vue'));
     Vue.component('vinput', require('./src/js/components/Vinput.vue'));
     Vue.component('flash', require('./src/js/components/Flash.vue'));
     Vue.component('vform', require('./src/js/components/Form.vue'));

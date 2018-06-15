@@ -13,11 +13,11 @@
                      :aria-labelledby="`dropdown_${column_title}`"
                 >
                     <div class="d-flex">
-                        <button @click="$parent.sortBy(column_key, true)" class="btn mr-1" :class="ascBtnClass">
+                        <button @click="page.sortBy(column_key, true)" class="btn mr-1" :class="ascBtnClass">
                             <i class="fa fa-fw fa-sort-amount-asc"></i>
                             Sort {{ column_title }} Asc
                         </button>
-                        <button @click="$parent.sortBy(column_key, false)" class="btn" :class="descBtnClass">
+                        <button @click="page.sortBy(column_key, false)" class="btn" :class="descBtnClass">
                             <i class="fa fa-fw fa-sort-amount-desc"></i>
                             Sort {{ column_title }} Desc
                         </button>
@@ -73,7 +73,7 @@
                         <small><i class="fa fa-fw fa-times"></i> Reset Filter</small>
                     </button>
                 </div>
-                <button :class="btnClass" class="btn btn-xs" @click="$parent.sortBy(column_key)">
+                <button :class="btnClass" class="btn btn-xs" @click="page.sortBy(column_key)">
                     <small>
                         {{ column_title }}
                         <i class="fa fa-fw" :class="active_asc ? 'fa-sort-amount-asc' : 'fa-sort-amount-desc' "></i>
@@ -127,7 +127,7 @@
         },
 
         created() {
-            this.$parent.headers.push(this);
+            this.page.headers.push(this);
 
             Bus.$on('UpdateFilters', (e) => {
                 if ( e.key === this.column_key ) {
@@ -151,6 +151,10 @@
         },
 
         computed : {
+            page() {
+                return this.$parent.$parent;
+            },
+
             show() {
                 return this.hiddenColumns.indexOf( this.column.title || this.column ) === -1;
             },
@@ -258,8 +262,8 @@
                     });
 
                     // hack to force updating of computed 'filtered' property
-                    this.$parent.sortBy(this.$parent.orderBy, ! this.$parent.asc);
-                    this.$parent.sortBy(this.$parent.orderBy, ! this.$parent.asc);
+                    this.page.sortBy(this.page.orderBy, ! this.page.asc);
+                    this.page.sortBy(this.page.orderBy, ! this.page.asc);
                 }, 700 );
             },
 
@@ -292,23 +296,6 @@
 
 <style lang="scss">
     .header-sort-button {
-        .dropdown-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height:100vh;
-            width:100vw;
-            background: rgba(0,0,0,0.0);
-            z-index: 10;
-            display: none;
-
-            transition: all 0.1s linear;
-
-            &.active {
-                display: block;
-                background: rgba(0,0,0,0.1);
-            }
-        }
 
         .multiselect__select {
             //top: 13px;

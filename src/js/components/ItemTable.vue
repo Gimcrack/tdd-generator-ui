@@ -3,7 +3,7 @@
         <tbody v-if="show" ref="row" :class="{sticky, toggled}">
         <tr>
             <td class="position-relative">
-                <i v-if="$parent.$parent.toggles.do_with_selected" @mouseover.prevent="checkToggle" @mousedown="toggle" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw"
+                <i v-if="page.toggles.do_with_selected" @mouseover.prevent="checkToggle" @mousedown="toggle" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw"
                    :class="[toggled ? ['fa-check-square-o','text-success'] : 'fa-square-o']">
                 </i>
             </td>
@@ -37,7 +37,12 @@
             </td>
             <slot></slot>
         </tr>
-        <slot name="row2"></slot>
+        <tr v-if="$slots['row2']">
+            <td></td>
+            <td colspan="100">
+                <slot name="row2"></slot>
+            </td>
+        </tr>
     </tbody>
     </transition>
 </template>
@@ -50,7 +55,7 @@
 
             Bus.$on('ShowChecked', (val) => {
                 this.show_checked = val;
-                this.show = ( ! this.toggled || this.show_checked );
+                this.show = ( ! this.toggled || this.show_checked || this.toggles.always_show_checked );
             });
 
         },
@@ -73,7 +78,8 @@
                     return {
                         info : true,
                         update : true,
-                        delete : true
+                        delete : true,
+                        always_show_checked : false
                     }
                 }
             },
@@ -86,8 +92,8 @@
             return {
                 toggled : false,
                 show_checked : false,
-                show : true
-
+                show : true,
+                page : this.$parent.$parent.$parent
             }
         },
 
@@ -108,7 +114,7 @@
                     $('tr.toggled').first().addClass('top');
                     $('tr.toggled').last().addClass('bottom');
 
-                    this.show = ( ! this.toggled || this.show_checked );
+                    this.show = ( ! this.toggled || this.show_checked || this.toggles.always_show_checked );
                 });
 
                 this.$emit('ToggledHasChanged');

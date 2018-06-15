@@ -7,6 +7,12 @@ export default {
             default() {
                 return {};
             }
+        },
+        itemLayout : {
+            default : 'item-table'
+        },
+        columns : {
+            required : true
         }
     },
 

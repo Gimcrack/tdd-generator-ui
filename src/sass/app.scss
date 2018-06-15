@@ -18,6 +18,8 @@
 @import "animations";
 @import "tabs";
 @import "tables";
+@import "cards";
+@import "dropdowns";
 
 .h-full {
     min-height: calc(100vh - 55px);
@@ -26,5 +28,7 @@
 .content {
     margin-top: 50px;
 }
+
+
 
 @import "media";

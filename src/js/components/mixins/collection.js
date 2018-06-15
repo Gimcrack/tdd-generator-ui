@@ -3,6 +3,7 @@ export default {
 
     data() {
         return {
+            page_layout : 'page-grid',
             busy : false,
             models : this.getInitialModels(),
             last_refreshed : this.getInitialLastRefreshed(),
@@ -22,6 +23,11 @@ export default {
     },
 
     computed : {
+        item_layout() {
+            if ( this.page_layout === 'page-table' ) return 'item-table';
+            if ( this.page_layout === 'page-grid' ) return 'item-grid';
+        },
+
         filtered() {
             let reject = ( _.isEmpty(this.params.reject) ) ? { placeholder : 'gibberish-value' } : this.params.reject,
                 filters = this.filters,
