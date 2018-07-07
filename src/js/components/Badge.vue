@@ -1,5 +1,8 @@
 <template>
-    <span class="p-1 badge" :class="type" v-text="text"></span>
+    <span class="p-1 badge" :class="type">
+        <i v-if="icon" class="fa fa-fw" :class="icon"></i> {{ text }}
+        <slot></slot>
+    </span>
 </template>
 
 <script>
@@ -11,7 +14,11 @@
             },
 
             text : {
-                required : true
+                default : null
+            },
+
+            icon : {
+                default : false
             }
         },
 

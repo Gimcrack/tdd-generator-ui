@@ -1,5 +1,5 @@
 <template>
-    <div class="field-group row m-2">
+    <div class="field-group row m-2 mt-3">
         <div class="col-lg-3 field-group-header mb-4">
             <span class="heading">{{group.name}}</span><br/>
             <small v-show="group.help">
@@ -10,7 +10,7 @@
             <component
                 :is="componentType(def)"
                 v-for="def,key in group.fields"
-                v-if=" ! editing || ! def.uneditable"
+                v-if="showField(def)"
                 :key="key"
                 :definition="def"
                 :value="form[def.name]"
@@ -50,9 +50,28 @@
                     case 'textarea' :
                         return 'formTextarea';
 
+                    case 'date' :
+                        return 'formDatepicker';
+
                     default :
                         return 'formControl';
                 }
+            },
+
+            showField(def) {
+                if ( ! def.condition ) {
+                    return ( ! this.editing ||
+                        ! def.uneditable )
+                }
+
+                for ( let prop in def.condition ) {
+                    if ( this.form[prop] !== def.condition[prop] ) {
+                        return false;
+                    }
+                }
+
+                return ( ! this.editing ||
+                    ! def.uneditable )
             }
         }
     }

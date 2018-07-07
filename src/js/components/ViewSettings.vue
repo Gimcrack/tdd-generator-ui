@@ -35,13 +35,8 @@
 </template>
 
 <script>
-    import VueMultiselect from 'vue-multiselect/src/Multiselect.vue';
 
     export default {
-
-        components : {
-            VueMultiselect
-        },
 
         props : {
             hiddenColumns : {

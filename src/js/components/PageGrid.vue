@@ -3,17 +3,15 @@
         <div class="border-bottom p-3 d-flex align-items-center">
             <div @click="toggleGridControls" :class="{active : showGridControls}" class="dropdown-wrapper"></div>
             <div class="btn-group">
-                <button class="btn btn-xs btn-outline-primary">
-                    <small><slot name="select-all"></slot></small>
-                </button>
+                <slot name="select-all"></slot>
                 <button v-if="$slots['selection-dropdown'] && $parent.hasToggled" class="btn btn-outline-primary btn-xs border-right-0" data-toggle="dropdown">
                     <i class="fa fa-ellipsis-v"></i>
                 </button>
                 <slot v-if="$parent.hasToggled" name="selection-dropdown"></slot>
-                <button @click="toggleGridControls" class="btn btn-outline-primary btn-xs mr-2">
+                <button @click="toggleGridControls" class="btn btn-outline-primary btn-xs btn-last mr-2">
                     <i class="fa fa-filter"></i>
                 </button>
-                <div v-if="showGridControls" :class="{show : showGridControls}" class="grid-controls dropdown-menu p-2 w-0 header-menu">
+                <div v-show="showGridControls" :class="{show : showGridControls}" class="grid-controls dropdown-menu p-2 w-0 header-menu">
                     <div class="m-2 d-flex flex-column">
                         <slot name="column-headers"></slot>
                     </div>

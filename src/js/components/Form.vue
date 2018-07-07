@@ -49,7 +49,7 @@
 </template>
 
 <script>
-    import _ from "lodash";
+    //import _ from "lodash";
     //import Api from "../Api";
 
     export default {
@@ -326,6 +326,11 @@
             width: 90vw;
             max-width: 960px;
             border-radius: 6px;
+
+            .field-groups {
+                height: calc(90vh - 140px);
+                overflow-y: scroll;
+            }
 
 
             .invalid-feedback {

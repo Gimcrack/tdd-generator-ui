@@ -23,8 +23,8 @@
 </template>
 
 <script>
-    import Rule from './Rule.class.js';
-    window.Rule = Rule;
+    //import Rule from './Rule.class.js';
+    //window.Rule = Rule;
 
     export default {
 

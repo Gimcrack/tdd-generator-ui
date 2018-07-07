@@ -1,101 +1,99 @@
 <template>
-    <th class="header-sort-button" nowrap="nowrap" v-if="show && column !== '__blank__'">
-        <div @click="toggleDropDown" :class="{active : dropdownOpen}" class="dropdown-wrapper"></div>
+    <keep-alive>
+        <th class="header-sort-button" nowrap="nowrap" v-if="show && column !== '__blank__'">
+            <div @click="toggleDropDown" :class="{active : dropdownOpen}" class="dropdown-wrapper"></div>
 
-        <div class="d-flex">
-            <div class="btn-group">
-                <button :id="`dropdown_${column_title}`" @click="toggleDropDown"
-                        :class="btnClass" class="btn btn-xs border-right-0">
-                    <i class="fa fa-ellipsis-v"></i>
-                </button>
-                <div class="dropdown-menu p-2 w-0 header-menu"
-                     :class="{show : dropdownOpen, 'dropdown-menu-right' : alignRight}"
-                     :aria-labelledby="`dropdown_${column_title}`"
-                >
-                    <div class="d-flex">
-                        <button @click="page.sortBy(column_key, true)" class="btn mr-1" :class="ascBtnClass">
-                            <i class="fa fa-fw fa-sort-amount-asc"></i>
-                            Sort {{ column_title }} Asc
-                        </button>
-                        <button @click="page.sortBy(column_key, false)" class="btn" :class="descBtnClass">
-                            <i class="fa fa-fw fa-sort-amount-desc"></i>
-                            Sort {{ column_title }} Desc
+            <div class="d-flex">
+                <div class="btn-group">
+                    <button :id="`dropdown_${column_title}`" @click="toggleDropDown"
+                            :class="btnClass" class="btn btn-xs border-right-0">
+                        <i class="fa fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu p-2 w-0 header-menu"
+                         :class="{show : dropdownOpen, 'dropdown-menu-right' : alignRight}"
+                         :aria-labelledby="`dropdown_${column_title}`"
+                    >
+                        <div class="d-flex">
+                            <button @click="page.sortBy(column_key, true)" class="btn mr-1" :class="ascBtnClass">
+                                <i class="fa fa-fw fa-sort-amount-asc"></i>
+                                Sort {{ column_title }} Asc
+                            </button>
+                            <button @click="page.sortBy(column_key, false)" class="btn" :class="descBtnClass">
+                                <i class="fa fa-fw fa-sort-amount-desc"></i>
+                                Sort {{ column_title }} Desc
+                            </button>
+                        </div>
+
+                        <vue-multiselect
+                            v-if="options!==false"
+                            @input="update"
+                            v-model="selected"
+                            track-by="id"
+                            label="label"
+                            :multiple="true"
+                            :options="uniqueOptions"
+                            :searchable="true"
+                            :placeholder="`Filter By ${column_title}`"
+                            :close-on-select="false"
+                            select-label=""
+                            deselect-label=""
+                            :limit="3"
+                            :group-select="groupSelect"
+                            :group-values="groupValues"
+                            :group-label="groupLabel"
+                            class="mt-2"
+                        >
+                            <template slot="beforeList">
+                                <div class="d-flex w-100 p-1">
+                                    <button v-if="selected.length !== flattenedOptions.length" @click="selectAll"
+                                            class="btn btn-primary flex-fill m-1">
+                                        <i class="fa fa-fw fa-check-square-o"></i> Select All
+                                    </button>
+                                    <button v-if="selected.length" @click="unselectAll"
+                                            class="btn btn-primary flex-fill m-1">
+                                        <i class="fa fa-fw fa-square-o"></i> Unselect All
+                                    </button>
+                                </div>
+                            </template>
+
+                            <template v-if="options.length > 6" slot="afterList">
+                                <div class="d-flex w-100 p-1">
+                                    <button v-if="selected.length !== flattenedOptions.length" @click="selectAll"
+                                            class="btn btn-primary flex-fill m-1">
+                                        <i class="fa fa-fw fa-check-square-o"></i> Select All
+                                    </button>
+                                    <button v-if="selected.length" @click="unselectAll"
+                                            class="btn btn-primary flex-fill m-1">
+                                        <i class="fa fa-fw fa-square-o"></i> Unselect All
+                                    </button>
+                                </div>
+                            </template>
+
+                        </vue-multiselect>
+                        <button @click="unselectAll" v-if="selected.length" class="btn btn-warning btn-xs mt-2">
+                            <small><i class="fa fa-fw fa-times"></i> Reset Filter</small>
                         </button>
                     </div>
-
-                    <vue-multiselect
-                        v-if="options!==false"
-                        @input="update"
-                        v-model="selected"
-                        track-by="id"
-                        label="label"
-                        :multiple="true"
-                        :options="uniqueOptions"
-                        :searchable="true"
-                        :placeholder="`Filter By ${column_title}`"
-                        :close-on-select="false"
-                        select-label=""
-                        deselect-label=""
-                        :limit="3"
-                        :group-select="groupSelect"
-                        :group-values="groupValues"
-                        :group-label="groupLabel"
-                        class="mt-2"
-                    >
-                        <template slot="beforeList">
-                            <div class="d-flex w-100 p-1">
-                                <button v-if="selected.length !== flattenedOptions.length" @click="selectAll"
-                                        class="btn btn-primary flex-fill m-1">
-                                    <i class="fa fa-fw fa-check-square-o"></i> Select All
-                                </button>
-                                <button v-if="selected.length" @click="unselectAll"
-                                        class="btn btn-primary flex-fill m-1">
-                                    <i class="fa fa-fw fa-square-o"></i> Unselect All
-                                </button>
-                            </div>
-                        </template>
-
-                        <template v-if="options.length > 6" slot="afterList">
-                            <div class="d-flex w-100 p-1">
-                                <button v-if="selected.length !== flattenedOptions.length" @click="selectAll"
-                                        class="btn btn-primary flex-fill m-1">
-                                    <i class="fa fa-fw fa-check-square-o"></i> Select All
-                                </button>
-                                <button v-if="selected.length" @click="unselectAll"
-                                        class="btn btn-primary flex-fill m-1">
-                                    <i class="fa fa-fw fa-square-o"></i> Unselect All
-                                </button>
-                            </div>
-                        </template>
-
-                    </vue-multiselect>
-                    <button @click="unselectAll" v-if="selected.length" class="btn btn-warning btn-xs mt-2">
-                        <small><i class="fa fa-fw fa-times"></i> Reset Filter</small>
+                    <button :class="btnClass" class="btn btn-xs" @click="page.sortBy(column_key)">
+                        <small>
+                            {{ column_title }}
+                            <i class="fa fa-fw" :class="active_asc ? 'fa-sort-amount-asc' : 'fa-sort-amount-desc' "></i>
+                        </small>
                     </button>
                 </div>
-                <button :class="btnClass" class="btn btn-xs" @click="page.sortBy(column_key)">
-                    <small>
-                        {{ column_title }}
-                        <i class="fa fa-fw" :class="active_asc ? 'fa-sort-amount-asc' : 'fa-sort-amount-desc' "></i>
-                    </small>
-                </button>
+
             </div>
+        </th>
 
-        </div>
-    </th>
+        <th v-else-if="show">
 
-    <th v-else-if="show">
-        
-    </th>
+        </th>
+    </keep-alive>
 </template>
 
 <script>
-    import VueMultiselect from 'vue-multiselect/src/Multiselect.vue';
 
     export default {
-        components : {
-            VueMultiselect
-        },
 
         props : {
             column: {},
@@ -126,7 +124,7 @@
             }
         },
 
-        created() {
+        mounted() {
             this.page.headers.push(this);
 
             Bus.$on('UpdateFilters', (e) => {

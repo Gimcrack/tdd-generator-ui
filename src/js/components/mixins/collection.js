@@ -3,7 +3,7 @@ export default {
 
     data() {
         return {
-            page_layout : 'page-grid',
+            page_layout : 'page-table',
             busy : false,
             models : this.getInitialModels(),
             last_refreshed : this.getInitialLastRefreshed(),

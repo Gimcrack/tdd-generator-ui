@@ -1,3 +1,4 @@
+
 <template>
     <div class="page">
         <div class="page-header">
@@ -13,6 +14,8 @@
                 <template v-else>New {{ properType }}</template>
             </button>
 
+            <toggle v-if="toggles.checklist" @clicked="toggleChecked" :active="showChecked">Checked</toggle>
+
             <slot name="menu"></slot>
 
             <vinput icon="fa-search" placeholder="Search..." v-model="search"></vinput>
@@ -22,6 +25,7 @@
 
         <!-- page-body -->
         <component
+            v-if="models.length"
             :is="page_layout"
             :layout-class="[ getTableHiddenColumnClasses,  {'table-sm' : compact}]"
         >
@@ -35,8 +39,13 @@
                 </div>
             </template>
 
+
             <template slot="select-all">
-                <i v-if="toggles.do_with_selected" @click="toggleAll" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw" :class="toggleAllClass"></i>
+                <button v-if="toggles.do_with_selected || toggles.checklist" class="btn btn-xs btn-outline-primary">
+                    <small>
+                        <i @click="toggleAll" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw" :class="toggleAllClass"></i>
+                    </small>
+                </button>
             </template>
 
             <template slot="column-headers">
@@ -46,6 +55,7 @@
                     :asc="asc"
                     :column="col"
                     :key="index"
+                    :name="index"
                     :options="getColumnOptions(col)"
                     :align-right="page_layout === 'page-table' && index >= params.columns.length/2"
                     class="table-header"
@@ -55,14 +65,16 @@
 
             <template slot="page-meta-top">
                 <div class="d-flex align-items-center header-sort-button flex-fill">
-                    <span class="badge p-2 mr-2" :class="[ showClearFiltersBtn ? 'badge-warning' : 'badge-light']">
-                        Viewing {{ filtered.length }} Records
+                    <badge class="p-2 mr-2" icon="fa-info" :type="[ showClearFiltersBtn ? 'badge-warning' : 'badge-light']">
+                        {{ viewingRecordsTxt }}
                         <template v-if="showClearFiltersBtn">(Filtered)</template>
-                    </span>
+                    </badge>
                     <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning mr-2">
                         <small><i class="fa fa-fw fa-times"></i> Reset All Filters</small>
                     </button>
-                    <span class="badge badge-light p-2 mr-2" v-text="`Updated ${lastRefreshedFormatted}`"></span>
+                    <badge class="p-2" type="badge-light" icon="fa-clock-o">
+                        Updated {{ lastRefreshedFormatted }}
+                    </badge>
                     <div class="flex-fill"></div>
 
                     <!-- right side -->
@@ -85,13 +97,15 @@
 
                     <div class="btn-group ml-2">
                         <button class="btn btn-xs"
-                                :class="page_layout === 'page-grid' ? ['active','btn-primary'] : ['btn-outline-primary']"
+                                :class="page_layout === 'page-grid' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
+                                :disabled="page_layout === 'page-grid'"
                                 @click="changeLayout('page-grid')"
                         >
                             <i class="fa fa-fw fa-th"></i>
                         </button>
                         <button class="btn btn-xs"
-                                :class="page_layout === 'page-table' ? ['active','btn-primary'] : ['btn-outline-primary']"
+                                :class="page_layout === 'page-table' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
+                                :disabled="page_layout === 'page-table'"
                                 @click="changeLayout('page-table')"
                         >
                             <i class="fa fa-fw fa-bars"></i>
@@ -100,7 +114,7 @@
                 </div>
             </template>
 
-            <template v-if="filtered.length" v-for="model in filtered" >
+            <template v-if="filtered.length > 0 && filtered.length < 500" v-for="model in filtered" >
                 <component
                     :is="params.component || params.type"
                     :item-layout="item_layout"
@@ -108,37 +122,53 @@
                     :key="model.id"
                     :model-props="params.modelProps"
                     :columns="params.columns"
+                    :show-checked="showChecked"
                     @ToggledHasChanged="setToggled">
                 </component>
             </template>
 
+
+
             <template slot="page-meta-bottom">
                 <div class="d-flex align-items-center header-sort-button">
-                    <span class="badge p-2 mr-2" :class="[ showClearFiltersBtn ? 'badge-warning' : 'badge-light']">
-                        Viewing {{ filtered.length }} Records
+                    <badge class="p-2 mr-2" icon="fa-info" :type="[ showClearFiltersBtn ? 'badge-warning' : 'badge-light']">
+                        {{ viewingRecordsTxt }}
                         <template v-if="showClearFiltersBtn">(Filtered)</template>
-                    </span>
+                    </badge>
                     <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning mr-2">
                         <small><i class="fa fa-fw fa-times"></i> Reset All Filters</small>
                     </button>
-                    <span class="badge badge-light p-2 mr-2" v-text="`Updated ${lastRefreshedFormatted}`"></span>
+                    <badge class="p-2" type="badge-light" icon="fa-clock-o">
+                        Updated {{ lastRefreshedFormatted }}
+                    </badge>
                 </div>
             </template>
 
         </component>
+
+        <div v-if="filtered.length > 500" class="alert alert-danger">
+            <strong><i class="fa fa-fw fa-exclamation-triangle"></i> Oops.</strong> There are too many items to display. Try applying some filters.
+        </div>
+
+        <div v-if="models.length < 1" class="alert alert-warning">
+            Nothing to see here, you could try a refresh.
+
+            <small><button type="button" @click.prevent="fetch" :disabled="busy" :class="busy ? 'disabled' : ''" class="btn-primary btn btn-xs">
+                <i class="fa fa-fw fa-circle-o-notch" :class="{'fa-spin' : busy}"></i>
+                {{ refresh_btn_text }}
+            </button></small>
+        </div>
     </div>
 </template>
 
 <script>
-    import _ from 'lodash';
-    import moment from 'moment';
-    import VueMultiselect from "../../../node_modules/vue-multiselect/src/Multiselect.vue";
+    //import _ from 'lodash';
+    //import moment from 'moment-timezone';
     import PageTable from './PageTable.vue';
     import PageGrid from './PageGrid.vue';
 
     export default {
         components: {
-            VueMultiselect,
             PageTable,
             PageGrid
         },
@@ -206,10 +236,21 @@
                 hiddenColumns : this.getInitialHiddenColumns(),
                 timeoutHiddenColumnUpdate : null,
                 page : {},
+                showChecked : false
             }
         },
 
         computed : {
+
+            viewingRecordsTxt() {
+                let
+                    num = ( this.showChecked || ! this.toggles.checklist ) ?
+                    this.filtered.length :
+                    this.filtered.length-this.toggledCount,
+                total = this.models.length;
+
+                return `Viewing ${ num } / ${ total } Records`;
+            },
 
             hasDropdownMenuSlot () {
                 return !!this.$slots['selection-dropdown-menu'];
@@ -268,12 +309,36 @@
         },
 
         methods : {
+
+            toggleChecked() {
+                this.showChecked = ! this.showChecked;
+
+                Bus.$emit('ShowChecked', this.showChecked);
+            },
+
             changeLayout(layout) {
+                this.headers = [];
+
                 this.page_layout = layout;
 
                 if ( this.hasToggled ) {
                     return this.getToggled().forEach( child => { child.$children[0].toggle() } );
                 }
+
+                this.clearFilter();
+
+                sleep(5000).then( () => {
+                    Bus.$emit('ShowChecked', this.showChecked);
+                });
+
+//                sleep(150).then( () => {
+//                    for( let key in this.filters ) {
+//                        let payload = {};
+//                        payload[key] = this.filters[key];
+//                        this.updateFilter(payload);
+//                    }
+//
+//                })
             },
 
             showMeta() {
@@ -306,10 +371,14 @@
 
             setToggled() {
                 this.toggled = this.getToggled();
+
+                this.$forceUpdate();
             },
 
             getToggled() {
                 if ( ! this.page ) return [];
+
+                if ( ! this.page.$children ) return [];
 
                 return this.page.$children
                     .filter( child => { return child.$children.length && child.$children[0].toggled; } );
@@ -317,6 +386,8 @@
 
             getUntoggled() {
                 if ( ! this.page ) return [];
+
+                if ( ! this.page.$children ) return [];
 
                 return this.page.$children
                     .filter( child => { return child.$children.length && ! child.$children[0].toggled; } );

@@ -87,6 +87,7 @@
 
     .page-header {
         border-color: $border-color !important;
+        box-shadow: 0px 9px 16px -9px rgba($border-color,0.4);
     }
 
     // tabs
@@ -106,7 +107,22 @@
         background: $body-bg;
     }
 
-    .tabs-left.nav-tabs {
+    .tabs-subnav {
+        position: fixed;
+        height: calc(100vh - 50px) !important;
+        margin-top: 52px;
+        transition: all 0.1s linear;
+        padding: 4em 0 4em 1.375em;
+
+        &.active {
+            background: lighten($navbar-tab-color,10%) !important;
+            margin-left: 8.375em;
+            width:9.2em;
+        }
+    }
+
+    .tabs-left.nav-tabs,
+    .tabs-subnav .nav-tabs {
 
         & > li > a {
             color: $navbar-tab-color;
@@ -153,7 +169,28 @@
             border-right: 1px solid $body-bg !important;
             color: $navbar-active-color !important;
             margin-right: -1px !important;
-            padding-left: 10px 10px 4px 1px;
+            padding: 10px 10px 4px;
+        }
+
+        & > li.active.has-subnav > a,
+        & > li.active.has-subnav > a:hover,
+        & > li.active.has-subnav > a:focus {
+            background: lighten($navbar-tab-color,10%) !important;
+            border: 1px solid transparent !important;
+            border-right: 1px solid transparent !important;
+            color: $navbar-active-color !important;
+            margin-right: -1px !important;
+            padding: 10px 10px 4px;
+        }
+    }
+
+    .tabs-subnav .nav-tabs {
+        border: none !important;
+
+        & > li > a {
+            color: $navbar-active-color !important;
+            border: none !important;
+            margin-right: 0 !important;
         }
     }
 

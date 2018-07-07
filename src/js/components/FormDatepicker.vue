@@ -2,15 +2,17 @@
     <div :class="['form-group', (show_invalid) ? 'is-invalid' : '']">
         <label :for="name" v-if="label">{{ label }}</label>
 
-        <input
-            @keydown.enter.stop.prevent="enter"
+        <date-picker
             @input="update"
-            :value="value"
-            :class="class_object"
-            :type="type"
+            @keydown.enter="enter"
+            :input-class="class_object"
             :placeholder="placeholder"
             :ref="name"
-        >
+            format="yyyy-MM-dd"
+            :typeable="true"
+            rows="4"
+            v-model="selected"
+        ></date-picker>
 
         <div class="icon is-small">
             <i :class="['fa', (show_invalid) ? 'fa-warning' : icon ]"></i>
@@ -27,10 +29,23 @@
 </template>
 
 <script>
+    //import moment from 'moment-timezone';
     //import Rule from './Rule.class.js';
+    import DatePicker from 'vuejs-datepicker';
+
     //window.Rule = Rule;
 
     export default {
+
+        components : {
+            DatePicker
+        },
+
+        watch : {
+            value( val ) {
+                this.selected = moment(val).format('DD MMM YYYY');
+            }
+        },
 
         props : {
 
@@ -65,6 +80,7 @@
 
         data() {
             return {
+                selected : moment(this.value).format('DD MMM YYYY'),
                 help_message : '',
                 validation : {
                     settings : [],
@@ -92,13 +108,7 @@
             },
 
             focus() {
-                if ( this.type !== 'textarea' ) {
-                    this.$el.querySelector('input').focus();
-                }
-                else
-                {
-                    this.$el.querySelector('textarea').focus();
-                }
+                this.$el.querySelector('textarea').focus();
             },
 
             check_validation_settings() {
@@ -113,12 +123,12 @@
                 }
             },
 
-            populate_rules() { 
+            populate_rules() {
 
                 this.check_validation_settings();
-                
+
                 if ( ! this.should_validate ) return false;
-                
+
                 this.validation.rules = [];
 
                 this.validation.settings.forEach( args => {
@@ -133,17 +143,10 @@
                 this.$forceUpdate();
             },
 
-            update($event) {
-                if ( this.type !== 'select' ) {
-                    return Bus.$emit('UpdateFormControl', { key : this.name, value : $event.target.value });
-                }
+            update(selected) {
+                let value = moment(selected).format('YYYY-MM-DD');
 
-                let value = this.selectOptionsData.multiple ?
-                    this.selectOptionsData.value.map( o => o.id ) :
-                    this.selectOptionsData.value.id;
-
-                Bus.$emit('UpdateFormControl', { key : this.name, value } );
-
+                return Bus.$emit('UpdateFormControl', { key : this.name, value });
             },
         },
 
@@ -186,11 +189,11 @@
             },
 
             class_object() {
-                return [ 
-                    this.className, 
-                    { 
-                        'form-control' : true, 
-                        'has-success' : this.valid, 
+                return [
+                    this.className,
+                    {
+                        'form-control' : true,
+                        'has-success' : this.valid,
                         'is-invalid' : this.show_invalid
                     }
                 ];
@@ -199,7 +202,7 @@
             should_validate() {
                 return this.required && this.validation.settings.length;
             },
-            
+
             valid() {
                 if ( ! this.should_validate ) return true;
 
@@ -219,9 +222,13 @@
                 if ( this.valid ) return new Rule();
 
                 return _(this.validation.rules)
-                        .find( rule => { return ! rule.valid } )
+                    .find( rule => { return ! rule.valid } )
             },
         },
 
     }
 </script>
+
+<style lang="scss">
+
+</style>

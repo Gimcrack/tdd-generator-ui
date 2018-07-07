@@ -39,15 +39,10 @@
 </template>
 
 <script>
-    import VueMultiselect from 'vue-multiselect/src/Multiselect.vue';
-    import Rule from './Rule.class.js';
-    window.Rule = Rule;
+    //import Rule from './Rule.class.js';
+    //window.Rule = Rule;
 
     export default {
-
-        components : {
-            VueMultiselect
-        },
 
         watch : {
             value() {
@@ -88,6 +83,8 @@
 
         data() {
             return {
+                loading : false,
+
                 help_message : '',
                 validation : {
                     settings : [],
@@ -199,7 +196,7 @@
 
                 this.loading = true;
 
-                window.Api.get(this.definition.select.source)
+                window.Api.get( this.select_source_url )
                     .then( (response) => {
                         this.params.options = response.data;
                         this.params.internalSearch = false;
@@ -302,6 +299,18 @@
 
             selected_values() {
 
+            },
+
+            select_source_url() {
+                if ( typeof this.definition.select.source === 'function' ) {
+                    return this.definition.select.source( this.$parent.controls );
+                }
+
+                return this.definition.select.source;
+            },
+
+            selected_name() {
+                return this.params.value.name;
             }
         },
 

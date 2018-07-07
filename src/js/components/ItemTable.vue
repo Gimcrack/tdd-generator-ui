@@ -16,6 +16,7 @@
                     @toggle="toggle"
                     @checkToggle="checkToggle"
                 >
+                    <slot name="menu"></slot>
                 </item-header>
             </td>
             <td v-for="cell,i in meta">
@@ -39,10 +40,8 @@
             this.$parent.$item = this;
 
             Bus.$on('ShowChecked', (val) => {
-                this.show_checked = val;
-                this.show = ( ! this.toggled || this.show_checked || this.toggles.always_show_checked );
+                this.show = ( ! this.toggled || this.showChecked || ! this.page.toggles.checklist );
             });
-
         },
 
         props : {
@@ -64,7 +63,7 @@
                         info : true,
                         update : true,
                         delete : true,
-                        always_show_checked : false
+                        checklist : false
                     }
                 }
             },
@@ -76,7 +75,9 @@
                     return [];
                 }
             },
-
+            showChecked : {
+                default : false
+            }
         },
 
         data() {
@@ -103,21 +104,21 @@
             toggle() {
                 this.toggled = ! this.toggled;
 
-                sleep(50).then(() => {
+                sleep(125).then(() => {
                     $('tr.toggled.top').removeClass('top');
                     $('tr.toggled.bottom').removeClass('bottom');
 
                     $('tr.toggled').first().addClass('top');
                     $('tr.toggled').last().addClass('bottom');
 
-                    this.show = ( ! this.toggled || this.show_checked || this.toggles.always_show_checked );
+                    this.show = ( ! this.toggled || this.show_checked || ! this.page.toggles.checklist );
                 });
 
                 this.$emit('ToggledHasChanged');
             },
 
             checkToggle() {
-                if ( window.mouseDown ) {
+                if ( window.mouseDown && ! this.page.toggles.checklist ) {
                     this.toggle();
                 }
             }

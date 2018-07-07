@@ -1,6 +1,6 @@
 {
   "name": "tdd-generator-ui",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "UI Components For TDD Scaffolding Generator",
   "main": "index.js",
   "repository": {
@@ -20,10 +20,13 @@
   "homepage": "https://github.com/Gimcrack/tdd-generator-ui#readme",
   "devDependencies": {
     "bootstrap": "^4.1.1",
+    "ceri-portal": "^0.1.0",
     "laravel-mix": "^2.1.11",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.17",
     "turndown": "^4.0.2",
-    "vue-multiselect": "^2.1.0"
+    "vue-multiselect": "^2.1.0",
+    "vue-portal": "^1.0.0",
+    "vuejs-datepicker": "^1.5.2"
   }
 }

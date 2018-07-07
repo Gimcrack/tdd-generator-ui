@@ -11,6 +11,11 @@ $input-btn-line-height-xs: 1.1 !default;
     @include button-size($btn-padding-y-xs, $btn-padding-x-xs, 0.85rem, $input-btn-line-height-xs, $btn-border-radius-sm);
 }
 
+.btn-group .btn-last {
+    border-top-right-radius: 0.2rem !important;
+    border-bottom-right-radius: 0.2rem !important;
+}
+
 .btn-outline-warning {
     color: $gray-900;
 }

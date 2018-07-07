@@ -2,12 +2,10 @@
     <table class="table table-striped table-hover" :class="layoutClass">
         <thead>
             <tr>
-                <td colspan="100">
+                <td class="p-3" colspan="100">
                     <div class="d-flex flex-fill">
-                        <div class="btn-group mr-2">
-                            <button class="btn btn-xs btn-outline-primary">
-                                <small><slot name="select-all"></slot></small>
-                            </button>
+                        <div class="btn-group" :class="{ 'mr-2' : $parent.toggles.checklist || $parent.toggles.do_with_selected }">
+                            <slot name="select-all"></slot>
                             <button v-if="$slots['selection-dropdown'] && $parent.hasToggled" class="btn btn-outline-primary btn-xs" data-toggle="dropdown">
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>

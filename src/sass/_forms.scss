@@ -2,18 +2,41 @@
 
 .form-wrapper {
     .form {
-        background: $brand-white;
-        border: 1px solid $laravel-border-color;
-        border-bottom: 3px solid $brand-success;
+        //background: $brand-white;
+        //border: 1px solid $laravel-border-color;
+        //border-bottom: 3px solid $brand-success;
 
         .page-header {
-            border-color: $brand-success;
+            //border-color: $brand-success;
         }
 
         .field-group {
-            background: lighten($body-bg,30%);
-            border: 1px solid $laravel-border-color;
-            border-bottom: 3px solid $brand-success;
+            //background: lighten($body-bg,30%);
+            //border: 1px solid $laravel-border-color;
+            //border-bottom: 3px solid $brand-success;
         }
+    }
+}
+
+.form-group {
+    position: relative;
+    font-size: 16px;
+
+    .form-control {
+        font-size: 16px;
+    }
+
+    input[type=text],
+    input[type=email],
+    input[type=password] {
+        text-indent: 20px;
+    }
+
+    .icon {
+        position: absolute !important;
+        top: 40px !important;
+        left: 10px !important;
+        color: #ccc !important;
+        font-size: inherit;
     }
 }
