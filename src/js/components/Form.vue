@@ -21,12 +21,13 @@
 
                 <div class="field-groups">
                     <form-field-group
-                            v-for="grp,key in form_params.inputs"
-                            :key="key"
-                            :form="form_params.form"
-                            :errors="errors"
-                            :group="grp"
-                            :editing="editing"
+                        v-for="grp,key in form_params.inputs"
+                        :key="key"
+                        :form="form_params.form"
+                        :errors="errors"
+                        :group="grp"
+                        :editing="editing"
+                        :conditions-met="conditionsMet(grp)"
                     ></form-field-group>
                 </div>
 
@@ -78,7 +79,9 @@
                     inputs : []
                 },
 
-                form_field_groups : {}
+                form_field_groups : {},
+
+                controls : {}
 
             }
         },
@@ -89,12 +92,15 @@
             if ( this.model ) {
                 this.loadModel();
             }
+
+            Store.controls = {}
         },
 
         computed : {
 
             heading() {
-                return (this.editing) ? `Editing ${this.form_params.type}: ${this.model[this.form_params.name_key]}` : `New ${this.form_params.type}`;
+                return (this.editing) ? `Editing ${this.form_params.type}: ${this.model[this.form_params.name_key]}` :
+                    `New ${this.form_params.type}`;
             },
 
             toggles() {
@@ -126,12 +132,18 @@
             },
 
             invalid() {
-                return _(this.form_field_groups).map('controls_array').flatten().map('valid').value().some(v => !v);
+                return _(this.form_field_groups).filter( o => o.show )
+                    .map('controls_array').flatten().map('valid').value().some(v => !v);
             },
 
-            controls() {
-                return _(this.form_field_groups).map('controls_array').flatten().value();
+            invalid_controls() {
+                return _(this.form_field_groups).filter( o => o.show )
+                    .map('controls_array').flatten().filter(o => ! o.valid).value();
             }
+
+//            controls() {
+//                return _(this.form_field_groups).map('controls_array').flatten().value();
+//            },
         },
 
         methods : {
@@ -152,7 +164,7 @@
 
                     this.show = true;
 
-                    Vue.nextTick(() => this.controls[0].focus());
+                    //Vue.nextTick(() => this.controls[0].focus());
                 });
 
                 Bus.$on('UpdateFormControl', (e) => {
@@ -186,6 +198,29 @@
                         return;
                     this.close();
                 });
+            },
+
+            conditionsMet(group) {
+
+                if ( ! group.condition ) {
+                    return true;
+                }
+
+                if ( !! group.condition ) {
+                    for ( let prop in group.condition ) {
+
+                        if ( group.condition[prop] == null ) {
+                            if ( this.form_params.form[prop] == null )
+                                return false;
+                        }
+
+                        else if ( this.form_params.form[prop] !== group.condition[prop] ) {
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
             },
 
             close() {

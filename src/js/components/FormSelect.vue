@@ -2,27 +2,37 @@
     <div :class="['form-group', (show_invalid) ? 'is-invalid' : '']">
         <label :for="name" v-if="label">{{ label }}</label>
 
-        <vue-multiselect
-            @input="update"
-            :value="params.value"
-            :multiple="params.multiple"
-            :options="params.options"
-            :label="params.label"
-            :track-by="params.trackBy"
-            :placeholder="placeholder"
-            :loading="loading"
-            :searchable="params.searchable"
-            :clearOnSelect="params.clearOnSelect"
-            :hideSelected="params.hideSelected"
-            :allowEmpty="params.allowEmpty"
-            :resetAfter="params.resetAfter"
-            :closeOnselect="params.closeOnselect"
-            :taggable="params.taggable"
-            :max="params.max"
-            :optionsLimit="params.optionsLimit"
-            :groupValues="params.groupValues"
-            :groupLabel="params.groupLabel"
-        ></vue-multiselect>
+        <div class="d-flex">
+            <vue-multiselect
+                @input="update"
+                :value="params.value"
+                :multiple="params.multiple"
+                :options="params.options"
+                :label="params.label"
+                :track-by="params.trackBy"
+                :placeholder="placeholder"
+                :loading="loading"
+                :searchable="params.searchable"
+                :clearOnSelect="params.clearOnSelect"
+                :hideSelected="params.hideSelected"
+                :allowEmpty="params.allowEmpty"
+                :resetAfter="params.resetAfter"
+                :closeOnSelect="params.closeOnSelect"
+                :taggable="params.taggable"
+                :max="params.max"
+                :optionsLimit="params.optionsLimit"
+                :groupValues="params.groupValues"
+                :groupLabel="params.groupLabel"
+            >
+            </vue-multiselect>
+
+            <form-button
+                class="ml-2"
+                v-if="definition.btn"
+                :definition="definition.btn"
+            ></form-button>
+        </div>
+
 
         <div class="icon is-small">
             <i :class="['fa', (show_invalid) ? 'fa-warning' : icon ]"></i>
@@ -84,6 +94,7 @@
         data() {
             return {
                 loading : false,
+                loaded : false,
 
                 help_message : '',
                 validation : {
@@ -103,7 +114,7 @@
                     hideSelected : false,
                     allowEmpty : true,
                     resetAfter : false,
-                    closeOnselect : false,
+                    closeOnSelect : false,
                     taggable : false,
                     max : null,
                     optionsLimit : 25,
@@ -115,6 +126,8 @@
 
         created() {
             this.populate_rules();
+
+            Store.controls[ this.name ] = this;
 
             this.$parent.controls[ this.name ] = this;
             this.$parent.controls_array.push(this);
@@ -179,9 +192,9 @@
                 if ( ! $event )
                     value = null;
                 else if ( $event.length )
-                    value = $event.map(o => o.id);
+                    value = $event.map(o => o[this.params.trackBy]);
                 else
-                    value = $event.id;
+                    value = $event[this.params.trackBy];
 
                 Bus.$emit('UpdateFormControl', { key : this.name, value } );
             },
@@ -191,10 +204,12 @@
                 if ( typeof this.definition.select.source === "object" ) {
                     this.params.options = this.definition.select.source;
                     this.params.internalSearch = true;
+                    this.updateSelected();
                     return;
                 }
 
                 this.loading = true;
+                this.loaded = false;
 
                 window.Api.get( this.select_source_url )
                     .then( (response) => {
@@ -206,19 +221,31 @@
             },
 
             updateSelected() {
-                return ( this.params.multiple ) ?
+                ( this.params.multiple ) ?
                     this.updateMultipleSelected() :
                     this.updateSingleSelected();
+
+                this.loaded = true;
             },
 
             updateMultipleSelected() {
+                if ( ! this.value ) {
+                    this.params.value = null;
+                    return;
+                }
+
                 this.params.value = _.map( _.castArray(this.value), (id) => {
-                    return _.find(this.params.options, { id : id });
+                    let o = {};
+                    o[this.params.trackBy] = id;
+                    return _.find(this.params.options, o);
                 });
             },
 
             updateSingleSelected() {
-                this.params.value = _.find( this.params.options, { id : this.value } );
+                let o = {};
+                o[this.params.trackBy] = this.value;
+
+                this.params.value = _.find( this.params.options, o );
             },
         },
 
@@ -303,13 +330,15 @@
 
             select_source_url() {
                 if ( typeof this.definition.select.source === 'function' ) {
-                    return this.definition.select.source( this.$parent.controls );
+                    return this.definition.select.source( this.$parent.$parent.controls );
                 }
 
                 return this.definition.select.source;
             },
 
             selected_name() {
+                if ( ! this.params.value ) return '';
+
                 return this.params.value.name;
             }
         },

@@ -1,6 +1,6 @@
 <template>
     <div :class="['form-group', (show_invalid) ? 'is-invalid' : '']">
-        <label :for="name" v-if="label">{{ label }}</label>
+        <label :for="name" v-if="label && type !== 'hidden'">{{ label }}</label>
 
         <input
             @keydown.enter.stop.prevent="enter"
@@ -12,7 +12,7 @@
             :ref="name"
         >
 
-        <div class="icon is-small">
+        <div v-if="type !== 'hidden'" class="icon is-small">
             <i :class="['fa', (show_invalid) ? 'fa-warning' : icon ]"></i>
         </div>
 
@@ -54,6 +54,9 @@
 
             value : {
                 required : true,
+                default() {
+                    return this.definition.value;
+                }
             },
 
             errors : {
@@ -79,8 +82,14 @@
         created() {
             this.populate_rules();
 
+            Store.controls[ this.name ] = this;
+
             this.$parent.controls[ this.name ] = this;
             this.$parent.controls_array.push(this);
+
+            if ( !! this.value ) {
+                Bus.$emit('UpdateFormControl', { key : this.name, value : this.value });
+            }
         },
 
         methods : {

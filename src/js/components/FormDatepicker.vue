@@ -95,6 +95,8 @@
         created() {
             this.populate_rules();
 
+            Store.controls[ this.name ] = this;
+
             this.$parent.controls[ this.name ] = this;
             this.$parent.controls_array.push(this);
         },

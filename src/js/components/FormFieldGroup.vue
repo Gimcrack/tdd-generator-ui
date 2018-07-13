@@ -1,5 +1,5 @@
 <template>
-    <div class="field-group row m-2 mt-3">
+    <div v-if="show" class="field-group row m-2 mt-3">
         <div class="col-lg-3 field-group-header mb-4">
             <span class="heading">{{group.name}}</span><br/>
             <small v-show="group.help">
@@ -23,22 +23,38 @@
 <script>
     export default {
 
-        props : [
-            'group',
-            'errors',
-            'form',
-            'editing'
-        ],
+        props : {
+            group : {},
+            errors : {},
+            form : {},
+            editing : {},
+            conditionsMet : {
+                default : true
+            }
+        },
 
         data() {
             return {
                 controls : {},
-                controls_array : []
+                controls_array : [],
+                delayLapsed : false
             }
         },
 
         created() {
             this.$parent.form_field_groups[this.group.name] = this;
+
+            let delay = (this.group.order || 0) * 450;
+
+            sleep(delay).then( () => {
+                this.delayLapsed = true;
+            } )
+        },
+
+        computed : {
+            show() {
+                return this.delayLapsed && this.conditionsMet;
+            }
         },
 
         methods : {
@@ -52,6 +68,9 @@
 
                     case 'date' :
                         return 'formDatepicker';
+
+                    case 'button' :
+                        return 'formButton';
 
                     default :
                         return 'formControl';
@@ -72,8 +91,8 @@
 
                 return ( ! this.editing ||
                     ! def.uneditable )
-            }
-        }
+            },
+        },
     }
 </script>
 

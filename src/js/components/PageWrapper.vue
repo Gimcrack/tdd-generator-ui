@@ -375,6 +375,10 @@
                 this.$forceUpdate();
             },
 
+            getToggledIds() {
+                return this.getToggled().map(o => o.model.id);
+            },
+
             getToggled() {
                 if ( ! this.page ) return [];
 

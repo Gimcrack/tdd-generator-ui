@@ -283,6 +283,22 @@ export default {
         cacheModels() {
             Store.$ls.set(this.getCacheKey('models'), JSON.stringify(this.models) );
             Store.$ls.set(this.getCacheKey('last_refreshed'), this.last_refreshed );
+        },
+
+        destroyMany() {
+            swal({
+                title : "Delete these records?",
+                text : "This operation cannot be undone.",
+                showCancelButton : true,
+            }).then(res => {
+                if ( res.dismiss === "cancel" )
+                    return;
+
+                this.busy = true;
+
+                Api.delete( this.params.endpoint, { data : { ids : this.page.getToggledIds() } })
+                    .then( this.success, this.error )
+            });
         }
     }
 }
