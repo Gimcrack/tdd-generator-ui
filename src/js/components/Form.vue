@@ -240,7 +240,9 @@
 
                 else {
                     // the form is dirty if any of the input values are changed from the model values
-                    this.dirty = _.keys(this.form_params.form).map( k => this.form_params.form[k] !== this.model[k] ).some( v => !! v );
+                    this.dirty = _.keys(this.form_params.form)
+                        .map( k => { return ! _.isEqual(this.form_params.form[k],this.model[k]) } )
+                        .some( v => !! v );
                 }
             },
 

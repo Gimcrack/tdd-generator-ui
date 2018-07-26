@@ -31,6 +31,12 @@
                 v-if="definition.btn"
                 :definition="definition.btn"
             ></form-button>
+
+            <form-button
+                class="ml-2"
+                v-if="definition.select.cache"
+                :definition="refreshBtnDefinition"
+            ></form-button>
         </div>
 
 
@@ -114,26 +120,35 @@
                     hideSelected : false,
                     allowEmpty : true,
                     resetAfter : false,
-                    closeOnSelect : false,
+                    closeOnSelect : ! this.definition.select.multiple,
                     taggable : false,
                     max : null,
                     optionsLimit : 25,
                     groupValues : null,
                     groupLabel : null,
-                }, this.definition.select)
+                }, this.definition.select),
+
+                refreshBtnDefinition : {
+                    label : '',
+                    type : 'button',
+                    btnType : 'btn-primary',
+                    icon : 'fa-refresh',
+                    fn : () => {
+                        this.clearCache();
+                        this.initSelect();
+                    }
+                }
             }
         },
 
         created() {
             this.populate_rules();
+            this.initSelect();
 
             Store.controls[ this.name ] = this;
 
             this.$parent.controls[ this.name ] = this;
             this.$parent.controls_array.push(this);
-
-            if ( this.type === 'select')
-                this.initSelect();
         },
 
         methods : {
@@ -196,6 +211,10 @@
                 else
                     value = $event[this.params.trackBy];
 
+                if ( ! value ) {
+                    value = ( this.params.multiple ) ? [] : null;
+                }
+
                 Bus.$emit('UpdateFormControl', { key : this.name, value } );
             },
 
@@ -211,12 +230,32 @@
                 this.loading = true;
                 this.loaded = false;
 
+                if ( this.definition.select.cache && !! Store.$ls.get( this.cache_key ) ) {
+                    this.params.options = JSON.parse( Store.$ls.get( this.cache_key ) );
+                    this.params.internalSearch = false;
+                    this.updateSelected();
+                    this.loading = false;
+                }
+                else {
+                    this.loadExternalOptions();
+                }
+            },
+
+            clearCache() {
+                Store.$ls.set( this.cache_key, null );
+            },
+
+            loadExternalOptions() {
+
                 window.Api.get( this.select_source_url )
                     .then( (response) => {
                         this.params.options = response.data;
                         this.params.internalSearch = false;
                         this.updateSelected();
                         this.loading = false;
+
+                        if ( this.definition.select.cache && !! response.data )
+                            Store.$ls.set( this.cache_key, JSON.stringify(response.data) );
                     } );
             },
 
@@ -250,6 +289,10 @@
         },
 
         computed : {
+
+            cache_key() {
+                return JSON.stringify(this.definition);
+            },
 
             label() {
                 return this.definition.label || this.definition.name.$ucfirst();

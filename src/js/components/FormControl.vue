@@ -151,7 +151,7 @@
                     this.selectOptionsData.value.map( o => o.id ) :
                     this.selectOptionsData.value.id;
 
-                Bus.$emit('UpdateFormControl', { key : this.name, value } );
+                Bus.$emit('UpdateFormControl', { key : this.name, value : value || null } );
 
             },
         },

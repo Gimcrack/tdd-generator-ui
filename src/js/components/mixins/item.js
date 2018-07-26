@@ -134,11 +134,14 @@ export default {
         },
 
         updatedEvent(event, quiet) {
-            // console.log(event);
+            console.log('Updated', event);
+
             let model = this.eventModel(event);
 
-            if ( !! this.$parent.add ) {
-                this.$parent.add(model);
+            console.log('parent',this.$parent);
+
+            if ( !! this.$parent.$parent.add ) {
+                this.$parent.$parent.add(model);
                 //this.$parent.orderBy = null;
                 //this.$parent.orderBy = 'id';
             }

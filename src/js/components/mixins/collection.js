@@ -128,25 +128,35 @@ export default {
             let index = this.findModelById(model.entity.id);
             if ( index > -1 ) this.models.$remove(index);
 
-            flash.warning(`${model.type} Removed: ${model.name}`)
+            flash.warning(`${model.type.$title_case()} Removed: ${model.name}`);
+
+            this.last_refreshed = Date.now();
+            this.cacheModels();
         },
 
         add( model ) {
+            console.log('Calling add model');
             let index = this.findModelById(model.entity.id);
 
             // if the model exists, replace it
             if ( index > -1 ) {
                 // console.log('Updating model');
-                return this.models[index] = model.entity;
+                this.models[index] = model.entity;
             }
             else {
                 // console.log('New model');
                 this.models.push(model.entity);
                 flash.success(`New ${model.type.$title_case()}: ${model.name}`);
             }
+
+            this.last_refreshed = Date.now();
+            this.cacheModels();
         },
 
         model( event ) {
+
+            //console.log('event',event,this);
+
             let entity = event[this.modelType],
                 friendly = this.params.model_friendly || 'name';
 
@@ -171,13 +181,16 @@ export default {
         listen() {
             Echo.channel(this.params.events.channel)
                 .listen( this.params.events.created, (event) => {
-                    // console.log(event);
+                    console.log('Created',event);
+
                     this.add( this.model(event) );
 
                     if ( !! this.postCreated )
                         this.postCreated(event);
                 })
                 .listen( this.params.events.destroyed, (event) => {
+                    console.log('Destroyed',event);
+
                     this.remove( this.model(event) );
 
                     if ( !! this.postDeleted )
@@ -281,6 +294,9 @@ export default {
         },
 
         cacheModels() {
+            console.info('Caching Models');
+
+
             Store.$ls.set(this.getCacheKey('models'), JSON.stringify(this.models) );
             Store.$ls.set(this.getCacheKey('last_refreshed'), this.last_refreshed );
         },
@@ -296,7 +312,7 @@ export default {
 
                 this.busy = true;
 
-                Api.delete( this.params.endpoint, { data : { ids : this.page.getToggledIds() } })
+                Api.delete( this.params.endpoint, { data : { ids : this.getToggledIds() } })
                     .then( this.success, this.error )
             });
         }
