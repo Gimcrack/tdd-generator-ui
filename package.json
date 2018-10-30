@@ -19,14 +19,14 @@
   },
   "homepage": "https://github.com/Gimcrack/tdd-generator-ui#readme",
   "devDependencies": {
-    "bootstrap": "^4.1.1",
+    "bootstrap": "^4.1.3",
     "ceri-portal": "^0.1.0",
-    "laravel-mix": "^2.1.11",
+    "laravel-mix": "^2.1.14",
     "moment": "^2.22.2",
-    "moment-timezone": "^0.5.17",
-    "turndown": "^4.0.2",
-    "vue-multiselect": "^2.1.0",
+    "moment-timezone": "^0.5.23",
+    "turndown": "^5.0.1",
+    "vue-multiselect": "^2.1.3",
     "vue-portal": "^1.0.0",
-    "vuejs-datepicker": "^1.5.2"
+    "vuejs-datepicker": "^1.5.3"
   }
 }
