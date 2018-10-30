@@ -13,7 +13,7 @@ export default {
         },
         columns : {
             required : true
-        }
+        },
     },
 
     watch : {

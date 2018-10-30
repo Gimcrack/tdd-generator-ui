@@ -39,9 +39,7 @@
         mounted() {
             this.$parent.$item = this;
 
-            Bus.$on('ShowChecked', (val) => {
-                this.show = ( ! this.toggled || this.showChecked || ! this.page.toggles.checklist );
-            });
+            Bus.$on('ShowChecked',this.updateShowStatus);
         },
 
         props : {
@@ -75,15 +73,11 @@
                     return [];
                 }
             },
-            showChecked : {
-                default : false
-            }
         },
 
         data() {
             return {
                 toggled : false,
-                show_checked : false,
                 show : true,
                 page : this.$parent.$parent.$parent
             }
@@ -101,6 +95,10 @@
 
         methods: {
 
+            updateShowStatus() {
+                this.show = ( ! this.toggled || this.page.showChecked || ! this.page.toggles.checklist );
+            },
+
             toggle() {
                 this.toggled = ! this.toggled;
 
@@ -111,7 +109,7 @@
                     $('tr.toggled').first().addClass('top');
                     $('tr.toggled').last().addClass('bottom');
 
-                    this.show = ( ! this.toggled || this.show_checked || ! this.page.toggles.checklist );
+                    this.updateShowStatus();
                 });
 
                 this.$emit('ToggledHasChanged');

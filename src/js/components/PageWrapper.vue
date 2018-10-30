@@ -14,7 +14,7 @@
                 <template v-else>New {{ properType }}</template>
             </button>
 
-            <toggle v-if="toggles.checklist" @clicked="toggleChecked" :active="showChecked">Checked</toggle>
+            <toggle v-if="toggles.checklist" @clicked="toggleChecked" :active="! showChecked">Checklist Mode</toggle>
 
             <slot name="menu"></slot>
 
@@ -122,7 +122,6 @@
                     :key="model.id"
                     :model-props="params.modelProps"
                     :columns="params.columns"
-                    :show-checked="showChecked"
                     @ToggledHasChanged="setToggled">
                 </component>
             </template>
@@ -187,6 +186,10 @@
             Bus.$on('UpdateFilters', (e) => {
                 this.updateFilter(e);
             });
+
+            Bus.$on('ShowChecked', (e) => {
+                this.showChecked = e;
+            })
         },
 
         props : {
@@ -485,16 +488,6 @@
             }
 
         }
-
-        /*.table-header {*/
-            /*&:first-child {*/
-                /*width: 40px !important;*/
-            /*}*/
-
-            /*&:nth-child(2) {*/
-                /*width: 80px !important;*/
-            /*}*/
-        /*}*/
 
         .table {
             &.hide-2 {
