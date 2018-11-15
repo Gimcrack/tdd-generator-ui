@@ -36,7 +36,11 @@
     import page from './mixins/page';
 
     export default {
-        mixins : [page]
+        mixins : [page],
+
+        mounted() {
+            this.$parent.$pageLayout = this;
+        },
     }
 </script>
 

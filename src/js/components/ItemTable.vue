@@ -25,7 +25,7 @@
             <slot></slot>
         </tr>
         <tr v-if="$slots['row2']">
-            <td colspan="100" class="p-3">
+            <td colspan="100" class="p-3 position-relative">
                 <slot name="row2"></slot>
             </td>
         </tr>
@@ -125,6 +125,14 @@
 </script>
 
 <style lang="scss">
+    tbody.ticket {
+        .btn-customer-responded-last {
+            position:absolute;
+            top: -59px;
+            left: 153px
+        }
+    }
+
     .slide-fade-enter-active {
         transition: all .3s ease;
     }

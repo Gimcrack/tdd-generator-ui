@@ -21,7 +21,7 @@
         </div>
         <div class="page-grid__body d-flex mr-2 ml-2">
 
-            <div class="page-grid__right card-columns mt-3 w-100">
+            <div class="page-grid__right mt-3 w-100">
                 <slot></slot>
             </div>
         </div>
@@ -37,11 +37,14 @@
 
         mounted() {
             this.$parent.$pageLayout = this;
+
+            this.$pageScrum = true;
         },
 
         data() {
             return {
                 showGridControls : false,
+                pageScrum : true
             }
         },
 

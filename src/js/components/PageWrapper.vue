@@ -8,6 +8,8 @@
                 {{ refresh_btn_text }}
             </button>
 
+            <auto-refresh @refresh="fetch" @countdown="updateCountdown"></auto-refresh>
+
             <button v-if="toggles.new" :class="{ disabled : busy }" @click.prevent="$emit('new')" :disabled="busy" class="btn btn-success">
                 <i class="fa fa-fw fa-circle-o-notch" :class="{'fa-spin' : busy}"></i>
                 <template v-if="params.newBtnText">{{ params.newBtnText}}</template>
@@ -75,6 +77,9 @@
                     <badge class="p-2" type="badge-light" icon="fa-clock-o">
                         Updated {{ lastRefreshedFormatted }}
                     </badge>
+                    <badge v-if="countdown !== -1" class="p-2 ml-2" type="badge-light" icon="fa-clock-o">
+                        Refreshing in {{ countdown }}
+                    </badge>
                     <div class="flex-fill"></div>
 
                     <!-- right side -->
@@ -87,23 +92,57 @@
                     ></view-settings>
 
                     <div class="btn-group ml-2" v-else >
-                        <button class="btn btn-xs btn-outline-primary" @click="showMeta">
+                        <button class="btn btn-xs z-0 btn-outline-primary" @click="showMeta">
                             <small><i class="fa fa-fw fa-plus"></i> Expand All</small>
                         </button>
-                        <button class="btn btn-xs btn-outline-primary" @click="hideMeta">
+                        <button class="btn btn-xs z-0 btn-outline-primary" @click="hideMeta">
                             <small><i class="fa fa-fw fa-minus"></i> Collapse All</small>
                         </button>
                     </div>
 
+                    <div v-if="page_layout === 'page-scrum'" class="d-flex ml-2">
+                        Group By
+                        <div class="btn-group ml-2">
+                            <button class="btn btn-xs z-0"
+                                    :class="groupBy === 'status' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
+                                    :disabled="groupBy === 'status'"
+                                    @click="changeGroupBy('status')"
+                            >
+                                <small>Status</small>
+                            </button>
+                            <button class="btn btn-xs z-0"
+                                    :class="groupBy === 'priority' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
+                                    :disabled="groupBy === 'priority'"
+                                    @click="changeGroupBy('priority')"
+                            >
+                                <small>Priority</small>
+                            </button>
+                            <button class="btn btn-xs z-0"
+                                    :class="groupBy === 'urgency' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
+                                    :disabled="groupBy === 'urgency'"
+                                    @click="changeGroupBy('urgency')"
+                            >
+                                <small>Urgency</small>
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="btn-group ml-2">
-                        <button class="btn btn-xs"
+                        <button class="btn btn-xs z-0"
+                                :class="page_layout === 'page-scrum' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
+                                :disabled="page_layout === 'page-scrum'"
+                                @click="changeLayout('page-scrum')"
+                        >
+                            <i class="fa fa-fw fa-bars fa-rotate-90"></i>
+                        </button>
+                        <button class="btn btn-xs z-0"
                                 :class="page_layout === 'page-grid' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
                                 :disabled="page_layout === 'page-grid'"
                                 @click="changeLayout('page-grid')"
                         >
                             <i class="fa fa-fw fa-th"></i>
                         </button>
-                        <button class="btn btn-xs"
+                        <button class="btn btn-xs z-0"
                                 :class="page_layout === 'page-table' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
                                 :disabled="page_layout === 'page-table'"
                                 @click="changeLayout('page-table')"
@@ -114,19 +153,47 @@
                 </div>
             </template>
 
-            <template v-if="filtered.length > 0 && filtered.length < 500" v-for="model in filtered" >
-                <component
-                    :is="params.component || params.type"
-                    :item-layout="item_layout"
-                    :initial="model"
-                    :key="model.id"
-                    :model-props="params.modelProps"
-                    :columns="params.columns"
-                    @ToggledHasChanged="setToggled">
-                </component>
+            <!-- Table & Grid Layout -->
+            <template v-if="page_layout === 'page-table' || page_layout === 'page-grid'">
+                <template v-if="filtered.length > 0 && filtered.length < 500" v-for="model in filtered" >
+                    <component
+                        :is="params.component || params.type"
+                        :item-layout="item_layout"
+                        :initial="model"
+                        :key="model.id"
+                        :model-props="params.modelProps"
+                        :columns="params.columns"
+                        @ToggledHasChanged="setToggled">
+                    </component>
+                </template>
             </template>
 
-
+            <!-- Scrum Layout -->
+            <template v-else>
+                <template v-if="filtered.length > 0 && filtered.length < 500">
+                    <div class="d-flex scrum-columns mb-5">
+                        <scrum-column
+                                @ToggledHasChanged="$emit('ToggledHasChanged')"
+                                v-if="filtered.some(o => o[groupBy].indexOf(status) > -1)"
+                                :status="status"
+                                v-for="status in scrumGroups"
+                                :key="status"
+                                :count="filtered.filter(o => o[groupBy].indexOf(status) > -1).length"
+                            >
+                            <component
+                                v-for="model in filtered.filter(o => o[groupBy].indexOf(status) > -1)"
+                                :is="params.component || params.type"
+                                :item-layout="item_layout"
+                                :initial="model"
+                                :key="model.id"
+                                :model-props="params.modelProps"
+                                :columns="params.columns"
+                                @ToggledHasChanged="setToggled">
+                            </component>
+                        </scrum-column>
+                    </div>
+                </template>
+            </template>
 
             <template slot="page-meta-bottom">
                 <div class="d-flex align-items-center header-sort-button">
@@ -139,6 +206,9 @@
                     </button>
                     <badge class="p-2" type="badge-light" icon="fa-clock-o">
                         Updated {{ lastRefreshedFormatted }}
+                    </badge>
+                    <badge v-if="countdown !== -1" class="p-2" type="badge-light" icon="fa-clock-o">
+                        Refreshing in {{ countdown }}
                     </badge>
                 </div>
             </template>
@@ -161,15 +231,21 @@
 </template>
 
 <script>
-    //import _ from 'lodash';
+    import _ from 'lodash';
     //import moment from 'moment-timezone';
     import PageTable from './PageTable.vue';
     import PageGrid from './PageGrid.vue';
+    import PageScrum from './PageScrum.vue';
+    import ScrumColumn from './ScrumColumn.vue';
+    import AutoRefresh from './AutoRefresh.vue';
 
     export default {
         components: {
             PageTable,
-            PageGrid
+            PageGrid,
+            PageScrum,
+            ScrumColumn,
+            AutoRefresh
         },
 
         mixins : [
@@ -189,7 +265,14 @@
 
             Bus.$on('ShowChecked', (e) => {
                 this.showChecked = e;
-            })
+            });
+
+            if ( this.intervals.formatLastRefreshed )
+                clearInterval(this.intervals.formatLastRefreshed);
+
+            this.intervals.formatLastRefreshed = setInterval(this.formatLastRefreshed,30000);
+
+            this.formatLastRefreshed();
         },
 
         props : {
@@ -214,7 +297,7 @@
                         where : {},
                         reject : { placeholder : 'some-nonsense-value'},
                         filters : {},
-                        hidden_columns : []
+                        hidden_columns : [],
                     }
                 }
             },
@@ -239,11 +322,49 @@
                 hiddenColumns : this.getInitialHiddenColumns(),
                 timeoutHiddenColumnUpdate : null,
                 page : {},
-                showChecked : false
+                showChecked : false,
+                groupBy : 'status',
+                intervals : [],
+                countdown : -1,
+                scrumStatuses : [
+                    'Open',
+                    'Pending',
+                    'In Progress',
+                    'Follow Up',
+                    'Waiting for Customer',
+                    'Waiting for Vendor',
+                    'Waiting for Approval',
+                    'Requires Upgrade',
+                ],
+                scrumPriorities : [
+                    '3 High',
+                    '2 Medium',
+                    '1 Low',
+                ],
+                scrumUrgencies : [
+                    'Immediate',
+                    'Today',
+                    'Tomorrow',
+                    'This Week',
+                    'Next Week',
+                    'Two Weeks',
+                    'This Month',
+                    'Next Month',
+                    'This Year',
+                    'Not Urgent',
+                    'Other'
+                ],
+                lastRefreshedFormatted : null
             }
         },
 
         computed : {
+
+            scrumGroups() {
+                if ( this.groupBy === 'status' ) return this.scrumStatuses;
+                if ( this.groupBy === 'priority' ) return this.scrumPriorities;
+                if ( this.groupBy === 'urgency' ) return this.scrumUrgencies;
+            },
 
             viewingRecordsTxt() {
                 let
@@ -285,12 +406,6 @@
                 return !! this.filterKeys.length;
             },
 
-            lastRefreshedFormatted() {
-                if ( isNaN(this.last_refreshed)) return this.last_refreshed;
-
-                return moment.unix(this.last_refreshed/1000).fromNow();
-            },
-
             hiddenColumnsOptions() {
                 return _.map(this.params.columns, o => { return typeof o === 'string' ? o : o.title });
             },
@@ -313,10 +428,30 @@
 
         methods : {
 
+            updateCountdown(value) {
+                if ( value === -1 ) return this.countdown = -1;
+                this.countdown = moment.utc(value).format('mm:ss');
+            },
+
+            formatLastRefreshed() {
+                this.lastRefreshedFormatted = ( isNaN(this.last_refreshed)) ?
+                    this.last_refreshed :
+                    moment.unix(this.last_refreshed/1000).fromNow();
+
+                return this.lastRefreshedFormatted;
+            },
+
             toggleChecked() {
                 this.showChecked = ! this.showChecked;
 
                 Bus.$emit('ShowChecked', this.showChecked);
+            },
+
+            changeGroupBy(groupBy) {
+                this.groupBy = groupBy;
+
+                if ( this.groupBy === 'urgency' )
+                    Bus.$emit('UpdateFilters', { key : 'urgency', value : ['Immediate','Today','Tomorrow','This Week','Next Week','Two Weeks','This Month'] });
             },
 
             changeLayout(layout) {
@@ -382,13 +517,26 @@
                 return this.getToggled().map(o => o.model.id);
             },
 
+            getItems() {
+                if ( ! this.page || ! this.page.$children ) return [];
+
+                return this.page.$children.map( child => child.$children.map( grandchild => grandchild.$item ) );
+            },
+
             getToggled() {
                 if ( ! this.page ) return [];
 
                 if ( ! this.page.$children ) return [];
 
-                return this.page.$children
-                    .filter( child => { return child.$children.length && child.$children[0].toggled; } );
+                if ( this.page_layout !== 'page-scrum' )
+                    return this.page.$children
+                        .filter( child => { return child.$children.length && child.$children[0].toggled; } );
+
+                else
+                    return this.page.$children
+                        .filter( child => child.scrumColumn )
+                        .map( child => { return child.toggled } )
+                        .flat();
             },
 
             getUntoggled() {
