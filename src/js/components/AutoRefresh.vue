@@ -37,12 +37,14 @@
                 rateFriendly : Store.$ls.get( this.getCacheKey('auto_refresh_rate_friendly'),'5 min'),
                 intervals : [],
                 dropdownOpen : false,
-                countdown : -1
+                countdown : -1,
+                paused : false
             }
         },
 
         mounted() {
             this.init();
+            Bus.$on('RefreshDone', this.resume );
         },
 
         methods : {
@@ -73,9 +75,6 @@
                 this.active = false;
                 Store.$ls.set( this.getCacheKey('auto_refresh_active'), false );
 
-                if ( this.intervals.refresh )
-                    clearInterval(this.intervals.refresh);
-
                 if ( this.intervals.countdown )
                     clearInterval(this.intervals.countdown);
 
@@ -87,30 +86,45 @@
                 this.rate = rate;
                 this.rateFriendly = rateFriendly;
 
-                if ( this.intervals.refresh )
-                    clearInterval(this.intervals.refresh);
-
                 if ( this.intervals.countdown )
                     clearInterval(this.intervals.countdown);
 
                 this.countdown = this.rate;
 
                 this.intervals.countdown = setInterval(this.advanceCountdown,1000);
-                this.intervals.refresh = setInterval(this.refresh,this.rate);
 
                 Store.$ls.set( this.getCacheKey('auto_refresh_active'), true );
                 Store.$ls.set( this.getCacheKey('auto_refresh_rate'), this.rate);
                 Store.$ls.set( this.getCacheKey('auto_refresh_rate_friendly'), this.rateFriendly);
+                this.$emit('countdown',this.rate);
+            },
+
+            resume() {
+                this.paused = false;
+                this.countdown = this.rate;
+                this.$emit('countdown',this.countdown);
             },
 
             refresh() {
                 this.$emit('refresh');
+                this.paused = true;
             },
 
             advanceCountdown() {
+
+                // check if we're waiting for refresh
+                if (this.paused)
+                    return;
+
+                this.$emit('countdown', this.countdown);
+
                 this.countdown -= 1000;
-                if (this.countdown === 0)
-                    this.countdown = this.rate;
+
+                // countdown lapsed, refresh and reset.
+                if (this.countdown === 0) {
+                    this.refresh();
+                }
+
                 this.$emit('countdown', this.countdown);
             },
 

@@ -254,6 +254,7 @@ export default {
             sleep(1000).then( () => {
                 this.refresh_btn_text = 'Refresh';
                 this.busy = false;
+                Bus.$emit('RefreshDone')
             })
         },
 

@@ -77,8 +77,8 @@
                     <badge class="p-2" type="badge-light" icon="fa-clock-o">
                         Updated {{ lastRefreshedFormatted }}
                     </badge>
-                    <badge v-if="countdown !== -1" class="p-2 ml-2" type="badge-light" icon="fa-clock-o">
-                        Refreshing in {{ countdown }}
+                    <badge v-if="countdown !== -1" class="ml-2 p-2" type="badge-light" icon="fa-clock-o">
+                        {{ countdown }}
                     </badge>
                     <div class="flex-fill"></div>
 
@@ -207,8 +207,8 @@
                     <badge class="p-2" type="badge-light" icon="fa-clock-o">
                         Updated {{ lastRefreshedFormatted }}
                     </badge>
-                    <badge v-if="countdown !== -1" class="p-2" type="badge-light" icon="fa-clock-o">
-                        Refreshing in {{ countdown }}
+                    <badge v-if="countdown !== -1" class="ml-2 p-2" type="badge-light" icon="fa-clock-o">
+                        {{ countdown }}
                     </badge>
                 </div>
             </template>
@@ -429,8 +429,13 @@
         methods : {
 
             updateCountdown(value) {
-                if ( value === -1 ) return this.countdown = -1;
-                this.countdown = moment.utc(value).format('mm:ss');
+                if ( value === -1 )
+                    return this.countdown = -1;
+
+                if ( value < 1000 )
+                    return this.countdown = 'Refreshing... ';
+
+                this.countdown = 'Refreshing in ' + moment.utc(value).format('mm:ss');
             },
 
             formatLastRefreshed() {
