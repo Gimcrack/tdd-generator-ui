@@ -1,10 +1,10 @@
 <template>
     <transition name="bounce">
-        <div class="item-grid position-relative card card-shadow mt-4 mb-4"
+        <div class="item-cards position-relative card card-shadow my-4 mx-2"
              v-if="show" ref="row" :class="[{sticky, toggled}, itemBorder]"
         >
-            <div class="card-body p-2">
-                <div :class="itemBorder" class="item-grid__controls position-absolute card d-flex align-items-start border-bottom-0">
+            <div class="card-body">
+                <div :class="itemBorder" class="item-cards__controls position-absolute card d-flex align-items-start border-bottom-0">
                     <div class="right-border-cover"></div>
                     <item-header
                         :id="id"
@@ -22,7 +22,7 @@
                     </item-header>
                 </div>
 
-                <div class="d-flex flex-column flex-fill pt-1">
+                <div class="d-flex flex-column flex-fill">
                     <slot name="row2"></slot>
                 </div>
 
@@ -30,16 +30,11 @@
 
                 <transition name="bounce">
                     <div v-if="show_meta"
-                         class="d-flex mt-3 item-grid__meta align-items-center justify-content-between flex-wrap bg-white-transparent text-dark rounded"
+                         class="d-flex mt-2 item-cards__meta align-items-center justify-content-center flex-wrap"
                     >
-                        <div class="m-2" v-for="cell,i in meta" :key="i">
-                            <item-meta
-                               :cell-data="cell"
-                               :model="model"
-                               :show-heading="true"
-                               :column="$parent.columns[i+1]"
-                            ></item-meta>
-                        </div>
+                        <h3>
+                            {{ model.name }}
+                        </h3>
 
                     </div>
                 </transition>
@@ -166,16 +161,13 @@
 </script>
 
 <style lang="scss">
-    .item-grid {
+    .item-cards {
 
-        .btn-customer-responded-last {
-            position:absolute;
-            top: -42px;
-            left: 166px
-        }
+        border-color: white;
+        color: white;
 
-        .bg-white-transparent {
-            background: rgba(255,255,255,0.9);
+        .card-body {
+            min-width: 130px;
         }
 
         &.bg-danger {
@@ -206,6 +198,12 @@
             }
         }
 
+        .btn-customer-responded-last {
+            position:absolute;
+            top: -50px;
+            left: 158px
+        }
+
         .btn-show-meta {
             transition: all 0.3s ease-in 0.2s;
 
@@ -216,26 +214,24 @@
 
 
 
-
-        .item-grid__controls {
+        .item-cards__controls {
             width: auto;
-            padding: 0.5rem 0.5rem 0;
-            top: -25px;
-            left: -1px;
+            padding: 0.3rem 0.3rem 0;
+            top: -15px;
+            left: 0px;
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
 
             .right-border-cover {
                 position: absolute;
-                right:-2px;
-                width:2px;
-                background: white;
-                height: 10px;
+                right:-5px;
+                width:5px;
+                height: 17px;
                 bottom:0;
             }
         }
 
-        .item-grid__meta {
+        .item-cards__meta {
 
         }
 

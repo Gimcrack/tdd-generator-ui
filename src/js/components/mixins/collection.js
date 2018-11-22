@@ -27,6 +27,7 @@ export default {
             if ( this.page_layout === 'page-table' ) return 'item-table';
             if ( this.page_layout === 'page-grid' ) return 'item-grid';
             if ( this.page_layout === 'page-scrum' ) return 'item-scrum';
+            if ( this.page_layout === 'page-cards' ) return 'item-cards';
         },
 
         filtered() {

@@ -402,5 +402,12 @@
         .multiselect__tags-wrap {
             margin-left: 20px;
         }
+
+        .multiselect__placeholder {
+            text-indent: 24px;
+            font-size: 16px;
+            line-height: 16px;
+        }
+
     }
 </style>

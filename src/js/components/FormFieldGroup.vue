@@ -44,7 +44,7 @@
         created() {
             this.$parent.form_field_groups[this.group.name] = this;
 
-            let delay = (this.group.order || 0) * 450;
+            let delay = (this.group.order || 0) * 600;
 
             sleep(delay).then( () => {
                 this.delayLapsed = true;

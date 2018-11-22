@@ -128,21 +128,32 @@
                     </div>
 
                     <div class="btn-group ml-2">
-                        <button class="btn btn-xs z-0"
+                        <button v-if="layouts.scrum !== false"
+                                class="btn btn-xs z-0"
                                 :class="page_layout === 'page-scrum' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
                                 :disabled="page_layout === 'page-scrum'"
                                 @click="changeLayout('page-scrum')"
                         >
-                            <i class="fa fa-fw fa-bars fa-rotate-90"></i>
+                            <i class="fa fa-fw fa-columns"></i>
                         </button>
-                        <button class="btn btn-xs z-0"
+                        <button v-if="layouts.cards !== false"
+                                class="btn btn-xs z-0"
+                                :class="page_layout === 'page-cards' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
+                                :disabled="page_layout === 'page-cards'"
+                                @click="changeLayout('page-cards')"
+                        >
+                            <i class="fa fa-fw fa-th"></i>
+                        </button>
+                        <button v-if="layouts.grid !== false"
+                                class="btn btn-xs z-0"
                                 :class="page_layout === 'page-grid' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
                                 :disabled="page_layout === 'page-grid'"
                                 @click="changeLayout('page-grid')"
                         >
-                            <i class="fa fa-fw fa-th"></i>
+                            <i class="fa fa-fw fa-th-large"></i>
                         </button>
-                        <button class="btn btn-xs z-0"
+                        <button v-if="layouts.table !== false"
+                                class="btn btn-xs z-0"
                                 :class="page_layout === 'page-table' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
                                 :disabled="page_layout === 'page-table'"
                                 @click="changeLayout('page-table')"
@@ -154,7 +165,7 @@
             </template>
 
             <!-- Table & Grid Layout -->
-            <template v-if="page_layout === 'page-table' || page_layout === 'page-grid'">
+            <template v-if="page_layout === 'page-table' || page_layout === 'page-grid' || page_layout === 'page-cards'">
                 <template v-if="filtered.length > 0 && filtered.length < 500" v-for="model in filtered" >
                     <component
                         :is="params.component || params.type"
@@ -169,7 +180,7 @@
             </template>
 
             <!-- Scrum Layout -->
-            <template v-else>
+            <template v-if="page_layout === 'page-scrum'">
                 <template v-if="filtered.length > 0 && filtered.length < 500">
                     <div class="d-flex scrum-columns mb-5">
                         <scrum-column
@@ -236,6 +247,7 @@
     import PageTable from './PageTable.vue';
     import PageGrid from './PageGrid.vue';
     import PageScrum from './PageScrum.vue';
+    import PageCards from './PageCards.vue';
     import ScrumColumn from './ScrumColumn.vue';
     import AutoRefresh from './AutoRefresh.vue';
 
@@ -244,6 +256,7 @@
             PageTable,
             PageGrid,
             PageScrum,
+            PageCards,
             ScrumColumn,
             AutoRefresh
         },
@@ -304,7 +317,19 @@
             toggles : {
                 default()  {
                     return {
-                        new : true
+                        new : true,
+
+                    }
+                }
+            },
+
+            layouts : {
+                default() {
+                    return {
+                        table : true,
+                        grid : true,
+                        scrum : false,
+                        cards : false
                     }
                 }
             }

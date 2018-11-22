@@ -20,6 +20,7 @@ export default function(Vue) {
     Vue.component('item-table', require('./src/js/components/ItemTable.vue'));
     Vue.component('item-grid', require('./src/js/components/ItemGrid.vue'));
     Vue.component('item-scrum', require('./src/js/components/ItemScrum.vue'));
+    Vue.component('item-cards', require('./src/js/components/ItemCards.vue'));
     Vue.component('vinput', require('./src/js/components/Vinput.vue'));
     Vue.component('flash', require('./src/js/components/Flash.vue'));
     Vue.component('toggle', require('./src/js/components/Toggle.vue'));
