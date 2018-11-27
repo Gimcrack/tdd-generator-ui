@@ -91,13 +91,19 @@
                         @update="updateHiddenColumns"
                     ></view-settings>
 
-                    <div class="btn-group ml-2" v-else >
+                    <div v-if="page_layout === 'page-grid'" class="btn-group ml-2">
                         <button class="btn btn-xs z-0 btn-outline-primary" @click="showMeta">
                             <small><i class="fa fa-fw fa-plus"></i> Expand All</small>
                         </button>
                         <button class="btn btn-xs z-0 btn-outline-primary" @click="hideMeta">
                             <small><i class="fa fa-fw fa-minus"></i> Collapse All</small>
                         </button>
+                    </div>
+
+                    <div class="btn-group ml-2" v-if="page_layout === 'page-cards'" >
+                        <div  class="mr-2" style="width: 200px">
+                            <vue-slider @input="changeZoom" tooltip="hover" v-model="zoom" :min="80" :max="300" :interval="10"></vue-slider>
+                        </div>
                     </div>
 
                     <div v-if="page_layout === 'page-scrum'" class="d-flex ml-2">
@@ -250,6 +256,7 @@
     import PageCards from './PageCards.vue';
     import ScrumColumn from './ScrumColumn.vue';
     import AutoRefresh from './AutoRefresh.vue';
+    import VueSlider from 'vue-slider-component';
 
     export default {
         components: {
@@ -258,7 +265,8 @@
             PageScrum,
             PageCards,
             ScrumColumn,
-            AutoRefresh
+            AutoRefresh,
+            VueSlider
         },
 
         mixins : [
@@ -286,6 +294,9 @@
             this.intervals.formatLastRefreshed = setInterval(this.formatLastRefreshed,30000);
 
             this.formatLastRefreshed();
+
+            this.zoom = +Store.$ls.get( this.getCacheKey('cards_zoom'), 100);
+            Bus.$emit('ChangeZoom', { zoom : this.zoom} );
         },
 
         props : {
@@ -351,6 +362,7 @@
                 groupBy : 'status',
                 intervals : [],
                 countdown : -1,
+                zoom : 100,
                 scrumStatuses : [
                     'Open',
                     'Pending',
@@ -475,6 +487,12 @@
                 this.showChecked = ! this.showChecked;
 
                 Bus.$emit('ShowChecked', this.showChecked);
+            },
+
+            changeZoom() {
+                Bus.$emit('ChangeZoom', { zoom : this.zoom} );
+
+                Store.$ls.set( this.getCacheKey('cards_zoom'), this.zoom );
             },
 
             changeGroupBy(groupBy) {

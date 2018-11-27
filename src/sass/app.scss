@@ -14,6 +14,15 @@
 @import "font-awesome/scss/font-awesome";
 @import "navs";
 
+// vue-popper
+$popper-background-color: mintcream;
+@import "~vue-popper-component/src/vue-popper";
+
+// overrides
+.vue-popper-component {
+    width: unset;
+    min-width: 320px;
+}
 
 @import "animations";
 @import "tabs";

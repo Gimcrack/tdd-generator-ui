@@ -33,6 +33,12 @@
             }
         },
 
+        watch : {
+            conditionsMet() {
+                this.init();
+            }
+        },
+
         data() {
             return {
                 controls : {},
@@ -41,14 +47,10 @@
             }
         },
 
-        created() {
+        mounted() {
             this.$parent.form_field_groups[this.group.name] = this;
 
-            let delay = (this.group.order || 0) * 600;
-
-            sleep(delay).then( () => {
-                this.delayLapsed = true;
-            } )
+            this.init();
         },
 
         computed : {
@@ -58,6 +60,17 @@
         },
 
         methods : {
+            init() {
+                console.log('initing');
+                this.delayLapsed = false;
+
+                let delay = (this.group.order || 0) * 400;
+
+                sleep(delay).then( () => {
+                    this.delayLapsed = true;
+                } )
+            },
+
             componentType(def) {
                 switch(def.type) {
                     case 'select':
@@ -78,15 +91,28 @@
             },
 
             showField(def) {
+                console.log('conditions',def.condition);
+
                 if ( ! def.condition ) {
                     return ( ! this.editing ||
                         ! def.uneditable )
                 }
 
                 for ( let prop in def.condition ) {
-                    if ( this.form[prop] !== def.condition[prop] ) {
-                        return false;
+                    if ( ! def.condition[prop] )
+                        continue;
+
+                    else {
+                        // determine if it's an inverse condition
+                        if ( def.condition[prop].operator === 'not' ) {
+                            return def.condition[prop].value !== this.form[prop];
+                        }
+
+                        if ( this.form[prop] !== def.condition[prop] ) {
+                            return false;
+                        }
                     }
+
                 }
 
                 return ( ! this.editing ||

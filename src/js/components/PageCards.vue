@@ -12,13 +12,12 @@
                     <i class="fa fa-filter"></i>
                 </button>
 
+
                 <div v-show="showGridControls" :class="{show : showGridControls}" class="grid-controls dropdown-menu p-2 w-0 header-menu">
                     <div class="m-2 d-flex flex-column">
                         <slot name="column-headers"></slot>
                     </div>
                 </div>
-
-
             </div>
             <slot name="page-meta-top"></slot>
         </div>
@@ -45,6 +44,7 @@
         data() {
             return {
                 showGridControls : false,
+                zoom : 100,
             }
         },
 

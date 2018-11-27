@@ -212,6 +212,15 @@
                         if ( group.condition[prop] == null ) {
                             if ( this.form_params.form[prop] == null )
                                 return false;
+                            else
+                                continue;
+                        }
+
+                        // determine if it's an inverse condition
+                        if ( group.condition[prop].operator === 'not' ) {
+                            if ( group.condition[prop].required && ! this.form_params.form[prop])
+                                return false;
+                            return group.condition[prop].value !== this.form_params.form[prop];
                         }
 
                         else if ( this.form_params.form[prop] !== group.condition[prop] ) {

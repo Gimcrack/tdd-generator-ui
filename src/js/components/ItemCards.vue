@@ -1,61 +1,53 @@
 <template>
     <transition name="bounce">
-        <div class="item-cards position-relative card card-shadow my-4 mx-2"
-             v-if="show" ref="row" :class="[{sticky, toggled}, itemBorder]"
+        <popper
+            :show-popper.sync="show_popper"
+            placement="bottom"
         >
-            <div class="card-body">
-                <div :class="itemBorder" class="item-cards__controls position-absolute card d-flex align-items-start border-bottom-0">
-                    <div class="right-border-cover"></div>
-                    <item-header
-                        :id="id"
-                        :busy="busy"
-                        :toggles="toggles"
-                        :toggled="toggled"
-                        :external-url="externalUrl"
-                        @view="$emit('view')"
-                        @update="$emit('update')"
-                        @destroy="$emit('destroy')"
-                        @toggle="toggle"
-                        @checkToggle="checkToggle"
-                    >
-                        <slot name="menu"></slot>
-                    </item-header>
-                </div>
+            <div :style="cardStyle" class="item-cards btn position-relative card-shadow mt-4 mx-2 d-flex"
+                 v-if="show" ref="row" :class="[{sticky, toggled}, itemBorder]"
+            >
 
-                <div class="d-flex flex-column flex-fill">
-                    <slot name="row2"></slot>
-                </div>
+                <div @click="togglePopper" class="card-body justify-content-center d-flex">
+                    <slot name="pre"></slot>
 
-                <slot name="pre"></slot>
+                    <transition name="bounce">
+                        <div v-if="show_meta"
+                             class="d-flex item-cards__meta align-items-center justify-content-center flex-wrap"
+                        >
+                            {{ model.nickname || model.name }}
+                        </div>
+                    </transition>
 
-                <transition name="bounce">
-                    <div v-if="show_meta"
-                         class="d-flex mt-2 item-cards__meta align-items-center justify-content-center flex-wrap"
-                    >
-                        <h3>
-                            {{ model.name }}
-                        </h3>
-
+                    <div v-if="$slots['row2']" class="d-flex justify-content-center mt-2">
+                        <button @click="show_meta = ! show_meta"
+                                class="btn-xs btn btn-show-meta"
+                                :class="show_meta ? ['btn-primary','active'] : ['btn-link']"
+                        >
+                            <i class="fa fa-caret-down"></i>
+                        </button>
                     </div>
-                </transition>
 
-                <div v-if="$slots['row2']" class="d-flex justify-content-center mt-2">
-                    <button @click="show_meta = ! show_meta"
-                            class="btn-xs btn btn-show-meta"
-                            :class="show_meta ? ['btn-primary','active'] : ['btn-link']"
-                    >
-                        <i class="fa fa-caret-down"></i>
-                    </button>
                 </div>
 
             </div>
 
-        </div>
+            <div slot="content" class="pb-2">
+                <slot name="popper"></slot>
+            </div>
+        </popper>
     </transition>
 </template>
 
 <script>
+
+    import Popper from 'vue-popper-component';
+
     export default {
+
+        components : {
+            Popper
+        },
 
         mounted() {
             this.$parent.$item = this;
@@ -68,6 +60,15 @@
 
             Bus.$on('HideMeta',() => {
                 this.show_meta = false;
+            });
+
+            Bus.$on('ChangeZoom', (e) => {
+                this.zoom = e.zoom;
+            });
+
+            Bus.$on('ClosePopper', (e) => {
+                if ( e.id === this.id )
+                    this.show_popper = false;
             });
 
         },
@@ -115,7 +116,9 @@
                 toggled : false,
                 show : true,
                 page : this.$parent.$parent.$parent,
-                show_meta : ! this.$slots['row2']
+                show_meta : ! this.$slots['row2'],
+                zoom : 100,
+                show_popper : false
             }
         },
 
@@ -126,10 +129,23 @@
 
             model() {
                 return this.$parent.model;
-            }
+            },
+
+            cardStyle() {
+                return {
+                    //transform: 'scale(' + this.zoom/100 + ',' + this.zoom/100 + ')'
+                    minWidth : (30+this.zoom) + 'px',
+                    minHeight: (-18+this.zoom) + 'px',
+                    fontSize : (1.4*this.zoom/100) + 'rem',
+                }
+            },
         },
 
         methods: {
+
+            togglePopper() {
+                this.show_popper = ! this.show_popper;
+            },
 
             updateShowStatus() {
                 this.show = ( ! this.toggled || this.page.showChecked || ! this.page.toggles.checklist );
@@ -162,15 +178,16 @@
 
 <style lang="scss">
     .item-cards {
+        transition: all 0.3s linear;
 
         border-color: white;
         color: white;
 
         .card-body {
-            min-width: 130px;
+            padding: 0;
         }
 
-        &.bg-danger {
+        &.btn-danger {
             .right-border-cover {
                 background: #c63100 !important;
             }
@@ -184,7 +201,7 @@
             }
         }
 
-        &.bg-success {
+        &.btn-success {
             .right-border-cover {
                 background: #00c631 !important;
             }

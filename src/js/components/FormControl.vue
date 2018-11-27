@@ -1,5 +1,5 @@
 <template>
-    <div :class="['form-group', (show_invalid) ? 'is-invalid' : '']">
+    <div :class="['form-group', (show_invalid) ? 'is-invalid' : '', 'tdd-generator-form-control']">
         <label :for="name" v-if="label && type !== 'hidden'">{{ label }}</label>
 
         <input
@@ -234,3 +234,11 @@
 
     }
 </script>
+
+<style lang="scss">
+    .tdd-generator-form-control {
+        .form-control {
+            text-indent : 20px;
+        }
+    }
+</style>
