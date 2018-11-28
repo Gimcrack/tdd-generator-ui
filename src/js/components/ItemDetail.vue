@@ -5,7 +5,7 @@
             <div class="card card-default">
                 <div class="page-header m-2">
                     <h2>
-                        <i class="fa fa-fw fa-exclamation-triangle"></i>
+                        <i class="fa fa-fw fa-info-circle"></i>
                         Item Detail
                     </h2>
                 </div>

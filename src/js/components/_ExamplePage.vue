@@ -1,23 +1,23 @@
 <template>
     <page
-        :params="details"
-        :toggles="toggles"
-        :layouts="layouts"
-        @new="create"
-        @created="created"
-        @deleted="deleted"
+            :params="details"
+            :toggles="toggles"
+            :layouts="layouts"
+            @new="create"
+            @created="created"
+            @deleted="deleted"
     >
         <template slot="menu">
-            <button @click="toggleOpen" class="btn btn-success">Open Only</button>
+            <!--<button @click="toggleOpen" class="btn btn-success">Open Only</button>-->
         </template>
 
         <template slot="selection-dropdown-menu">
-            <dropdown-item :show="toggles.update" :busy="page.toggledCount>1" @clicked="page.update" icon="fa-edit">
+            <!--<dropdown-item :show="toggles.update" :busy="page.toggledCount>1" @clicked="page.update" icon="fa-edit">
                 Edit
-            </dropdown-item>
-            <dropdown-item :show="toggles.update" @clicked="page.destroyMany" icon="fa-trash">
+            </dropdown-item>-->
+            <!--<dropdown-item :show="toggles.update" @clicked="page.destroyMany" icon="fa-trash">
                 Delete
-            </dropdown-item>
+            </dropdown-item>-->
         </template>
     </page>
 </template>
@@ -26,6 +26,10 @@
     export default {
         data() {
             return {
+                /**
+                 *  Placeholder for the page object
+                 */
+                page : {},
 
                 /**
                  *  Controls to enable
@@ -68,24 +72,24 @@
                 details : {
 
                     /*
-                    ### Component Parameters
+                     Component Parameters
                      */
 
                     // The type of model
-                    type : 'disk',
+                    type : 'product',
 
                     // // The name of the Vue Component, if different than the model type
-                    // component : 'diskComponent',
+                    // component : 'productComponent',
 
                     // // Override the model name
                     //model_for_humans : 'Disk',
 
                     /*
-                    ### Data Parameters ###
+                     Data Parameters
                      */
 
                     // The api endpoint, without prefix
-                    endpoint : 'disks',
+                    endpoint : 'products',
 
                     // // the json key of the data e.g. 'data'
                     // data_key : null,
@@ -95,7 +99,7 @@
                     // reject : { placeholder : 'some-nonsense-value'},
 
                     /*
-                    ### Display Parameters ###
+                    Display Parameters
                      */
 
                     columns : [
@@ -105,42 +109,43 @@
                         // using just the key will display the Title Case version of the string
                         'id',   // will display as Id
                         'name', // will display as Name
+                        'description',
 
                         // custom title
-                        {
-                            title : 'Stoppage', // will display as Stoppage
-                            key : 'work_stoppage',
-                        },
+                        // {
+                        //     title : 'Stoppage', // will display as Stoppage
+                        //     key : 'work_stoppage',
+                        // },
 
                         // custom data type and title
-                        {
-                            title : 'Created',
-                            key : 'created_at',
-                            type : 'date'
-                        },
+                        // {
+                        //     title : 'Created',
+                        //     key : 'created_at',
+                        //     type : 'date'
+                        // },
 
                         // custom title and filter options
-                        {
-                            title : 'Boolean Value',
-                            key : 'some_flag',
-                            options : [
-                                {
-                                    label : 'Yes',
-                                    id : true
-                                },
-                                {
-                                    label : 'No',
-                                    id : false
-                                }
-                            ]
-                        }
+                        // {
+                        //     title : 'Boolean Value',
+                        //     key : 'some_flag',
+                        //     options : [
+                        //         {
+                        //             label : 'Yes',
+                        //             id : true
+                        //         },
+                        //         {
+                        //             label : 'No',
+                        //             id : false
+                        //         }
+                        //     ]
+                        // }
                     ],
 
                     // The heading text
-                    heading : 'Disks',
+                    heading : 'Products',
 
                     // Help text
-                    help : 'Manage Disks',
+                    help : 'Manage Products',
 
                     // // ordering of the result data
                     // order : 'name',
@@ -159,18 +164,18 @@
                     // newBtnText : 'New Disk',
 
                     /*
-                    ### Event Parameters ###
+                    Event Parameters
                      */
                     events : {
 
                         // the channel to listen on
-                        channel : 'disks',
+                        channel : 'products',
 
                         // the name of the 'Created' event
-                        created : 'DiskWasCreated',
+                        created : 'ProductWasCreated',
 
                         // the name of the 'Destroyed' event
-                        destroyed : 'DiskWasDestroyed',
+                        destroyed : 'ProductWasDestroyed',
 
                         // other events to listen for on the 'disks' channel
                         //  use this patten:
@@ -206,7 +211,7 @@
 
             // called when New button is clicked
             create() {
-                Bus.$emit("ShowForm", { type : "disk", model : null });
+                Bus.$emit("ShowForm", { type : "product", model : null });
             },
 
             // called after a new item is created
@@ -218,10 +223,6 @@
             deleted() {
                 console.warn("Deleted method not implemented on Disks.vue");
             },
-
-            do_something() {
-                console.log("Doing Something");
-            }
         },
     }
 </script>

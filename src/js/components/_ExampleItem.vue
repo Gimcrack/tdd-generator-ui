@@ -1,15 +1,15 @@
 <template>
     <component
-        :is="itemLayout"
-        :id="model.id"
-        :deleting="deleting"
-        :updating="updating"
-        :toggles="toggles"
-        :meta="meta"
-        @view="view"
-        @update="update"
-        @ToggledHasChanged="$emit('ToggledHasChanged')"
-        :item-border="itemBorder"
+            :is="itemLayout"
+            :id="model.id"
+            :deleting="deleting"
+            :updating="updating"
+            :toggles="toggles"
+            :meta="meta"
+            @view="view"
+            @update="update"
+            @ToggledHasChanged="$emit('ToggledHasChanged')"
+            :item-border="itemBorder"
     >
 
         <template slot="menu">
@@ -52,40 +52,40 @@
             return {
 
                 /*
-                ### Toggle Options
+                 Toggle Options
                  */
                 toggles : {
                     // show the view info button
-                    info : false,
+                    info : true,
 
                     // show the update button
                     update : true,
 
                     // show the delete button
-                    delete : false,
+                    delete : true,
 
                     // is the view link external?
                     view_external : false,
                 },
 
                 /*
-                ### Item Parameters ###
+                Item Parameters
                  */
                 item : {
                     // the name of the primary key
                     key : 'id',
 
                     // the type of the model
-                    type : 'thing',
+                    type : 'product',
 
                     // the api endpoint without prefix
-                    endpoint : 'things',
+                    endpoint : 'products',
 
                     // the name of the Echo channel to listen on
-                    channel : `things.${this.initial.id}`,
+                    channel : `products.${this.initial.id}`,
 
                     // the name of the Updated event
-                    updated : 'ThingWasUpdated',
+                    updated : 'ProductWasUpdated',
                 },
 
 
@@ -101,57 +101,41 @@
                     // a string value will just return that corresponding key
                     // e.g. model.name
                     'name',
+                    'description',
 
-                    // custom or computed text
-                    {
-                        text: this.nominal_text,
-                    },
+                    // // custom or computed text
+                    // {
+                    //     text: this.nominal_text,
+                    // },
 
-                    // dynamic badge, badge text given by key e.g. model.active
-                    {
-                        key: 'active',
-                        badge: true,
-                        badge_class: this.model.active === 'yes' ? 'badge-success' : 'badge-danger'
-                    },
+                    // // dynamic badge, badge text given by key e.g. model.active
+                    // {
+                    //     key: 'active',
+                    //     badge: true,
+                    //     badge_class: this.model.active === 'yes' ? 'badge-success' : 'badge-danger'
+                    // },
 
-                    // dynamic badge, custom text
-                    {
-                        text : this.nominal_text,
-                        badge: true,
-                        badge_class: this.model.nominal === 'yes' ? 'badge-success' : 'badge-danger'
-                    }
-                    //'description',
+                    // // dynamic badge, custom text
+                    // {
+                    //     text : this.nominal_text,
+                    //     badge: true,
+                    //     badge_class: this.model.nominal === 'yes' ? 'badge-success' : 'badge-danger'
+                    // }
                 ]
             },
 
             itemBorder() {
-                return ( !! this.model.nominal ) ? ['btn-success'] : ['btn-danger'];
+                return [];
             },
-
-            nominal_text() {
-                let nom = ( !! this.model.nominal ) ? 'Yes' : 'No';
-
-                if ( this.expired_status )
-                    return nom + ' - Expired';
-
-                if ( this.stale_status )
-                    return nom + ' - Stale';
-
-                return nom;
-            }
         },
 
         methods : {
             update() {
-                Bus.$emit('ShowForm', { type : 'service_group', model : this.initial })
+                Bus.$emit('ShowForm', { type : 'product', model : this.initial })
             },
 
             postUpdated(event) {
                 this.updating = false;
-            },
-
-            view() {
-                console.log('View this service group');
             },
         }
     }
