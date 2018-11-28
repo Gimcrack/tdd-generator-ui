@@ -33,6 +33,8 @@ export default {
         return {
             $item : null,
 
+            component_type : "item-table",
+
             model : this.initial,
             updating : false,
             deleting : false,

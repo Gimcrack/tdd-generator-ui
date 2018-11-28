@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7794f487-d858-4eb4-894f-5c196e3220d8" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/js/components/ItemDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/js/components/_ExampleItem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/js/components/_EzxamplePage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/components/Form.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/Form.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/components/FormControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/FormControl.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/components/FormFieldGroup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/FormFieldGroup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/components/ItemCards.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/ItemCards.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/components/PageCards.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/PageCards.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/components/PageWrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/PageWrapper.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/components/mixins/item.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/mixins/item.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -79,6 +71,38 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="1970528930">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="js" value="2" />
+          <entry key="vue" value="4" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JavaScript" value="2" />
+          <entry key="Vue.js" value="4" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="js" value="2" />
+          <entry key="vue" value="2150" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JavaScript" value="2" />
+          <entry key="Vue.js" value="2150" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileColors">
     <fileColor scope="Non-Project Files (Material Default)" color="2E3C43" />
@@ -89,47 +113,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/js/components/_EzxamplePage.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="570">
+              <caret line="19" column="28" lean-forward="true" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+              <folding>
+                <marker date="1543379162400" expanded="true" signature="6242:6432" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/js/components/ItemCards.vue">
+        <entry file="file://$PROJECT_DIR$/src/js/components/_ExampleItem.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="17" column="62" selection-start-line="17" selection-start-column="62" selection-end-line="17" selection-end-column="62" />
+            <state relative-caret-position="1920">
+              <caret line="64" column="35" lean-forward="true" selection-end-line="157" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/js/components/FormFieldGroup.vue">
+        <entry file="file://$PROJECT_DIR$/src/js/components/mixins/item.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1518">
-              <caret line="66" column="55" selection-start-line="66" selection-start-column="55" selection-end-line="66" selection-end-column="55" />
+            <state relative-caret-position="1530">
+              <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/js/components/FormSelect.vue">
+        <entry file="file://$PROJECT_DIR$/src/js/components/ItemHeader.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3036">
-              <caret line="132" column="36" selection-start-line="132" selection-start-column="36" selection-end-line="132" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/js/components/Form.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8579">
-              <caret line="373" column="18" selection-start-line="373" selection-start-column="13" selection-end-line="373" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/js/components/FormControl.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5290">
-              <caret line="230" column="64" selection-start-line="230" selection-start-column="64" selection-end-line="230" selection-end-column="64" />
+            <state relative-caret-position="411">
+              <caret line="67" column="19" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -137,7 +155,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="46">
+            <state relative-caret-position="60">
               <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
             </state>
           </provider>
@@ -146,7 +164,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/components/ItemDetail.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2668">
+            <state relative-caret-position="3480">
               <caret line="116" column="25" selection-start-line="116" selection-start-column="25" selection-end-line="116" selection-end-column="25" />
             </state>
           </provider>
@@ -155,7 +173,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sass/app.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
+            <state relative-caret-position="600">
               <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
             </state>
           </provider>
@@ -164,8 +182,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/components/PageWrapper.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4255">
-              <caret line="185" column="23" selection-start-line="185" selection-start-column="23" selection-end-line="185" selection-end-column="23" />
+            <state relative-caret-position="411">
+              <caret line="320" column="29" selection-start-line="320" selection-start-column="24" selection-end-line="320" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/js/components/mixins/collection.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="411">
+              <caret line="201" column="36" selection-start-line="201" selection-start-column="29" selection-end-line="201" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -173,7 +200,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/components/PageCards.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
+            <state relative-caret-position="660">
               <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
             </state>
           </provider>
@@ -206,12 +233,15 @@
       <find>c</find>
       <find>countdown</find>
       <find>events</find>
-      <find>toggles</find>
       <find>page-scrum</find>
       <find>Ex</find>
       <find>Store</find>
       <find>Expand</find>
       <find>order</find>
+      <find>global</find>
+      <find>where</find>
+      <find>params.</find>
+      <find>toggles</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Code\tdd-generator-ui\src\js\components</dir>
@@ -239,7 +269,6 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/js/components/AutoRefresh.vue" />
         <option value="$PROJECT_DIR$/src/js/components/FormSelect.vue" />
-        <option value="$PROJECT_DIR$/src/js/components/mixins/item.js" />
         <option value="$PROJECT_DIR$/src/js/components/mixins/collection.js" />
         <option value="$PROJECT_DIR$/src/js/components/ItemGrid.vue" />
         <option value="$PROJECT_DIR$/src/js/components/PageCards.vue" />
@@ -250,6 +279,9 @@
         <option value="$PROJECT_DIR$/src/js/components/FormFieldGroup.vue" />
         <option value="$PROJECT_DIR$/src/js/components/FormControl.vue" />
         <option value="$PROJECT_DIR$/src/js/components/ItemCards.vue" />
+        <option value="$PROJECT_DIR$/src/js/components/_EzxamplePage.vue" />
+        <option value="$PROJECT_DIR$/src/js/components/mixins/item.js" />
+        <option value="$PROJECT_DIR$/src/js/components/_ExampleItem.vue" />
       </list>
     </option>
   </component>
@@ -277,8 +309,8 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1036" />
+    <option name="width" value="2576" />
+    <option name="height" value="1416" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -313,6 +345,14 @@
               <item name="js" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="tdd-generator-ui" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tdd-generator-ui" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="mixins" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -331,6 +371,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jeremy\Code\tdd-generator-ui\src\js\components" />
       <recent name="C:\Code\tdd-generator-ui\src\js\components" />
       <recent name="$PROJECT_DIR$/src/js/components" />
     </key>
@@ -364,16 +405,17 @@
       <workItem from="1541533390814" duration="49713000" />
       <workItem from="1542761255393" duration="27701000" />
       <workItem from="1543357607306" duration="553000" />
+      <workItem from="1543376576910" duration="4151000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="103418000" />
+    <option name="totallyTimeSpent" value="107569000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27121374" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27344993" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -465,9 +507,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/components/ItemHeader.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/components/PageGrid.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
@@ -513,22 +552,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/components/mixins/item.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="157" column="10" selection-start-line="157" selection-start-column="10" selection-end-line="157" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/components/mixins/page.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/components/mixins/collection.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="28" column="73" selection-start-line="28" selection-start-column="73" selection-end-line="28" selection-end-column="73" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/components/ItemScrum.vue">
       <provider selected="true" editor-type-id="text-editor">
@@ -561,73 +586,111 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/components/ItemCards.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="17" column="62" selection-start-line="17" selection-start-column="62" selection-end-line="17" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/components/FormFieldGroup.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1518">
+        <state relative-caret-position="1980">
           <caret line="66" column="55" selection-start-line="66" selection-start-column="55" selection-end-line="66" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/components/FormSelect.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3036">
+        <state relative-caret-position="3960">
           <caret line="132" column="36" selection-start-line="132" selection-start-column="36" selection-end-line="132" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/components/Form.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8579">
+        <state relative-caret-position="11190">
           <caret line="373" column="18" selection-start-line="373" selection-start-column="13" selection-end-line="373" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/components/FormControl.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5290">
+        <state relative-caret-position="6900">
           <caret line="230" column="64" selection-start-line="230" selection-start-column="64" selection-end-line="230" selection-end-column="64" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
+        <state relative-caret-position="60">
           <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/components/ItemDetail.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2668">
+        <state relative-caret-position="3480">
           <caret line="116" column="25" selection-start-line="116" selection-start-column="25" selection-end-line="116" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sass/app.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
+        <state relative-caret-position="600">
           <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/components/PageWrapper.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4255">
-          <caret line="185" column="23" selection-start-line="185" selection-start-column="23" selection-end-line="185" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/components/PageCards.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
+        <state relative-caret-position="660">
           <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/components/PageWrapper.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="320" column="29" selection-start-line="320" selection-start-column="24" selection-end-line="320" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/components/mixins/collection.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="201" column="36" selection-start-line="201" selection-start-column="29" selection-end-line="201" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/components/ItemCards.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="170" column="60" selection-start-line="170" selection-start-column="53" selection-end-line="170" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/components/_EzxamplePage.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="19" column="28" lean-forward="true" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+          <folding>
+            <marker date="1543379162400" expanded="true" signature="6242:6432" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/components/mixins/item.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1530">
+          <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/components/ItemHeader.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="67" column="19" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/components/_ExampleItem.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1920">
+          <caret line="64" column="35" lean-forward="true" selection-end-line="157" selection-end-column="9" />
         </state>
       </provider>
     </entry>
