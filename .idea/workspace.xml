@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7794f487-d858-4eb4-894f-5c196e3220d8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/components/ItemDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/ItemDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/components/_ExampleItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/_ExampleItem.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/components/_ExamplePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/_ExamplePage.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,6 +71,7 @@
     <session id="1970528930">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
@@ -225,7 +223,7 @@
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="7" fullScreen="true">
     <option name="x" value="2552" />
     <option name="y" value="-8" />
     <option name="width" value="2576" />
@@ -324,15 +322,15 @@
       <workItem from="1541533390814" duration="49713000" />
       <workItem from="1542761255393" duration="27701000" />
       <workItem from="1543357607306" duration="553000" />
-      <workItem from="1543376576910" duration="6529000" />
+      <workItem from="1543376576910" duration="7126000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="109947000" />
+    <option name="totallyTimeSpent" value="110544000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2560" y="0" width="2560" height="1440" extended-state="6" />
+    <frame x="2560" y="0" width="2560" height="1440" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27344993" />

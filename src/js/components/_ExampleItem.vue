@@ -1,15 +1,15 @@
 <template>
     <component
-            :is="itemLayout"
-            :id="model.id"
-            :deleting="deleting"
-            :updating="updating"
-            :toggles="toggles"
-            :meta="meta"
-            @view="view"
-            @update="update"
-            @ToggledHasChanged="$emit('ToggledHasChanged')"
-            :item-border="itemBorder"
+        :is="itemLayout"
+        :id="model.id"
+        :deleting="deleting"
+        :updating="updating"
+        :toggles="toggles"
+        :meta="meta"
+        @view="view"
+        @update="update"
+        @ToggledHasChanged="$emit('ToggledHasChanged')"
+        :item-border="itemBorder"
     >
 
         <template slot="menu">
@@ -37,6 +37,10 @@
                 >
                 </component>
             </div>-->
+        </template>
+
+        <template slot="row2">
+            <!-- Row 2 on tabular layout -->
         </template>
 
     </component>
