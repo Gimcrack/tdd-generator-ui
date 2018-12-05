@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../standup/.idea/standup.iml" filepath="$PROJECT_DIR$/../standup/.idea/standup.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/tdd-generator-ui.iml" filepath="$PROJECT_DIR$/.idea/tdd-generator-ui.iml" />
     </modules>
   </component>

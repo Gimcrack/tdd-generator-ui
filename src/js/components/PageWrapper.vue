@@ -102,7 +102,7 @@
 
                     <div class="btn-group ml-2" v-if="page_layout === 'page-cards'" >
                         <div  class="mr-2" style="width: 200px">
-                            <vue-slider @input="changeZoom" tooltip="hover" v-model="zoom" :min="80" :max="300" :interval="10"></vue-slider>
+                            <vue-slider @input="changeZoom" tooltip="hover" v-model="zoom" :min="40" :max="300" :interval="5"></vue-slider>
                         </div>
                     </div>
 

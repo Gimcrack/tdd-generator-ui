@@ -1,42 +1,46 @@
 <template>
-    <transition name="bounce">
-        <popper
-            :show-popper.sync="show_popper"
-            placement="bottom"
-        >
-            <div :style="cardStyle" class="item-cards btn position-relative card-shadow mt-4 mx-2 d-flex"
-                 v-if="show" ref="row" :class="[{sticky, toggled}, itemBorder]"
+    <div>
+        <div v-if="show_popper" @click="show_popper=false" class="modal-wrapper"></div>
+        <transition name="bounce">
+            <popper
+                :show-popper.sync="show_popper"
+                placement="bottom"
             >
+                <div :style="cardStyle" class="item-cards btn position-relative card-shadow d-flex white-space-normal"
+                     v-if="show" ref="row" :class="[{sticky, toggled}, itemBorder]"
+                >
 
-                <div @click="togglePopper" class="card-body justify-content-center d-flex">
-                    <slot name="pre"></slot>
+                    <div @click="togglePopper" class="card-body justify-content-center d-flex">
+                        <slot name="pre"></slot>
 
-                    <transition name="bounce">
-                        <div v-if="show_meta"
-                             class="d-flex item-cards__meta align-items-center justify-content-center flex-wrap"
-                        >
-                            {{ model.nickname || model.name }}
+                        <transition name="bounce">
+                            <div v-if="show_meta"
+                                 class="d-flex item-cards__meta align-items-center justify-content-center flex-wrap"
+                            >
+                                <i v-if="icon" class="fa fa-fw" :class="icon"></i>
+                                {{ model.nickname || model.name }}
+                            </div>
+                        </transition>
+
+                        <div v-if="$slots['row2']" class="d-flex justify-content-center mt-2">
+                            <button @click="show_meta = ! show_meta"
+                                    class="btn-xs btn btn-show-meta"
+                                    :class="show_meta ? ['btn-primary','active'] : ['btn-link']"
+                            >
+                                <i class="fa fa-caret-down"></i>
+                            </button>
                         </div>
-                    </transition>
 
-                    <div v-if="$slots['row2']" class="d-flex justify-content-center mt-2">
-                        <button @click="show_meta = ! show_meta"
-                                class="btn-xs btn btn-show-meta"
-                                :class="show_meta ? ['btn-primary','active'] : ['btn-link']"
-                        >
-                            <i class="fa fa-caret-down"></i>
-                        </button>
                     </div>
 
                 </div>
 
-            </div>
-
-            <div slot="content" class="pb-2">
-                <slot name="popper"></slot>
-            </div>
-        </popper>
-    </transition>
+                <div slot="content" class="pb-2">
+                    <slot name="popper"></slot>
+                </div>
+            </popper>
+        </transition>
+    </div>
 </template>
 
 <script>
@@ -109,6 +113,9 @@
                     return [];
                 }
             },
+            icon : {
+                default : false
+            }
         },
 
         data() {
@@ -134,9 +141,10 @@
             cardStyle() {
                 return {
                     //transform: 'scale(' + this.zoom/100 + ',' + this.zoom/100 + ')'
-                    minWidth : (30+this.zoom) + 'px',
-                    minHeight: (-18+this.zoom) + 'px',
-                    fontSize : (1.4*this.zoom/100) + 'rem',
+                    width : (55+this.zoom) + 'px',
+                    height: (15+this.zoom) + 'px',
+                    fontSize : (1.25*this.zoom/100) + 'rem',
+                    margin: 0.1 + ( 0.2 * this.zoom/100 ) + 'rem',
                 }
             },
         },
@@ -177,7 +185,18 @@
 </script>
 
 <style lang="scss">
+    .modal-wrapper {
+        position:fixed;
+        top:0;
+        left:0;
+        height: 100vh;
+        width: 100vw;
+        background: rgba(0,0,0,0.3);
+        z-index: 5;
+    }
+
     .item-cards {
+
         transition: all 0.3s linear;
 
         border-color: white;

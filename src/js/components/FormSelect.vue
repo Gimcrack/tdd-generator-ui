@@ -20,9 +20,11 @@
                 :closeOnSelect="params.closeOnSelect"
                 :taggable="params.taggable"
                 :max="params.max"
+                :limit="params.limit"
                 :optionsLimit="params.optionsLimit"
                 :groupValues="params.groupValues"
                 :groupLabel="params.groupLabel"
+                :groupSelect="params.groupSelect"
             >
             </vue-multiselect>
 
@@ -116,16 +118,18 @@
                     trackBy : 'id',
                     label : 'name',
                     searchable : true,
-                    clearOnSelect : true,
+                    clearOnSelect : false,
                     hideSelected : false,
                     allowEmpty : true,
                     resetAfter : false,
                     closeOnSelect : ! this.definition.select.multiple,
                     taggable : false,
                     max : null,
-                    optionsLimit : 25,
+                    limit : 5,
+                    optionsLimit : 100,
                     groupValues : null,
                     groupLabel : null,
+                    groupSelect : true
                 }, this.definition.select),
 
                 refreshBtnDefinition : {

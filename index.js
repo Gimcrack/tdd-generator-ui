@@ -43,4 +43,5 @@ export default function(Vue) {
     Vue.component('headerSortButton', require('./src/js/components/HeaderSortButton.vue'));
     Vue.component('viewSettings',require('./src/js/components/ViewSettings.vue'));
     Vue.component('resetPassword',require('./src/js/components/ResetPassword.vue'));
+    Vue.component('popper',require('vue-popper-component/src/VuePopper.vue'));
 }
