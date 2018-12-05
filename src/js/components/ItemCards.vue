@@ -105,7 +105,7 @@
             },
             itemBorder : {
                 default() {
-                    return [];
+                    return ['bg-white'];
                 }
             },
             meta : {

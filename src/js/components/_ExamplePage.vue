@@ -1,11 +1,11 @@
 <template>
     <page
-            :params="details"
-            :toggles="toggles"
-            :layouts="layouts"
-            @new="create"
-            @created="created"
-            @deleted="deleted"
+        :params="details"
+        :toggles="toggles"
+        :layouts="layouts"
+        @new="create"
+        @created="created"
+        @deleted="deleted"
     >
         <template slot="menu">
             <!--<button @click="toggleOpen" class="btn btn-success">Open Only</button>-->
