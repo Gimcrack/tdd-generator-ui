@@ -1,6 +1,6 @@
 <template>
     <div class="form-menu">
-        <button v-show="toggles.editing && ! toggles.dirty" type="button" @click.prevent="$emit('new')" :disabled="toggles.dirty" :class="{ disabled : toggles.dirty }" class="btn-primary btn">
+        <button v-show="toggles.can_create && toggles.editing && ! toggles.dirty" type="button" @click.prevent="$emit('new')" :disabled="toggles.dirty" :class="{ disabled : toggles.dirty }" class="btn-primary btn">
             <i class="fa fa-fw fa-plus" :class="{'fa-spin' : busy}"></i>
             New
         </button>

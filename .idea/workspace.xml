@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7794f487-d858-4eb4-894f-5c196e3220d8" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/laravel-plugin.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php-test-framework.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/tdd-generator-ui.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/tdd-generator-ui.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../standup/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../standup/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/components/FormSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/FormSelect.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/components/ItemCards.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/ItemCards.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/components/PageWrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/PageWrapper.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/_typography.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/sass/_typography.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/components/mixins/collection.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/mixins/collection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/components/mixins/item.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/components/mixins/item.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,6 +14,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ComposerSettings" synchronizationState="DONT_SYNCHRONIZE" />
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
     <option name="GROUP_DATA_SOURCES" value="true" />
@@ -44,53 +37,60 @@
     <fileColor scope="Non-Project Files (Material Oceanic)" color="2E3C43" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/TicketMetrics.vue">
+        <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/MyTickets.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="414">
+              <caret line="30" column="26" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/headers/tickets.js">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/metrics/TicketResponseTimes.vue">
+        <entry file="file://$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/HeaderSortButton.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1265">
-              <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../standup/app/Http/Controllers/TicketMetricsController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
-            </state>
+            <state relative-caret-position="-2484" />
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../standup/vendor/ingenious/isupport-php-client/src/Isupport.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1256">
-              <caret line="434" column="6" lean-forward="true" selection-start-line="434" selection-start-column="6" selection-end-line="434" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../standup/vendor/ingenious/isupport-php-client/src/Contracts/TicketProvider.php">
+        <entry file="file://$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/mixins/collection.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="368">
-              <caret line="16" column="60" selection-start-line="16" selection-start-column="60" selection-end-line="16" selection-end-column="60" />
+              <caret line="115" column="54" selection-start-line="115" selection-start-column="54" selection-end-line="115" selection-end-column="54" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../standup/vendor/ingenious/isupport-php-client/src/IsupportFake.php">
+        <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Ticket.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="46" column="36" lean-forward="true" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+            <state relative-caret-position="6624">
+              <caret line="289" selection-start-line="289" selection-end-line="289" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/PageWrapper.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1403">
+              <caret line="535" column="14" selection-start-line="535" selection-start-column="14" selection-end-line="535" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/mixins/item.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="506">
+              <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -132,9 +132,15 @@
       <find>where</find>
       <find>params.</find>
       <find>\$</find>
+      <find>swal</find>
+      <find>cache</find>
+      <find>sort</find>
+      <find>getToggled</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Code\tdd-generator-ui\src\js\components</dir>
+      <dir>C:\Code\standup\node_modules\tdd-generator-ui</dir>
+      <dir>C:\Code\standup\node_modules\tdd-generator-ui\src\js\components</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -143,35 +149,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../standup/app/Listeners/SetupDefaultServices.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ChatMessageReceived.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ClientSentHeartbeat.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ClientShouldSendHeartbeat.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ClientShouldUpgrade.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ClientWasCreated.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ClientWasDestroyed.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ClientWasUpdated.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ClientWasUpgraded.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/DiskWasCreated.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/DiskWasDestroyed.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/DiskWasUpdated.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/LogEntryWasCreated.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/NewBuild.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ServiceGroupWasCreated.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ServiceGroupWasDestroyed.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ServiceGroupWasUpdated.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ServiceStatusWasCreated.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ServiceStatusWasDestroyed.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ServiceStatusWasRequested.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ServiceWasCreated.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ServiceWasDestroyed.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ServiceWasUpdated.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ShouldRefreshClientDisks.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/ShouldRefreshClientServices.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/UserWasCreated.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/UserWasDestroyed.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/UserWasUpdated.php" />
-        <option value="$PROJECT_DIR$/../standup/app/Events/WindowsServiceWasCreated.php" />
         <option value="$PROJECT_DIR$/../standup/app/Events/WindowsServiceWasDestroyed.php" />
         <option value="$PROJECT_DIR$/../standup/app/Events/WindowsServiceWasUpdated.php" />
         <option value="$PROJECT_DIR$/../standup/app/Providers/HorizonServiceProvider.php" />
@@ -181,19 +158,48 @@
         <option value="$PROJECT_DIR$/../standup/app/Helpers/Facades/DatabaseServerHelper.php" />
         <option value="$PROJECT_DIR$/../standup/app/Jobs/GetServiceStatus.php" />
         <option value="$PROJECT_DIR$/../standup/app/Helpers/DatabaseServerHelper.php" />
-        <option value="$PROJECT_DIR$/../standup/config/database.php" />
         <option value="$PROJECT_DIR$/../standup/tests/Feature/ServiceTest.php" />
         <option value="$PROJECT_DIR$/../standup/tests/Unit/ClientTest.php" />
         <option value="$PROJECT_DIR$/../standup/tests/Unit/ServiceTest.php" />
-        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/forms/service_group.js" />
-        <option value="$PROJECT_DIR$/../standup/app/Http/Controllers/ServiceController.php" />
         <option value="$PROJECT_DIR$/../standup/app/Console/Kernel.php" />
-        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/Tickets.vue" />
-        <option value="$PROJECT_DIR$/../standup/routes/api.php" />
-        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/Home.vue" />
         <option value="$PROJECT_DIR$/../standup/vendor/ingenious/isupport-php-client/src/Contracts/TicketProvider.php" />
         <option value="$PROJECT_DIR$/../standup/vendor/ingenious/isupport-php-client/src/IsupportFake.php" />
         <option value="$PROJECT_DIR$/../standup/vendor/ingenious/isupport-php-client/src/Isupport.php" />
+        <option value="$PROJECT_DIR$/../standup/tests/Unit/ServiceGroupTest.php" />
+        <option value="$PROJECT_DIR$/../standup/tests/Unit/ServiceStatusTest.php" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/OverallStatus.vue" />
+        <option value="$PROJECT_DIR$/../standup/app/Events/ServiceWasUpdated.php" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/Home.vue" />
+        <option value="$PROJECT_DIR$/../standup/database/migrations/2018_12_06_162050_create_tags_table.php" />
+        <option value="$PROJECT_DIR$/../standup/tests/Feature/ServiceGroupTagTest.php" />
+        <option value="$PROJECT_DIR$/../standup/app/Http/Controllers/ServiceGroupServiceController.php" />
+        <option value="$PROJECT_DIR$/../standup/app/Http/Controllers/ServiceTagController.php" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/Tag.vue" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/Tags.vue" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/forms/service_group.js" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/forms/tag.js" />
+        <option value="$PROJECT_DIR$/../standup/tests/Feature/ServiceTagTest.php" />
+        <option value="$PROJECT_DIR$/../standup/app/Tag.php" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/Service.vue" />
+        <option value="$PROJECT_DIR$/../standup/app/Http/Controllers/TagController.php" />
+        <option value="$PROJECT_DIR$/../standup/app/Service.php" />
+        <option value="$PROJECT_DIR$/../standup/app/Http/Controllers/ServiceController.php" />
+        <option value="$PROJECT_DIR$/../standup/config/database.php" />
+        <option value="$PROJECT_DIR$/../standup/.env" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/app.js" />
+        <option value="$PROJECT_DIR$/../standup/routes/api.php" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/Services.vue" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/Tickets.vue" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/MyTickets.vue" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/ProblemTickets.vue" />
+        <option value="$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/FormMenu.vue" />
+        <option value="$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/Form.vue" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/forms/ticket.js" />
+        <option value="$PROJECT_DIR$/../standup/app/Http/Controllers/IsupportTicketStatusController.php" />
+        <option value="$PROJECT_DIR$/../standup/app/IsupportTicket.php" />
+        <option value="$PROJECT_DIR$/../standup/resources/assets/js/components/Ticket.vue" />
+        <option value="$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/PageWrapper.vue" />
+        <option value="$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/mixins/collection.js" />
       </list>
     </option>
   </component>
@@ -202,10 +208,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.1.20" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="983" />
-    <option name="y" value="-36" />
-    <option name="width" value="864" />
-    <option name="height" value="464" />
+    <option name="x" value="1167" />
+    <option name="y" value="-31" />
+    <option name="width" value="576" />
+    <option name="height" value="309" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -225,6 +231,51 @@
             <path>
               <item name="tdd-generator-ui" type="b2602c69:ProjectViewProjectNode" />
               <item name="standup" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tdd-generator-ui" type="b2602c69:ProjectViewProjectNode" />
+              <item name="standup" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="tdd-generator-ui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tdd-generator-ui" type="b2602c69:ProjectViewProjectNode" />
+              <item name="standup" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="tdd-generator-ui" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tdd-generator-ui" type="b2602c69:ProjectViewProjectNode" />
+              <item name="standup" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="tdd-generator-ui" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tdd-generator-ui" type="b2602c69:ProjectViewProjectNode" />
+              <item name="standup" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="tdd-generator-ui" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tdd-generator-ui" type="b2602c69:ProjectViewProjectNode" />
+              <item name="standup" type="462c0819:PsiDirectoryNode" />
+              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
+              <item name="tdd-generator-ui" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="mixins" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tdd-generator-ui" type="b2602c69:ProjectViewProjectNode" />
+              <item name="standup" type="462c0819:PsiDirectoryNode" />
               <item name="vendor" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -247,15 +298,6 @@
               <item name="ingenious" type="462c0819:PsiDirectoryNode" />
               <item name="isupport-php-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tdd-generator-ui" type="b2602c69:ProjectViewProjectNode" />
-              <item name="standup" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="ingenious" type="462c0819:PsiDirectoryNode" />
-              <item name="isupport-php-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Contracts" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -267,17 +309,19 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="8.12.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../standup/phpunit.xml" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="de.espend.idea.laravel.ui.TemplateSettingsForm" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php.composer" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Code\standup\resources\assets\js\components\forms" />
+      <recent name="C:\Code\standup\app\Http\Controllers" />
+      <recent name="C:\Code\standup\tests\Feature" />
       <recent name="C:\Users\jeremy\Code\tdd-generator-ui\src\js\components" />
       <recent name="C:\Code\tdd-generator-ui\src\js\components" />
-      <recent name="$PROJECT_DIR$/src/js/components" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -292,26 +336,21 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="PHP Script.ChatTest.php">
-    <configuration name="ServiceGroupTest.php" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/tdd-generator-ui/Unit/ServiceGroupTest.php">
-      <method v="2" />
-    </configuration>
-    <configuration name="Test Suite" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" activateToolWindowBeforeRun="false">
+  <component name="RunManager" selected="PHP Script.ServiceTagTest.php">
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner configuration_file="$PROJECT_DIR$/../standup/phpunit.xml" scope="XML" use_alternative_configuration_file="true" />
       <method v="2" />
     </configuration>
-    <configuration name="ChatTest.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/../standup/tests/Unit/ChatTest.php">
+    <configuration name="ServiceGroupTest.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/../standup/tests/Unit/ServiceGroupTest.php">
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="JavaScript Debug.ServiceGroupTest.php" />
-      <item itemvalue="PHP Script.ChatTest.php" />
-      <item itemvalue="PHPUnit.Test Suite" />
-    </list>
+    <configuration name="ServiceTagTest.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/../standup/tests/Feature/ServiceTagTest.php">
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="PHP Script.ChatTest.php" />
-        <item itemvalue="JavaScript Debug.ServiceGroupTest.php" />
+        <item itemvalue="PHP Script.ServiceTagTest.php" />
+        <item itemvalue="PHP Script.ServiceGroupTest.php" />
       </list>
     </recent_temporary>
   </component>
@@ -337,7 +376,8 @@
       <workItem from="1543430676836" duration="2273000" />
       <workItem from="1543540695952" duration="4360000" />
       <workItem from="1543861298808" duration="36000" />
-      <workItem from="1543861366370" duration="24776000" />
+      <workItem from="1543861366370" duration="47190000" />
+      <workItem from="1544465539339" duration="13869000" />
     </task>
     <servers />
   </component>
@@ -347,19 +387,19 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="141973000" />
+    <option name="totallyTimeSpent" value="178256000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2631579" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2669173" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32980973" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32916668" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -381,350 +421,351 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/ServiceStatusWasCreated.php">
+    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Controllers/ServiceGroupController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        <state relative-caret-position="529">
+          <caret line="62" column="8" lean-forward="true" selection-start-line="62" selection-start-column="8" selection-end-line="64" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/ServiceGroupWasUpdated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/ServiceGroupWasDestroyed.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/ServiceGroupWasCreated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/NewBuild.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="21" column="38" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/LogEntryWasCreated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/DiskWasUpdated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/DiskWasDestroyed.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/DiskWasCreated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/ServiceStatusWasRequested.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/ServiceWasCreated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/WindowsServiceWasUpdated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/WindowsServiceWasDestroyed.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/WindowsServiceWasCreated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/UserWasUpdated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/UserWasDestroyed.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/UserWasCreated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/ShouldRefreshClientServices.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/ShouldRefreshClientDisks.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/ServiceWasUpdated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Events/ServiceWasDestroyed.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Providers/HorizonServiceProvider.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="17" column="23" lean-forward="true" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/ServiceGroups.vue">
+    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Requests/NewServiceGroupRequest.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Helpers/Facades/DatabaseServerHelper.php">
+    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Requests/NewTagRequest.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Requests/UpdateServiceGroupRequest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="18" column="38" lean-forward="true" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
+        <state relative-caret-position="552">
+          <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/vendor/ingenious/isupport-php-client/src/Facades/Isupport.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" selection-start-line="4" selection-end-line="20" selection-end-column="1" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Requests/UpdateTagRequest.php">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/webpack.mix.js">
+    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Controllers/ServiceGroupServiceController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Service.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="42" column="16" selection-start-line="42" selection-start-column="16" selection-end-line="60" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Jobs/GetServiceStatus.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1058">
-          <caret line="46" column="74" lean-forward="true" selection-start-line="46" selection-start-column="74" selection-end-line="46" selection-end-column="74" />
+        <state relative-caret-position="138">
+          <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
           <folding>
-            <element signature="e#28#73#0#PHP" expanded="true" />
+            <element signature="e#40#56#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Controllers/ServiceTagController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-262">
+          <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+          <folding>
+            <element signature="e#40#56#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/app/ServiceGroup.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1242">
+          <caret line="63" column="5" selection-start-line="24" selection-start-column="6" selection-end-line="63" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Home.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="127" column="33" selection-start-line="127" selection-start-column="33" selection-end-line="127" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/ServiceGroup.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+        <state relative-caret-position="1104">
+          <caret line="147" column="13" lean-forward="true" selection-start-line="123" selection-start-column="12" selection-end-line="147" selection-end-column="13" />
           <folding>
             <element signature="n#style#0;n#div#0;n#template#1;n#component#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/config/horizon.php">
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Tag.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="101" column="23" selection-start-line="101" selection-start-column="23" selection-end-line="101" selection-end-column="23" />
+        <state relative-caret-position="115">
+          <caret line="5" column="28" lean-forward="true" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#template#1;n#component#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/tests/Feature/ServiceTest.php">
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/ServiceGroups.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="934">
-          <caret line="85" column="16" lean-forward="true" selection-start-line="85" selection-start-column="16" selection-end-line="85" selection-end-column="16" />
+        <state relative-caret-position="1265">
+          <caret line="55" column="74" lean-forward="true" selection-start-line="55" selection-start-column="43" selection-end-line="55" selection-end-column="74" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Console/Kernel.php">
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Tags.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="28" column="5" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+        <state relative-caret-position="207">
+          <caret line="9" column="11" lean-forward="true" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Controllers/ServiceController.php">
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/forms/tag.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="35" column="5" lean-forward="true" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
+        <state relative-caret-position="506">
+          <caret line="22" column="34" lean-forward="true" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/forms/service_group.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="45" column="26" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
+        <state relative-caret-position="276">
+          <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Controllers/ServiceController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="72" column="80" lean-forward="true" selection-start-line="72" selection-start-column="80" selection-end-line="72" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/app/Service.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="25" column="27" lean-forward="true" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/app/Client.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="35" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/app/Tag.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="41" column="6" selection-start-line="41" selection-start-column="6" selection-end-line="41" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/tests/Feature/ServiceTagTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="108" column="22" selection-start-line="108" selection-start-column="22" selection-end-line="108" selection-end-column="22" />
+          <folding>
+            <element signature="e#33#45#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Controllers/TagController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="727">
+          <caret line="111" column="8" selection-start-line="111" selection-start-column="8" selection-end-line="111" selection-end-column="8" />
+          <folding>
+            <element signature="e#40#56#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Controllers/ClientController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-69" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/composer.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/app/Helpers/IsupportHelper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1265">
+          <caret line="58" column="33" selection-start-line="58" selection-start-column="33" selection-end-line="58" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../standup/config/database.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2659">
-          <caret line="130" column="10" selection-start-line="130" selection-start-column="10" selection-end-line="130" selection-end-column="10" />
+        <state relative-caret-position="2760">
+          <caret line="120" column="54" selection-start-line="120" selection-start-column="54" selection-end-line="120" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Helpers/DatabaseServerHelper.php">
+    <entry file="file://$PROJECT_DIR$/../standup/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+        <state relative-caret-position="460">
+          <caret line="20" column="45" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/tests/Unit/ServiceTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1127">
-          <caret line="57" selection-start-line="57" selection-end-line="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/tests/Unit/ClientTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="73" column="5" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/Api.js">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/forms/service.windows-service.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/forms/service.client.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="27" column="14" selection-start-line="27" selection-start-column="12" selection-end-line="38" selection-end-column="13" />
+        <state relative-caret-position="437">
+          <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="24" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Client.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="113" column="19" selection-start-line="113" selection-start-column="19" selection-end-line="113" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/public/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="70" column="57" selection-start-line="70" selection-start-column="57" selection-end-line="70" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/routes/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/forms/service.ticket-queue.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="20" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Clients.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Service.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="24" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Controllers/IsupportTicketStatusController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+          <folding>
+            <element signature="e#40#63#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/Form.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="314" column="54" selection-start-line="314" selection-start-column="54" selection-end-line="314" selection-end-column="54" />
+          <caret line="314" column="94" selection-start-line="314" selection-start-column="94" selection-end-line="314" selection-end-column="94" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/FormMenu.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="3" column="72" selection-start-line="3" selection-start-column="72" selection-end-line="3" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/forms/ticket.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/app/IsupportTicket.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2530">
+          <caret line="110" column="7" selection-start-line="110" selection-start-column="7" selection-end-line="110" selection-end-column="7" />
+          <folding>
+            <element signature="e#23#60#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/ProblemTickets.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Services.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Tickets.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="736">
+          <caret line="32" column="27" selection-start-line="32" selection-start-column="27" selection-end-line="32" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/headers/tickets.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Controllers/TicketController.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Home.vue">
+    <entry file="file://$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/HeaderSortButton.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="78" column="40" selection-start-line="78" selection-start-column="40" selection-end-line="78" selection-end-column="40" />
+        <state relative-caret-position="-2484" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/MyTickets.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="30" column="26" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/routes/api.php">
+    <entry file="file://$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/mixins/item.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="21" column="51" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
+        <state relative-caret-position="506">
+          <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Tickets.vue">
+    <entry file="file://$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/PageWrapper.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1288">
-          <caret line="7" column="64" selection-start-line="7" selection-start-column="64" selection-end-line="7" selection-end-column="64" />
+        <state relative-caret-position="1403">
+          <caret line="535" column="14" selection-start-line="535" selection-start-column="14" selection-end-line="535" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/TicketMetrics.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/metrics/TicketResponseTimes.vue">
+    <entry file="file://$PROJECT_DIR$/../standup/resources/assets/js/components/Ticket.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1265">
-          <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+        <state relative-caret-position="6624">
+          <caret line="289" selection-start-line="289" selection-end-line="289" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/_ide_helper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="13448" column="43" lean-forward="true" selection-start-line="13448" selection-start-column="43" selection-end-line="13448" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/app/Http/Controllers/TicketMetricsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/vendor/ingenious/isupport-php-client/src/Contracts/TicketProvider.php">
+    <entry file="file://$PROJECT_DIR$/../standup/node_modules/tdd-generator-ui/src/js/components/mixins/collection.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
-          <caret line="16" column="60" selection-start-line="16" selection-start-column="60" selection-end-line="16" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/vendor/ingenious/isupport-php-client/src/IsupportFake.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="46" column="36" lean-forward="true" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../standup/vendor/ingenious/isupport-php-client/src/Isupport.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1256">
-          <caret line="434" column="6" lean-forward="true" selection-start-line="434" selection-start-column="6" selection-end-line="434" selection-end-column="6" />
+          <caret line="115" column="54" selection-start-line="115" selection-start-column="54" selection-end-line="115" selection-end-column="54" />
         </state>
       </provider>
     </entry>

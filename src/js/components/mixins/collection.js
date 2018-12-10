@@ -63,11 +63,74 @@ export default {
 
     methods : {
 
+        getInitialState() {
+            let key = this.params.endpoint,
+                state = INITIAL_STATE[key] || [];
+
+            // get the data if it has a key (like when paginating)
+            if ( this.params.data_key ) {
+                state = state[this.params.data_key];
+            }
+
+            return state || [];
+        },
+
+        setToggled() {
+            this.toggled = this.getToggled();
+
+            this.$forceUpdate();
+        },
+
+        getToggledIds() {
+            return this.getToggled().map(o => o.model.id);
+        },
+
+        getToggled() {
+            if ( ! this.page ) return [];
+
+            if ( ! this.page.$children ) return [];
+
+            return this.getItems()
+                .filter( child => child.$children[0])
+                .filter( child => child.$children[0].toggled );
+        },
+
+        getUntoggled() {
+            if ( ! this.page ) return [];
+
+            if ( ! this.page.$children ) return [];
+
+            return this.getItems()
+                .filter( child => ! child.$children[0].toggled );
+        },
+
+        toggleAll() {
+            if ( this.hasToggled ) {
+                return this.getToggled().forEach( child => { child.$children[0].toggle() } );
+            }
+
+            return this.getUntoggled().forEach( child => { child.$children[0].toggle() } );
+        },
+
+        getItems() {
+            if ( ! this.page || ! this.page.$children ) {
+                return [];
+            }
+
+            if ( this.page_layout !== 'page-scrum') {
+                return this.page.$children.filter( child => child.$item );
+            }
+
+            return this.page.$children
+                .filter( child => child.scrumColumn  )
+                .map( child => child.$children.filter( grandchild => grandchild.$item ) )
+                .flat();
+        },
+
         getItemByModel(model) {
-            let item = _( this.$children )
-                .reject( o => ! o.model )
-                .filter( o => o.model.id === model.id )
-                .value();
+            let item = this.getItems()
+                .filter( o => { return !! o.model } )
+                .filter( o => o.model.id === model.id );
 
             return item[0]
         },
@@ -137,7 +200,7 @@ export default {
         },
 
         add( model ) {
-            console.log('Calling add model');
+            //console.log('Calling add model');
             let index = this.findModelById(model.entity.id);
 
             // if the model exists, replace it
@@ -183,7 +246,7 @@ export default {
         listen() {
             Echo.channel(this.params.events.channel)
                 .listen( this.params.events.created, (event) => {
-                    console.log('Created',event);
+                    //console.log('Created',event);
 
                     this.add( this.model(event) );
 
@@ -191,7 +254,7 @@ export default {
                         this.postCreated(event);
                 })
                 .listen( this.params.events.destroyed, (event) => {
-                    console.log('Destroyed',event);
+                    //console.log('Destroyed',event);
 
                     this.remove( this.model(event) );
 
@@ -297,9 +360,23 @@ export default {
         },
 
         cacheModels() {
+            if ( this.toggles.dont_cache )
+                return;
+
+            if ( !! this.timeouts.cache )
+            {
+                clearTimeout(this.timeouts.cache);
+            }
+
+            console.info('Scheduling cache');
+            this.timeouts.cache = setTimeout(this.performCache, 5000);
+        },
+
+        performCache() {
+            if ( this.toggles.dont_cache )
+                return;
+
             console.info('Caching Models');
-
-
             Store.$ls.set(this.getCacheKey('models'), JSON.stringify(this.models) );
             Store.$ls.set(this.getCacheKey('last_refreshed'), this.last_refreshed );
         },

@@ -535,18 +535,6 @@
                 Bus.$emit('HideMeta');
             },
 
-            getInitialState() {
-                let key = this.params.endpoint,
-                    state = INITIAL_STATE[key] || [];
-
-                // get the data if it has a key (like when paginating)
-                if ( this.params.data_key ) {
-                    state = state[this.params.data_key];
-                }
-
-                return state || [];
-            },
-
             postCreated(event) {
                 this.$emit('created',event);
             },
@@ -555,54 +543,7 @@
                 this.$emit('deleted',event)
             },
 
-            setToggled() {
-                this.toggled = this.getToggled();
 
-                this.$forceUpdate();
-            },
-
-            getToggledIds() {
-                return this.getToggled().map(o => o.model.id);
-            },
-
-            getItems() {
-                if ( ! this.page || ! this.page.$children ) return [];
-
-                return this.page.$children.map( child => child.$children.map( grandchild => grandchild.$item ) );
-            },
-
-            getToggled() {
-                if ( ! this.page ) return [];
-
-                if ( ! this.page.$children ) return [];
-
-                if ( this.page_layout !== 'page-scrum' )
-                    return this.page.$children
-                        .filter( child => { return child.$children.length && child.$children[0].toggled; } );
-
-                else
-                    return this.page.$children
-                        .filter( child => child.scrumColumn )
-                        .map( child => { return child.toggled } )
-                        .flat();
-            },
-
-            getUntoggled() {
-                if ( ! this.page ) return [];
-
-                if ( ! this.page.$children ) return [];
-
-                return this.page.$children
-                    .filter( child => { return child.$children.length && ! child.$children[0].toggled; } );
-            },
-
-            toggleAll() {
-                if ( this.hasToggled ) {
-                    return this.getToggled().forEach( child => { child.$children[0].toggle() } );
-                }
-
-                return this.getUntoggled().forEach( child => { child.$children[0].toggle() } );
-            },
 
             update() {
                 if ( ! this.hasToggled ) return false;
