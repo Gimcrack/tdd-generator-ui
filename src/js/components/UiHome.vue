@@ -223,11 +223,11 @@
                 },
 
                 ui: {
-                    layout: this.getSetting('layout', 'wide'),
-                    theme: this.getSetting('theme', 'light'),
-                    view: this.getSetting('view', 'normal'),
-                    rightActive: this.getSetting('rightActive', 'settings'),
-                    effects: this.getSetting('effects', 'on')
+                    layout: 'wide',
+                    theme: 'light',
+                    view: 'normal',
+                    rightActive: 'settings',
+                    effects: 'on',
                 }
             }
         },
@@ -252,6 +252,8 @@
                     this.animate.chat = true;
                 }
             });
+
+            this.getUISettings();
 
             this.refreshUi();
         },
@@ -337,16 +339,22 @@
                 }
             },
 
-            getSetting(setting, def) {
-                if ( ! Store.$ls.get(setting) ) {
-                    this.setSetting(setting,def);
-                }
+            getUISettings() {
+                this.getSetting('layout', 'wide');
+                this.getSetting('theme', 'light');
+                this.getSetting('view', 'normal');
+                this.getSetting('rightActive', 'settings');
+                this.getSetting('effects', 'on');
+            },
 
-                return Store.$ls.get(setting,def);
+            async getSetting(setting, def) {
+                let value = await Store.get(setting);
+
+                return this.updateUi(setting, (value == null) ? def : value );
             },
 
             setSetting(setting, value) {
-                return Store.$ls.set(setting, value);
+                return Store.set(setting, value);
             },
 
             updateUi(setting, value) {

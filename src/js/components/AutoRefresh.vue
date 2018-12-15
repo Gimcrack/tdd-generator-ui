@@ -32,9 +32,9 @@
 
         data() {
             return {
-                active : Store.$ls.get( this.getCacheKey('auto_refresh_active'), false ) === "true",
-                rate : Store.$ls.get( this.getCacheKey('auto_refresh_rate'), 300000),
-                rateFriendly : Store.$ls.get( this.getCacheKey('auto_refresh_rate_friendly'),'5 min'),
+                active : false,
+                rate : 300000,
+                rateFriendly : '5 min',
                 intervals : [],
                 dropdownOpen : false,
                 countdown : -1,
@@ -42,9 +42,17 @@
             }
         },
 
-        mounted() {
+        async mounted() {
             this.init();
-            Bus.$on('RefreshDone', this.resume );
+
+            Bus.$on('RefreshDone', () => {
+                if ( this.active )
+                    this.resume();
+            });
+
+            this.active = await Store.get( this.getCacheKey('auto_refresh_active'), false );
+            this.rate = await Store.get( this.getCacheKey('auto_refresh_rate'), 300000);
+            this.rateFriendly = await Store.get( this.getCacheKey('auto_refresh_rate_friendly'),'5 min');
         },
 
         methods : {
@@ -73,7 +81,7 @@
 
             disableAutoRefresh() {
                 this.active = false;
-                Store.$ls.set( this.getCacheKey('auto_refresh_active'), false );
+                Store.set( this.getCacheKey('auto_refresh_active'), false );
 
                 if ( this.intervals.countdown )
                     clearInterval(this.intervals.countdown);
@@ -93,9 +101,9 @@
 
                 this.intervals.countdown = setInterval(this.advanceCountdown,1000);
 
-                Store.$ls.set( this.getCacheKey('auto_refresh_active'), true );
-                Store.$ls.set( this.getCacheKey('auto_refresh_rate'), this.rate);
-                Store.$ls.set( this.getCacheKey('auto_refresh_rate_friendly'), this.rateFriendly);
+                Store.set( this.getCacheKey('auto_refresh_active'), true );
+                Store.set( this.getCacheKey('auto_refresh_rate'), this.rate);
+                Store.set( this.getCacheKey('auto_refresh_rate_friendly'), this.rateFriendly);
                 this.$emit('countdown',this.rate);
             },
 

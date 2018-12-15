@@ -5,8 +5,8 @@ export default {
         return {
             page_layout : 'page-table',
             busy : false,
-            models : this.getInitialModels(),
-            last_refreshed : this.getInitialLastRefreshed(),
+            models : [],
+            last_refreshed : 'Never',
             refresh_btn_text : 'Refresh',
             search : null,
             orderBy : 'name',
@@ -18,7 +18,9 @@ export default {
     mounted() {
         this.listen();
 
-        this.models = this.getInitialModels();
+        this.getInitialModels();
+
+        this.getInitialLastRefreshed();
         //this.fetch();
     },
 
@@ -344,15 +346,16 @@ export default {
             return true;
         },
 
-        getInitialModels() {
-            if ( this.toggles.dont_cache ) return [];
+        async getInitialModels() {
+            if (this.toggles.dont_cache) return [];
 
-            let models = Store.$ls.get(this.getCacheKey('models'),"[]");
-            return (typeof models === "string") ? JSON.parse(models) : models;
+            let models = await Store.get(this.getCacheKey('models'), "[]");
+
+            this.models = (typeof models === "string") ? JSON.parse(models) : models;
         },
 
-        getInitialLastRefreshed() {
-            return Store.$ls.get(this.getCacheKey('last_refreshed'),'Never');
+        async getInitialLastRefreshed() {
+            this.last_refreshed = await Store.get(this.getCacheKey('last_refreshed'), 'Never');
         },
 
         getCacheKey(key) {
@@ -377,8 +380,8 @@ export default {
                 return;
 
             console.info('Caching Models');
-            Store.$ls.set(this.getCacheKey('models'), JSON.stringify(this.models) );
-            Store.$ls.set(this.getCacheKey('last_refreshed'), this.last_refreshed );
+            Store.set(this.getCacheKey('models'), JSON.stringify(this.models) );
+            Store.set(this.getCacheKey('last_refreshed'), this.last_refreshed );
         },
 
         destroyMany() {
