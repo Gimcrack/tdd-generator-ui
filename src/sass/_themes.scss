@@ -1,22 +1,35 @@
 @import "mixins/theme";
 @import "variables";
 
+$background-gradient-color: $gray-800 !default;
 
 $login-background-src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cea32ac97f8ffde3f76df4a646ac8b4d&auto=format&fit=crop&w=1350&q=80" !default;
+
+$top-login-image: block !default;
+$logo-src : "https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cea32ac97f8ffde3f76df4a646ac8b4d&auto=format&fit=crop&w=1350&q=80" !default;
 
 .card-img-top.login-img {
     background: url($login-background-src) no-repeat;
     background-size: cover;
     min-height: 200px;
+    display: $top-login-image;
 }
 
 body.auth {
     background: radial-gradient(
-                    rgba($gray-800, 0.98),
-                    rgba($gray-800, 0.95),
-                    rgba($gray-800, 0.90)
-    ), url($login-background-src) no-repeat fixed !important;
+                    rgba($background-gradient-color, 0.7),
+                    rgba($background-gradient-color, 0.8),
+                    rgba($background-gradient-color, 0.95)
+    ), url($login-background-src) fixed no-repeat !important;
     background-size: cover !important;
+
+    .logo {
+        background: url($logo-src) no-repeat !important;
+        background-size: contain !important;
+        width: 100%;
+        height: 80px;
+        margin-bottom: 1rem;
+    }
 }
 
 // dark theme

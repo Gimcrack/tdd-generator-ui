@@ -3,6 +3,28 @@
     background: $body-bg;
     color: $body-color;
 
+    &.no-nav.auth {
+        .navbar-custom {
+            display:none !important;
+        }
+    }
+
+    // scrolled
+    &.scrolled {
+        .navbar-custom {
+            background-color: $navbar-bg;
+            border-bottom: 1px solid $border-color !important;
+
+            padding-top: 0.2rem;
+            padding-bottom: 0.2rem;
+            font-size: 1.2rem;
+
+            .navbar-brand {
+                font-size: 1.3rem;
+            }
+        }
+    }
+
     .btn-ui {
         background: $navbar-color;
     }
@@ -20,10 +42,18 @@
                 color: $navbar-color;
                 border-bottom: 1px solid $border-color;
 
+                a {
+                    background-color: transparent ;
+                }
+
                 &.active {
                     border-bottom-width: 2px;
                     color: $navbar-active-color;
                     cursor: default;
+
+                    a {
+                        background: transparent;
+                    }
                 }
 
                 &:hover {
@@ -51,9 +81,12 @@
 
     // top navbar
     .navbar-custom {
-        background-color: $navbar-bg;
+
+        background-color: transparent;
         color: $navbar-color;
-        border-bottom: 1px solid $border-color !important;
+        font-size: 1.5rem;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
 
         .navbar-nav > li > a {
             color: $navbar-color;
@@ -61,7 +94,7 @@
 
         .navbar-nav > .active > a {
             color: $navbar-tab-color;
-            background-color: $navbar-bg;
+            background-color: transparent;
         }
 
         .navbar-nav > li > a:hover,
@@ -75,7 +108,8 @@
         .navbar-brand {
             color: $brand-color;
             font-weight: bold;
-            font-family: "Sansation Regular";
+            //font-family: "Raleway", serif;
+            font-size: 1.75rem;
         }
         .navbar-toggle {
             background-color: $navbar-bg;
