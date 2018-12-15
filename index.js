@@ -3,6 +3,7 @@ import Item from './src/js/components/mixins/item.js';
 import Collection from './src/js/components/mixins/collection.js'
 import TurnDown from 'turndown';
 import Rule from './src/js/components/Rule.class.js';
+import VueLocalForage from 'vue-localforage';
 
 export default function(Vue) {
 
@@ -13,6 +14,8 @@ export default function(Vue) {
 
     window.turndownService = new TurnDown();
     window.Rule = Rule;
+
+    Vue.use(VueLocalForage, { name : 'ls'} );
 
     Vue.component('vue-multiselect', require('vue-multiselect/src/Multiselect.vue'));
     Vue.component('ui-home', require('./src/js/components/UiHome.vue'));

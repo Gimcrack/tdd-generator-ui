@@ -25,6 +25,7 @@
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.23",
     "turndown": "^5.0.1",
+    "vue-localforage": "^0.2.5",
     "vue-multiselect": "^2.1.3",
     "vue-popper": "^0.3.8",
     "vue-popper-component": "^0.1.0",

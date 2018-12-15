@@ -107,6 +107,7 @@
                 return {
                     editing : this.editing,
                     dirty : this.dirty,
+                    can_create : this.form_params.toggles.create !== false,
                     can_save : ! this.busy && this.dirty && ! this.invalid,
                     can_revert : ! this.busy && this.revertable,
                     can_reset : ! this.busy && this.resetable,
@@ -311,7 +312,9 @@
 
             post() {
                 if ( this.editing ) {
-                    Api.patch(this.form_params.endpoint + '/' + this.model.id, this.form_params.form)
+                    let id = ( this.form_params.id_key  ) ? this.model[this.form_params.id_key] : this.model.id;
+
+                    Api.patch(this.form_params.endpoint + '/' + id, this.form_params.form)
                         .then(this.success, this.fail);
                 }
                 else {

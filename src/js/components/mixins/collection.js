@@ -5,8 +5,8 @@ export default {
         return {
             page_layout : 'page-table',
             busy : false,
-            models : this.getInitialModels(),
-            last_refreshed : this.getInitialLastRefreshed(),
+            models : [],
+            last_refreshed : 'Never',
             refresh_btn_text : 'Refresh',
             search : null,
             orderBy : 'name',
@@ -18,7 +18,9 @@ export default {
     mounted() {
         this.listen();
 
-        this.models = this.getInitialModels();
+        this.getInitialModels();
+
+        this.getInitialLastRefreshed();
         //this.fetch();
     },
 
@@ -63,11 +65,74 @@ export default {
 
     methods : {
 
+        getInitialState() {
+            let key = this.params.endpoint,
+                state = INITIAL_STATE[key] || [];
+
+            // get the data if it has a key (like when paginating)
+            if ( this.params.data_key ) {
+                state = state[this.params.data_key];
+            }
+
+            return state || [];
+        },
+
+        setToggled() {
+            this.toggled = this.getToggled();
+
+            this.$forceUpdate();
+        },
+
+        getToggledIds() {
+            return this.getToggled().map(o => o.model.id);
+        },
+
+        getToggled() {
+            if ( ! this.page ) return [];
+
+            if ( ! this.page.$children ) return [];
+
+            return this.getItems()
+                .filter( child => child.$children[0])
+                .filter( child => child.$children[0].toggled );
+        },
+
+        getUntoggled() {
+            if ( ! this.page ) return [];
+
+            if ( ! this.page.$children ) return [];
+
+            return this.getItems()
+                .filter( child => ! child.$children[0].toggled );
+        },
+
+        toggleAll() {
+            if ( this.hasToggled ) {
+                return this.getToggled().forEach( child => { child.$children[0].toggle() } );
+            }
+
+            return this.getUntoggled().forEach( child => { child.$children[0].toggle() } );
+        },
+
+        getItems() {
+            if ( ! this.page || ! this.page.$children ) {
+                return [];
+            }
+
+            if ( this.page_layout !== 'page-scrum') {
+                return this.page.$children.filter( child => child.$item );
+            }
+
+            return this.page.$children
+                .filter( child => child.scrumColumn  )
+                .map( child => child.$children.filter( grandchild => grandchild.$item ) )
+                .flat();
+        },
+
         getItemByModel(model) {
-            let item = _( this.$children )
-                .reject( o => ! o.model )
-                .filter( o => o.model.id === model.id )
-                .value();
+            let item = this.getItems()
+                .filter( o => { return !! o.model } )
+                .filter( o => o.model.id === model.id );
 
             return item[0]
         },
@@ -137,7 +202,7 @@ export default {
         },
 
         add( model ) {
-            console.log('Calling add model');
+            //console.log('Calling add model');
             let index = this.findModelById(model.entity.id);
 
             // if the model exists, replace it
@@ -183,7 +248,7 @@ export default {
         listen() {
             Echo.channel(this.params.events.channel)
                 .listen( this.params.events.created, (event) => {
-                    console.log('Created',event);
+                    //console.log('Created',event);
 
                     this.add( this.model(event) );
 
@@ -191,7 +256,7 @@ export default {
                         this.postCreated(event);
                 })
                 .listen( this.params.events.destroyed, (event) => {
-                    console.log('Destroyed',event);
+                    //console.log('Destroyed',event);
 
                     this.remove( this.model(event) );
 
@@ -281,15 +346,16 @@ export default {
             return true;
         },
 
-        getInitialModels() {
-            if ( this.toggles.dont_cache ) return [];
+        async getInitialModels() {
+            if (this.toggles.dont_cache) return [];
 
-            let models = Store.$ls.get(this.getCacheKey('models'),"[]");
-            return (typeof models === "string") ? JSON.parse(models) : models;
+            let models = await Store.get(this.getCacheKey('models'), "[]");
+
+            this.models = (typeof models === "string") ? JSON.parse(models) : models;
         },
 
-        getInitialLastRefreshed() {
-            return Store.$ls.get(this.getCacheKey('last_refreshed'),'Never');
+        async getInitialLastRefreshed() {
+            this.last_refreshed = await Store.get(this.getCacheKey('last_refreshed'), 'Never');
         },
 
         getCacheKey(key) {
@@ -297,11 +363,25 @@ export default {
         },
 
         cacheModels() {
+            if ( this.toggles.dont_cache )
+                return;
+
+            if ( !! this.timeouts.cache )
+            {
+                clearTimeout(this.timeouts.cache);
+            }
+
+            console.info('Scheduling cache');
+            this.timeouts.cache = setTimeout(this.performCache, 5000);
+        },
+
+        performCache() {
+            if ( this.toggles.dont_cache )
+                return;
+
             console.info('Caching Models');
-
-
-            Store.$ls.set(this.getCacheKey('models'), JSON.stringify(this.models) );
-            Store.$ls.set(this.getCacheKey('last_refreshed'), this.last_refreshed );
+            Store.set(this.getCacheKey('models'), JSON.stringify(this.models) );
+            Store.set(this.getCacheKey('last_refreshed'), this.last_refreshed );
         },
 
         destroyMany() {

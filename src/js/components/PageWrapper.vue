@@ -273,7 +273,7 @@
             mixins.collection
         ],
 
-        mounted() {
+        async mounted() {
             this.$parent.page = this;
 
             Bus.$on('ToggleCompactView', () => {
@@ -288,15 +288,20 @@
                 this.showChecked = e;
             });
 
+            this.getInitialHiddenColumns();
+
+            this.getInitialState();
+
             if ( this.intervals.formatLastRefreshed )
                 clearInterval(this.intervals.formatLastRefreshed);
 
-            this.intervals.formatLastRefreshed = setInterval(this.formatLastRefreshed,30000);
+            this.intervals.formatLastRefreshed = setInterval(this.formatLastRefreshed,10000);
 
             this.formatLastRefreshed();
 
-            this.zoom = +Store.$ls.get( this.getCacheKey('cards_zoom'), 100);
-            Bus.$emit('ChangeZoom', { zoom : this.zoom} );
+            this.zoom = await Store.get( this.getCacheKey('cards_zoom'), 100);
+
+            Bus.$emit('ChangeZoom', { zoom : this.zoom } );
         },
 
         props : {
@@ -351,11 +356,11 @@
                 orderBy : this.params.order || 'name',
                 asc : ( this.params.orderDir !== null ) ? this.params.orderDir : true,
                 toggled : this.getToggled(),
-                models : this.getInitialState(),
+                models : [],
                 compact : false,
                 filters : {},
                 headers : [],
-                hiddenColumns : this.getInitialHiddenColumns(),
+                hiddenColumns : [],
                 timeoutHiddenColumnUpdate : null,
                 page : {},
                 showChecked : false,
@@ -492,7 +497,7 @@
             changeZoom() {
                 Bus.$emit('ChangeZoom', { zoom : this.zoom} );
 
-                Store.$ls.set( this.getCacheKey('cards_zoom'), this.zoom );
+                Store.set( this.getCacheKey('cards_zoom'), this.zoom );
             },
 
             changeGroupBy(groupBy) {
@@ -535,73 +540,12 @@
                 Bus.$emit('HideMeta');
             },
 
-            getInitialState() {
-                let key = this.params.endpoint,
-                    state = INITIAL_STATE[key] || [];
-
-                // get the data if it has a key (like when paginating)
-                if ( this.params.data_key ) {
-                    state = state[this.params.data_key];
-                }
-
-                return state || [];
-            },
-
             postCreated(event) {
                 this.$emit('created',event);
             },
 
             postDeleted(event) {
                 this.$emit('deleted',event)
-            },
-
-            setToggled() {
-                this.toggled = this.getToggled();
-
-                this.$forceUpdate();
-            },
-
-            getToggledIds() {
-                return this.getToggled().map(o => o.model.id);
-            },
-
-            getItems() {
-                if ( ! this.page || ! this.page.$children ) return [];
-
-                return this.page.$children.map( child => child.$children.map( grandchild => grandchild.$item ) );
-            },
-
-            getToggled() {
-                if ( ! this.page ) return [];
-
-                if ( ! this.page.$children ) return [];
-
-                if ( this.page_layout !== 'page-scrum' )
-                    return this.page.$children
-                        .filter( child => { return child.$children.length && child.$children[0].toggled; } );
-
-                else
-                    return this.page.$children
-                        .filter( child => child.scrumColumn )
-                        .map( child => { return child.toggled } )
-                        .flat();
-            },
-
-            getUntoggled() {
-                if ( ! this.page ) return [];
-
-                if ( ! this.page.$children ) return [];
-
-                return this.page.$children
-                    .filter( child => { return child.$children.length && ! child.$children[0].toggled; } );
-            },
-
-            toggleAll() {
-                if ( this.hasToggled ) {
-                    return this.getToggled().forEach( child => { child.$children[0].toggle() } );
-                }
-
-                return this.getUntoggled().forEach( child => { child.$children[0].toggle() } );
             },
 
             update() {
@@ -647,10 +591,10 @@
                         .value();
             },
 
-            getInitialHiddenColumns() {
-                let hidden = Store.$ls.get( this.getCacheKey('hidden_columns'), this.params.hidden_columns );
+            async getInitialHiddenColumns() {
+                let hidden = await Store.get( this.getCacheKey('hidden_columns'), this.params.hidden_columns );
 
-                return ( typeof hidden === 'string' ) ? hidden.split(',') : hidden;
+                this.hiddenColumns = ( typeof hidden === 'string' ) ? hidden.split(',') : hidden;
             },
 
             updateHiddenColumns( event ) {
@@ -659,7 +603,7 @@
 
                 this.timeoutHiddenColumnUpdate = setTimeout( () => {
                     this.hiddenColumns = event.hidden;
-                    Store.$ls.set(this.getCacheKey('hidden_columns'), event.hidden);
+                    Store.set(this.getCacheKey('hidden_columns'), event.hidden);
                 }, 750 );
 
             }

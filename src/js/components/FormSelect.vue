@@ -222,7 +222,7 @@
                 Bus.$emit('UpdateFormControl', { key : this.name, value } );
             },
 
-            initSelect() {
+            async initSelect() {
                 // options are specified locally
                 if ( typeof this.definition.select.source === "object" ) {
                     this.params.options = this.definition.select.source;
@@ -234,8 +234,8 @@
                 this.loading = true;
                 this.loaded = false;
 
-                if ( this.definition.select.cache && !! Store.$ls.get( this.cache_key ) ) {
-                    this.params.options = JSON.parse( Store.$ls.get( this.cache_key ) );
+                if ( this.definition.select.cache && !! await Store.get( this.cache_key ) ) {
+                    this.params.options = JSON.parse( await Store.get( this.cache_key ) );
                     this.params.internalSearch = false;
                     this.updateSelected();
                     this.loading = false;
@@ -246,7 +246,7 @@
             },
 
             clearCache() {
-                Store.$ls.set( this.cache_key, null );
+                Store.remove( this.cache_key );
             },
 
             loadExternalOptions() {
@@ -259,7 +259,7 @@
                         this.loading = false;
 
                         if ( this.definition.select.cache && !! response.data )
-                            Store.$ls.set( this.cache_key, JSON.stringify(response.data) );
+                            Store.set( this.cache_key, JSON.stringify(response.data) );
                     } );
             },
 

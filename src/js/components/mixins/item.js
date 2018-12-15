@@ -136,11 +136,11 @@ export default {
         },
 
         updatedEvent(event, quiet) {
-            console.log('Updated', event);
+            //console.log('Updated', event);
 
             let model = this.eventModel(event);
 
-            console.log('parent',this.$parent);
+            //console.log('parent',this.$parent);
 
             if ( !! this.$parent.$parent.add ) {
                 this.$parent.$parent.add(model);
@@ -164,14 +164,14 @@ export default {
                 .listen(this.item.updated, this.updatedEvent);
 
             if ( !! this.item.events ) {
-                console.log('Binding custom events');
+                //console.log('Binding custom events');
                 this.item.events.forEach( ( e ) => {
 
-                    console.log('Binding event', {
-                        channel : this.item.channel,
-                        event : e.event,
-                        handler : e.handler
-                    });
+                    // console.log('Binding event', {
+                    //     channel : this.item.channel,
+                    //     event : e.event,
+                    //     handler : e.handler
+                    // });
 
                     Echo.channel(this.item.channel)
                         .listen( e.event, e.handler )
