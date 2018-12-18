@@ -1,7 +1,7 @@
 export default {
-    
+
     minLength( value, len ) {
-        return !! value && value.trim().length >= len;
+        return !! value && value.toString().trim().length >= len;
     },
 
     regEx( value, pattern ) {
@@ -14,7 +14,7 @@ export default {
     },
 
     maxLength( value, len ) {
-        return !! value && value.trim().length <= len;
+        return !! value && value.toString().trim().length <= len;
     },
 
     contains( value, str ) {

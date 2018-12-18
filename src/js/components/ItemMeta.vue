@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column align-items-start justify-content-center">
+    <div :style="cellStyle" class="d-flex flex-column align-items-start justify-content-center" :class="cellClass">
         <span v-if="showHeading" class="border-bottom border-light text-bold text-small mb-1">
         {{ heading }}
         </span>
@@ -21,6 +21,7 @@
                         badge : false,
                         badge_class : null,
                         text : null,
+                        style : {}
                     }
                 }
             },
@@ -58,7 +59,21 @@
                 return (this.column.title) ?
                     this.column.title :
                     this.column.$title_case();
-            }
+            },
+
+            cellStyle() {
+                if ( this.cellData.style )
+                    return this.cellData.style;
+
+                return {}
+            },
+
+            cellClass() {
+                if ( this.cellData.className )
+                    return this.cellData.className;
+
+                return {}
+            },
         }
     }
 </script>

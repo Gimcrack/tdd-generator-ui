@@ -11,7 +11,13 @@
 @import "swal/sweetalert2";
 //
 //// Font Awesome
-@import "font-awesome/scss/font-awesome";
+//@import "~@fortawesome/fontawesome-pro/scss/v4-shims";
+@import "~@fortawesome/fontawesome-pro/scss/fontawesome";
+@import "~@fortawesome/fontawesome-pro/scss/light";
+@import "~@fortawesome/fontawesome-pro/scss/regular";
+@import "~@fortawesome/fontawesome-pro/scss/solid";
+
+
 @import "navs";
 
 // vue-popper
@@ -41,6 +47,10 @@ $popper-background-color: mintcream;
 
 .z-0 {
     z-index: 0 !important;
+}
+
+.flex-1 {
+    flex: 1;
 }
 
 .ticket.customer-responded {
