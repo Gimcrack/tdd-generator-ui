@@ -17,8 +17,10 @@
                             <div v-if="show_meta"
                                  class="d-flex item-cards__meta align-items-center justify-content-center flex-wrap"
                             >
-                                <i v-if="icon" class="fa fa-fw" :class="icon"></i>
-                                {{ model.nickname || model.name }}
+                                <slot name="cardBody">
+                                    <i v-if="icon" class="fa fa-fw" :class="icon"></i>
+                                    {{ model.nickname || model.name }}
+                                </slot>
                             </div>
                         </transition>
 
@@ -108,6 +110,11 @@
                     return ['bg-white'];
                 }
             },
+            overrideCardStyle : {
+                default() {
+                    return {}
+                }
+            },
             meta : {
                 default() {
                     return [];
@@ -139,13 +146,13 @@
             },
 
             cardStyle() {
-                return {
+                return Object.assign({}, {
                     //transform: 'scale(' + this.zoom/100 + ',' + this.zoom/100 + ')'
                     width : (55+this.zoom) + 'px',
                     height: (15+this.zoom) + 'px',
                     fontSize : (1.25*this.zoom/100) + 'rem',
                     margin: 0.1 + ( 0.2 * this.zoom/100 ) + 'rem',
-                }
+                }, this.overrideCardStyle);
             },
         },
 

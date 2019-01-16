@@ -284,8 +284,37 @@
                 });
             },
 
+            flashMessage(response, type) {
+                let name = (response.data.model) ? response.data.model.name || null : null;
+                let operation = '';
+
+                // stylize the name or use generic
+                name = name ? "'" + name + "'" : 'Record';
+
+                // figure out what happened
+                switch (response.config.method.toLowerCase()) {
+                    case 'post' : // new
+                        operation = 'Created';
+                        break;
+
+                    case 'patch' :
+                    case 'put' :
+                        operation = 'Updated';
+                        break;
+
+                    case 'delete' :
+                        operation = 'Deleted';
+                        break;
+                }
+
+                switch(type) {
+                    case 'success' :
+                        return flash.success(`${name} ${operation} Successfully`);
+                }
+            },
+
             success(response) {
-                flash.success("Operation completed successfully");
+                this.flashMessage(response, 'success');
                 this.busy = false;
 
                 //console.log(response.data);
@@ -348,7 +377,7 @@
                     this.busy = true;
                     this.close_after_api = true;
 
-                    Api.delete(this.form_params.endpoint + '/' + this.model.id)
+                    Api.delete(this.form_params.endpoint + '/' + this.model[this.form_params.route_key_name || 'id'])
                         .then( this.success, this.fail );
                 });
             }

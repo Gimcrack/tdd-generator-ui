@@ -558,7 +558,7 @@
                 if ( event.value == null ) {
                     this.$delete(this.filters, event.key);
                 } else {
-                    this.$set(this.filters, event.key, event.value);
+                    this.$set(this.filters, event.key, { value : event.value, invert : !! event.invert });
                 }
                 this.$forceUpdate();
             },
@@ -580,6 +580,7 @@
                         .map( o => {
                             return _.get(o,col.key ? col.key : col);
                         })
+                        .flatten()
                         .uniq()
                         .sortBy(o => o)
                         .map( val => {

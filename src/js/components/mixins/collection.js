@@ -43,11 +43,11 @@ export default {
                     .sortBy( (model) => {
                             let item = this.getItemByModel(model);
 
-                            if ( !! item && item[this.orderBy] ) {
-                                return item[this.orderBy]
+                            if ( !! item && _.get(item,this.orderBy) ) {
+                                return _.get(item,this.orderBy)
                             }
 
-                            return model[this.orderBy];
+                            return _.get(model,this.orderBy);
                         }
                     );
 
@@ -332,15 +332,15 @@ export default {
         applyFilters(filters,row) {
             for( let prop in filters ) {
 
-                //console.log(filters[prop], row[prop]);
+                let values = _.flatten( [ filters[prop].value ] ),
+                    mode = filters[prop].invert ? 'reject' : 'accept',
+                    row_value = _.flatten( [ _.get(row,prop) ] );
 
-                if ( filters[prop].length > 1 ) {
-                    if ( filters[prop].indexOf(_.get(row,prop)) === -1 )
-                        return false;
+                if ( mode === 'accept') {
+                    if ( ! _.intersection(values, row_value).length ) return false;
+                } else  { // reject
+                    if ( _.intersection(values, row_value).length ) return false;
                 }
-
-                else if ( _.get(row,prop) != filters[prop] )
-                    return false;
             }
 
             return true;

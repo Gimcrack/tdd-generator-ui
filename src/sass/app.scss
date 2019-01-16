@@ -11,11 +11,12 @@
 @import "swal/sweetalert2";
 //
 //// Font Awesome
-//@import "~@fortawesome/fontawesome-pro/scss/v4-shims";
+@import "~@fortawesome/fontawesome-pro/scss/v4-shims";
 @import "~@fortawesome/fontawesome-pro/scss/fontawesome";
 @import "~@fortawesome/fontawesome-pro/scss/light";
 @import "~@fortawesome/fontawesome-pro/scss/regular";
 @import "~@fortawesome/fontawesome-pro/scss/solid";
+@import "~@fortawesome/fontawesome-pro/scss/brands";
 
 
 @import "navs";

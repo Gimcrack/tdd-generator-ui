@@ -3,10 +3,24 @@
         <span v-if="showHeading" class="border-bottom border-light text-bold text-small mb-1">
         {{ heading }}
         </span>
-        <badge v-if="cellData.badge && cellText" :type="cellData.badge_class">
-            {{ cellText }}
-        </badge>
-        <span v-html="cellText" v-else></span>
+
+        <template v-if="cellData.badge && cellText && (typeof cellText === 'object')">
+            <div class="d-flex flex-wrap" style="max-width:400px">
+                <badge v-for="(val,key) in cellText" :key="key" :type="cellData.badge_class" class="mr-2 mb-2" :style="cellData.badge_style">
+                    {{ val }}
+                </badge>
+            </div>
+        </template>
+
+        <template v-else>
+            <badge v-if="cellData.badge && cellText" :type="cellData.badge_class" :style="cellData.badge_style">
+                {{ cellText }}
+            </badge>
+            <span v-else>
+                <i @click="cellData.icon.btn" v-if="cellData.icon" class="fa mr-1" :class="cellData.icon.iconClass" :style="{ cursor : (cellData.icon.btn) ? 'pointer' : 'default'}"></i>
+                <span v-html="cellText"></span>
+            </span>
+        </template>
     </div>
 </template>
 
@@ -21,6 +35,7 @@
                         badge : false,
                         badge_class : null,
                         text : null,
+                        icon : null,
                         style : {}
                     }
                 }

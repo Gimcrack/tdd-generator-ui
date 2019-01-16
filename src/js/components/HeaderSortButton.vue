@@ -68,11 +68,16 @@
                                     </button>
                                 </div>
                             </template>
-
                         </vue-multiselect>
-                        <button @click="unselectAll" v-if="selected.length" class="btn btn-warning btn-xs mt-2">
-                            <small><i class="fa fa-fw fa-times"></i> Reset Filter</small>
-                        </button>
+
+                        <div class="d-flex mt-2">
+                            <button class="btn btn-primary btn-xs mr-2" :class="{ active : invert }" @click="toggleInvert">
+                                <small><i class="fa" :class="[ (invert) ? 'fa-check-square-o' : 'fa-square-o' ]"></i> Invert Filter</small>
+                            </button>
+                            <button @click="resetFilter" v-if="selected.length" class="btn btn-warning btn-xs">
+                                <small><i class="fa fa-fw fa-times"></i> Reset Filter</small>
+                            </button>
+                        </div>
                     </div>
                     <button :class="btnClass" class="btn btn-xs" @click="page.sortBy(column_key)">
                         <small>
@@ -129,12 +134,16 @@
 
             Bus.$on('UpdateFilters', (e) => {
                 if ( e.key === this.column_key ) {
+
+                    this.invert = !! e.invert;
+
                     this.selected = _.map( _.flatten([e.value]), o => {
                         return {
                             id : o,
                             label : o
                         }
                     });
+
                 }
             });
         },
@@ -145,6 +154,7 @@
                 selected : [],
                 uniqueOptions : this.getOptions(),
                 updateTimeout : null,
+                invert : false,
             }
         },
 
@@ -234,6 +244,16 @@
 
         methods : {
 
+            toggleInvert() {
+                this.invert = ! this.invert;
+                this.update();
+            },
+
+            resetFilter() {
+                this.invert = false;
+                this.unselectAll();
+            },
+
             selectAll() {
                 this.selected = this.flattenedOptions;
                 this.update();
@@ -256,7 +276,8 @@
 
                     this.$emit( 'UpdateFilter', {
                         key : this.column_key,
-                        value : this.mapped_selected
+                        value : this.mapped_selected,
+                        invert : this.invert,
                     });
 
                     // hack to force updating of computed 'filtered' property
