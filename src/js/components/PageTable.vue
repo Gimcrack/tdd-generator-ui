@@ -6,7 +6,7 @@
                     <div class="d-flex flex-fill">
                         <div class="btn-group" :class="{ 'mr-2' : $parent.toggles.checklist || $parent.toggles.do_with_selected }">
                             <slot name="select-all"></slot>
-                            <button v-if="$slots['selection-dropdown'] && $parent.hasToggled" class="btn btn-outline-primary btn-xs" data-toggle="dropdown">
+                            <button type="button" v-if="$slots['selection-dropdown'] && $parent.hasToggled" class="btn btn-outline-primary btn-xs" data-toggle="dropdown">
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
                             <slot v-if="$parent.hasToggled" name="selection-dropdown"></slot>

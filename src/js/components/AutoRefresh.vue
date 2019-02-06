@@ -2,7 +2,7 @@
     <div>
         <div @click="toggleDropDown" :class="{active : dropdownOpen}" class="dropdown-wrapper"></div>
         <div class="btn-group">
-            <button @click="toggleDropDown"
+            <button type="button" @click="toggleDropDown"
                     :class="active ? ['btn-success','active'] : ['btn-secondary']" class="btn border-right-0 z-0">
                 <i class="fa fa-ellipsis-v"></i>
             </button>
@@ -10,16 +10,16 @@
                  :class="{show : dropdownOpen}"
             >
                 <div class="d-flex flex-column">
-                    <button @click="disableAutoRefresh" class="btn btn-link">Off</button>
-                    <button @click="enableAutoRefresh(5000,'5 sec')" class="btn btn-link">5 sec</button>
-                    <button @click="enableAutoRefresh(15000,'15 sec')" class="btn btn-link">15 sec</button>
-                    <button @click="enableAutoRefresh(30000,'30 sec')" class="btn btn-link">30 sec</button>
-                    <button @click="enableAutoRefresh(60000,'1 min')" class="btn btn-link">1 min</button>
-                    <button @click="enableAutoRefresh(300000,'5 min')" class="btn btn-link">5 min</button>
-                    <button @click="enableAutoRefresh(1500000,'15 min')" class="btn btn-link">15 min</button>
+                    <button type="button" @click="disableAutoRefresh" class="btn btn-link">Off</button>
+                    <button type="button" @click="enableAutoRefresh(5000,'5 sec')" class="btn btn-link">5 sec</button>
+                    <button type="button" @click="enableAutoRefresh(15000,'15 sec')" class="btn btn-link">15 sec</button>
+                    <button type="button" @click="enableAutoRefresh(30000,'30 sec')" class="btn btn-link">30 sec</button>
+                    <button type="button" @click="enableAutoRefresh(60000,'1 min')" class="btn btn-link">1 min</button>
+                    <button type="button" @click="enableAutoRefresh(300000,'5 min')" class="btn btn-link">5 min</button>
+                    <button type="button" @click="enableAutoRefresh(1500000,'15 min')" class="btn btn-link">15 min</button>
                 </div>
             </div>
-            <button @click="toggleActive" :class="active ? ['btn-success','active'] : ['btn-secondary']" class="btn z-0">
+            <button type="button" @click="toggleActive" :class="active ? ['btn-success','active'] : ['btn-secondary']" class="btn z-0">
                 <i class="fa fa-fw fa-toggle" :class="[active ? 'fa-toggle-on' : 'fa-toggle-off']"></i>
                 Auto-Refresh: {{ labelText }}
             </button>

@@ -1,24 +1,24 @@
 <template>
     <div class="messages">
 
-        <button @click="show = ! show" class="btn btn-link btn-toggle-notifications">
+        <button type="button" @click="show = ! show" class="btn btn-link btn-toggle-notifications">
             <i class="fa fa-fw fa-2x" :class="[show ? 'fa-bell' : 'fa-bell-o']"></i>
         </button>
 
-        <button v-show="show" @click="show_history = ! show_history" class="btn btn-link btn-show-history" :class="{ 'text-secondary' : ! show_history }">
+        <button type="button" v-show="show" @click="show_history = ! show_history" class="btn btn-link btn-show-history" :class="{ 'text-secondary' : ! show_history }">
             <i class="fa fa-fw fa-history fa-2x"></i>
             <transition name="bounce">
                 <div v-show="show_badge" class="badge badge-info">{{ messages.length+archive.length }}</div>
             </transition>
         </button>
 
-        <button v-show="show && messages.length" @click="readAll" class="btn btn-link btn-read-all">
+        <button type="button" v-show="show && messages.length" @click="readAll" class="btn btn-link btn-read-all">
             <i class="fa fa-fw fa-check-double fa-2x"></i>
         </button>
 
         <transition name="bounce">
             <div v-show="show" class="message-container rounded">
-                <button v-if="archive.length && show_history" class="btn btn-secondary my-2" @click="show_archive = ! show_archive">
+                <button type="button" v-if="archive.length && show_history" class="btn btn-secondary my-2" @click="show_archive = ! show_archive">
                     Show {{ show_archive ? 'Less' : 'More' }} ...
                 </button>
                 <flash-message @close="close" v-if="show_archive" v-for="message in archive" :key="message.key" :message="message" :show-history="show_history"></flash-message>

@@ -61,7 +61,7 @@
 
         methods : {
             init() {
-                console.log('initing');
+                //console.log('initing');
                 this.delayLapsed = false;
 
                 let delay = (this.group.order || 0) * 400;
@@ -91,7 +91,7 @@
             },
 
             showField(def) {
-                console.log('conditions',def.condition);
+                //console.log('conditions',def.condition);
 
                 if ( ! def.condition ) {
                     return ( ! this.editing ||

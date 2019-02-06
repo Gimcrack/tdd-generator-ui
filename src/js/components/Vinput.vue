@@ -4,7 +4,7 @@
         <div class="vinput__icon">
             <i class="fa fa-fw fa-2x" :class="this.icon"></i>
         </div>
-        <button @click.prevent.stop="reset" v-show="value" class="vinput__reset btn btn-xs btn-danger btn-outline">
+        <button type="button" @click.prevent.stop="reset" v-show="value" class="vinput__reset btn btn-xs btn-danger btn-outline">
             <i class="fa fa-fw fa-times"></i>
         </button>    
     </div>

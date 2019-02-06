@@ -4,11 +4,11 @@
             <div @click="toggleGridControls" :class="{active : showGridControls}" class="dropdown-wrapper"></div>
             <div class="btn-group">
                 <slot name="select-all"></slot>
-                <button v-if="$slots['selection-dropdown'] && $parent.hasToggled" class="btn btn-outline-primary btn-xs border-right-0" data-toggle="dropdown">
+                <button type="button" v-if="$slots['selection-dropdown'] && $parent.hasToggled" class="btn btn-outline-primary btn-xs border-right-0" data-toggle="dropdown">
                     <i class="fa fa-ellipsis-v"></i>
                 </button>
                 <slot v-if="$parent.hasToggled" name="selection-dropdown"></slot>
-                <button @click="toggleGridControls" class="btn btn-outline-primary btn-xs btn-last mr-2">
+                <button type="button" @click="toggleGridControls" class="btn btn-outline-primary btn-xs btn-last mr-2">
                     <i class="fa fa-filter"></i>
                 </button>
 

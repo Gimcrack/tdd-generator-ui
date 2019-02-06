@@ -371,7 +371,7 @@ export default {
                 clearTimeout(this.timeouts.cache);
             }
 
-            console.info('Scheduling cache');
+            //console.info('Scheduling cache');
             this.timeouts.cache = setTimeout(this.performCache, 5000);
         },
 
@@ -379,7 +379,7 @@ export default {
             if ( this.toggles.dont_cache )
                 return;
 
-            console.info('Caching Models');
+            //console.info('Caching Models');
             Store.set(this.getCacheKey('models'), JSON.stringify(this.models) );
             Store.set(this.getCacheKey('last_refreshed'), this.last_refreshed );
         },

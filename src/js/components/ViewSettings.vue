@@ -2,10 +2,10 @@
     <div class="view-settings header-sort-button position-relative">
         <div @click="toggleDropDown" :class="{active : dropdownOpen}" class="dropdown-wrapper"></div>
 
-        <button v-if="showReset" @click="reset" class="btn btn-xs btn-warning mr-2">
+        <button type="button" v-if="showReset" @click="reset" class="btn btn-xs btn-warning mr-2">
             <small><i class="fa fa-fw fa-times"></i> Reset View</small>
         </button>
-        <button id="dropdown_view_settings" @click="toggleDropDown"
+        <button type="button" id="dropdown_view_settings" @click="toggleDropDown"
                 :class="btnClass" class="btn btn-xs">
             <small><i class="fa fa-ellipsis-v"></i> Edit View</small>
         </button>
@@ -27,7 +27,7 @@
                     :searchable="true"
             >
             </vue-multiselect>
-            <button v-if="showReset" @click="reset" class="btn btn-xs btn-warning mt-2">
+            <button type="button" v-if="showReset" @click="reset" class="btn btn-xs btn-warning mt-2">
                 <small><i class="fa fa-fw fa-times"></i> Reset View</small>
             </button>
         </div>

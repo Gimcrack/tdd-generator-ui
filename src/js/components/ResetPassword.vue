@@ -21,8 +21,8 @@
                 </div>
                 <div class="card-footer">
                     <div class="btn-group">
-                        <button :disabled="busy" :class="{disabled:busy}" @click.prevent="submit" class="btn btn-success btn-outline">Go</button>
-                        <button :disabled="busy" :class="{disabled:busy}" type="button" @click.prevent="cancel" class="btn btn-danger btn-outline">Cancel</button>
+                        <button type="button" :disabled="busy" :class="{disabled:busy}" @click.prevent="submit" class="btn btn-success btn-outline">Go</button>
+                        <button type="button" :disabled="busy" :class="{disabled:busy}" @click.prevent="cancel" class="btn btn-danger btn-outline">Cancel</button>
                     </div>
                 </div>
             </div>

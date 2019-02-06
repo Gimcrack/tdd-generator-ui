@@ -2,7 +2,7 @@
     <transition name="bounce">
         <div v-show="show || showHistory" class="my-1 alert alert-flash shadow-sm position-relative" :class="`alert-${message.type}`" role="alert">
             <div :style="overlayStyle" class="timer-overlay"></div>
-            <button @click="close" class="btn-link btn btn-xs btn-close-message">
+            <button type="button" @click="close" class="btn-link btn btn-xs btn-close-message">
                 <i class="fa fa-fw fa-times"></i>
             </button>
             <div class="d-flex flex-row">

@@ -6,7 +6,7 @@
             </span>
         </div>
 
-        <button class="btn btn-link btn-xs btn-plus-times position-absolute" :class="{active:expanded}" @click="toggleExpanded">
+        <button type="button" class="btn btn-link btn-xs btn-plus-times position-absolute" :class="{active:expanded}" @click="toggleExpanded">
             <i class="fa fa-fw fa-plus"></i>
         </button>
 

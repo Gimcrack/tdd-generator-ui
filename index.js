@@ -35,6 +35,7 @@ export default function(Vue) {
     Vue.component('itemMeta',require('./src/js/components/ItemMeta.vue'));
     Vue.component('itemHeader',require('./src/js/components/ItemHeader.vue'));
     Vue.component('dropdownItem',require('./src/js/components/DropdownItem.vue'));
+    Vue.component('dropdownMenu',require('./src/js/components/DropdownMenu.vue'));
     Vue.component('formFieldGroup',require('./src/js/components/FormFieldGroup.vue') );
     Vue.component('formMenu',require('./src/js/components/FormMenu.vue'));
     Vue.component('formControl', require('./src/js/components/FormControl.vue'));
@@ -46,5 +47,6 @@ export default function(Vue) {
     Vue.component('headerSortButton', require('./src/js/components/HeaderSortButton.vue'));
     Vue.component('viewSettings',require('./src/js/components/ViewSettings.vue'));
     Vue.component('resetPassword',require('./src/js/components/ResetPassword.vue'));
+    Vue.component('editableText',require('./src/js/components/EditableText.vue'));
     Vue.component('popper',require('vue-popper-component/src/VuePopper.vue'));
 }

@@ -31,7 +31,7 @@ export default {
     },
 
     select( value ) {
-        console.log(value);
+        //console.log(value);
 
         return !! value;
     },

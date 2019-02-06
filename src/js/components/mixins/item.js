@@ -160,18 +160,17 @@ export default {
         },
 
         listen() {
+            let updated_event = ( typeof this.item.updated === 'object' ) ? this.item.updated.event : this.item.updated,
+                quiet = (typeof this.item.updated === 'object' ) ? !! this.item.updated.quiet : false;
+
             Echo.channel(this.item.channel)
-                .listen(this.item.updated, this.updatedEvent);
+                .listen(updated_event, (event) => {
+                        return this.updatedEvent(event, quiet);
+                    }
+                );
 
             if ( !! this.item.events ) {
-                //console.log('Binding custom events');
                 this.item.events.forEach( ( e ) => {
-
-                    // console.log('Binding event', {
-                    //     channel : this.item.channel,
-                    //     event : e.event,
-                    //     handler : e.handler
-                    // });
 
                     Echo.channel(this.item.channel)
                         .listen( e.event, e.handler )

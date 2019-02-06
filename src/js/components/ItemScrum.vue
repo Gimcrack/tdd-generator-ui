@@ -56,7 +56,7 @@
                 </transition>
 
                 <div v-if="$slots['row2']" class="d-flex justify-content-center ">
-                    <button @click="show_meta = ! show_meta"
+                    <button type="button" @click="show_meta = ! show_meta"
                             class="btn-xs btn btn-show-meta"
                             :class="show_meta ? ['btn-primary','active'] : ['btn-link']"
                     >

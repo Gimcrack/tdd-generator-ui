@@ -1,7 +1,7 @@
 <template>
     <div id="home-container" :class="ui.layout">
 
-        <button @click="toggleRight" :class="{active : showRightMenu, animate : animate.button}"
+        <button type="button" @click="toggleRight" :class="{active : showRightMenu, animate : animate.button}"
                 class="btn btn-info btn-sm btn-toggle-right-menu">
             <i class="fa fa-fw fa-bars"></i>
         </button>
@@ -127,10 +127,10 @@
                                 <div class="p-2 d-flex justify-content-center">
                                     <span class="flex-grow-1 align-self-center">Layout</span>
                                     <div class="btn-group" role="group">
-                                        <button @click="updateUi('layout','wide')" type="button" class="btn btn-sm btn-info" :class="{active : ui.layout=='wide'}">
+                                        <button type="button" @click="updateUi('layout','wide')" class="btn btn-sm btn-info" :class="{active : ui.layout=='wide'}">
                                             <i class="fa fa-fw fa-desktop"></i> Wide
                                         </button>
-                                        <button @click="updateUi('layout','narrow')" type="button" class="btn btn-sm btn-info" :class="{active : ui.layout=='narrow'}">
+                                        <button type="button" @click="updateUi('layout','narrow')" class="btn btn-sm btn-info" :class="{active : ui.layout=='narrow'}">
                                             <i class="fa fa-fw fa-tablet"></i> Narrow
                                         </button>
                                     </div>
@@ -140,10 +140,10 @@
                                 <div class="p-2 d-flex justify-content-center">
                                     <div class="flex-grow-1 align-self-center">Theme</div>
                                     <div class="btn-group" role="group">
-                                        <button @click="updateUi('theme','dark')" type="button" class="btn btn-sm btn-info" :class="{active : ui.theme=='dark'}">
+                                        <button type="button" @click="updateUi('theme','dark')" class="btn btn-sm btn-info" :class="{active : ui.theme=='dark'}">
                                             <i class="fa fa-fw fa-moon-o"></i> Dark
                                         </button>
-                                        <button @click="updateUi('theme','light')" type="button" class="btn btn-sm btn-info" :class="{active : ui.theme=='light'}">
+                                        <button type="button" @click="updateUi('theme','light')" class="btn btn-sm btn-info" :class="{active : ui.theme=='light'}">
                                             <i class="fa fa-fw fa-sun-o"></i> Light
                                         </button>
                                     </div>
@@ -153,10 +153,10 @@
                                 <div class="p-2 d-flex justify-content-center">
                                     <div class="flex-grow-1 align-self-center">Data View</div>
                                     <div class="btn-group" role="group">
-                                        <button @click="updateUi('view','normal')" type="button" class="btn btn-sm btn-info" :class="{active : ui.view=='normal'}">
+                                        <button type="button" @click="updateUi('view','normal')" class="btn btn-sm btn-info" :class="{active : ui.view=='normal'}">
                                             <i class="fa fa-fw fa-list-ul"></i> Normal
                                         </button>
-                                        <button @click="updateUi('view','compact')" type="button" class="btn btn-sm btn-info" :class="{active : ui.view=='compact'}">
+                                        <button type="button" @click="updateUi('view','compact')" class="btn btn-sm btn-info" :class="{active : ui.view=='compact'}">
                                             <i class="fa fa-fw fa-list"></i> Compact
                                         </button>
                                     </div>
@@ -166,11 +166,21 @@
                                 <div class="p-2 d-flex justify-content-center">
                                     <div class="flex-grow-1 align-self-center">Effects</div>
                                     <div class="btn-group" role="group">
-                                        <button @click="updateUi('effects','on')" type="button" class="btn btn-sm btn-info" :class="{active : ui.effects=='on'}">
+                                        <button type="button" @click="updateUi('effects','on')" class="btn btn-sm btn-info" :class="{active : ui.effects=='on'}">
                                             <i class="fa fa-fw fa-toggle-on"></i> On
                                         </button>
-                                        <button @click="updateUi('effects','off')" type="button" class="btn btn-sm btn-info" :class="{active : ui.effects=='off'}">
+                                        <button type="button" @click="updateUi('effects','off')" class="btn btn-sm btn-info" :class="{active : ui.effects=='off'}">
                                             <i class="fa fa-fw fa-toggle-off"></i> Off
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-100 mb-2 border-bottom border-info">
+                                <div class="p-2 d-flex justify-content-center">
+                                    <div class="flex-grow-1 align-self-center">Troubleshooting</div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" @click="clearCache" class="btn btn-sm btn-info">
+                                            <i class="fa fa-fw fa-exclamation-triangle"></i> Clear Local Cache
                                         </button>
                                     </div>
                                 </div>
@@ -273,6 +283,10 @@
         },
 
         methods : {
+
+            clearCache() {
+                Store.clearModels();
+            },
 
             selectTab(tab) {
                 this.activeTab = tab;

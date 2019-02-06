@@ -5,7 +5,7 @@
 
             <div class="d-flex">
                 <div class="btn-group">
-                    <button :id="`dropdown_${column_title}`" @click="toggleDropDown"
+                    <button type="button" :id="`dropdown_${column_title}`" @click="toggleDropDown"
                             :class="btnClass" class="btn btn-xs border-right-0">
                         <i class="fa fa-ellipsis-v"></i>
                     </button>
@@ -14,13 +14,22 @@
                          :aria-labelledby="`dropdown_${column_title}`"
                     >
                         <div class="d-flex">
-                            <button @click="page.sortBy(column_key, true)" class="btn mr-1" :class="ascBtnClass">
+                            <button type="button" @click="page.sortBy(column_key, true)" class="btn mr-1" :class="ascBtnClass">
                                 <i class="fa fa-fw fa-sort-amount-asc"></i>
                                 Sort {{ column_title }} Asc
                             </button>
-                            <button @click="page.sortBy(column_key, false)" class="btn" :class="descBtnClass">
+                            <button type="button" @click="page.sortBy(column_key, false)" class="btn" :class="descBtnClass">
                                 <i class="fa fa-fw fa-sort-amount-desc"></i>
                                 Sort {{ column_title }} Desc
+                            </button>
+                        </div>
+
+                        <div class="d-flex my-2">
+                            <button type="button" class="btn btn-primary btn-xs mr-2" :class="{ active : invert }" @click="toggleInvert">
+                                <small><i class="fa" :class="[ (invert) ? 'fa-check-square-o' : 'fa-square-o' ]"></i> Invert Filter</small>
+                            </button>
+                            <button type="button" @click="resetFilter" v-if="selected.length" class="btn btn-warning btn-xs">
+                                <small><i class="fa fa-fw fa-times"></i> Reset Filter</small>
                             </button>
                         </div>
 
@@ -45,11 +54,11 @@
                         >
                             <template slot="beforeList">
                                 <div class="d-flex w-100 p-1">
-                                    <button v-if="selected.length !== flattenedOptions.length" @click="selectAll"
+                                    <button type="button" v-if="selected.length !== flattenedOptions.length" @click="selectAll"
                                             class="btn btn-primary flex-fill m-1">
                                         <i class="fa fa-fw fa-check-square-o"></i> Select All
                                     </button>
-                                    <button v-if="selected.length" @click="unselectAll"
+                                    <button type="button" v-if="selected.length" @click="unselectAll"
                                             class="btn btn-primary flex-fill m-1">
                                         <i class="fa fa-fw fa-square-o"></i> Unselect All
                                     </button>
@@ -58,28 +67,19 @@
 
                             <template v-if="options.length > 6" slot="afterList">
                                 <div class="d-flex w-100 p-1">
-                                    <button v-if="selected.length !== flattenedOptions.length" @click="selectAll"
+                                    <button type="button" v-if="selected.length !== flattenedOptions.length" @click="selectAll"
                                             class="btn btn-primary flex-fill m-1">
                                         <i class="fa fa-fw fa-check-square-o"></i> Select All
                                     </button>
-                                    <button v-if="selected.length" @click="unselectAll"
+                                    <button type="button" v-if="selected.length" @click="unselectAll"
                                             class="btn btn-primary flex-fill m-1">
                                         <i class="fa fa-fw fa-square-o"></i> Unselect All
                                     </button>
                                 </div>
                             </template>
                         </vue-multiselect>
-
-                        <div class="d-flex mt-2">
-                            <button class="btn btn-primary btn-xs mr-2" :class="{ active : invert }" @click="toggleInvert">
-                                <small><i class="fa" :class="[ (invert) ? 'fa-check-square-o' : 'fa-square-o' ]"></i> Invert Filter</small>
-                            </button>
-                            <button @click="resetFilter" v-if="selected.length" class="btn btn-warning btn-xs">
-                                <small><i class="fa fa-fw fa-times"></i> Reset Filter</small>
-                            </button>
-                        </div>
                     </div>
-                    <button :class="btnClass" class="btn btn-xs" @click="page.sortBy(column_key)">
+                    <button type="button" :class="btnClass" class="btn btn-xs" @click="page.sortBy(column_key)">
                         <small>
                             {{ column_title }}
                             <i class="fa fa-fw" :class="active_asc ? 'fa-sort-amount-asc' : 'fa-sort-amount-desc' "></i>
@@ -287,13 +287,25 @@
             },
 
             getOptions() {
+                let opts = this.options !== 'yes_no' ?
+                    this.options : [
+                    {
+                        id : [0,false],
+                        label : 'No'
+                    },
+                    {
+                        id : [1,true],
+                        label : 'Yes'
+                    },
+                ];
+
                 if ( ! this.options.length ) return [{
                     id: 'placeholder',
                     label: 'placeholder'
                 }];
 
                 if ( this.shouldGroup ) {
-                    return _(this.options)
+                    return _(opts)
                         .union([])
                         .groupBy( o => {
                             return o.label.slice(0,4);
@@ -307,7 +319,7 @@
                         .value();
                 }
 
-                return _.union(this.options);
+                return _.union(opts);
             }
         }
     }

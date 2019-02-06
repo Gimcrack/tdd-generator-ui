@@ -10,6 +10,7 @@
             :type="type"
             :placeholder="placeholder"
             :ref="name"
+            :readonly="readonly"
         >
 
         <div v-if="type !== 'hidden'" class="icon is-small">
@@ -48,6 +49,7 @@
                         validate : null,
                         enter : null,
                         className : null,
+                        readonly : null
                     }
                 }
             },
@@ -157,6 +159,10 @@
         },
 
         computed : {
+
+            readonly() {
+                return !! this.definition.readonly;
+            },
 
             label() {
                 return this.definition.label || this.definition.name.$ucfirst();

@@ -1,6 +1,6 @@
 <template>
     <div v-if="visible" class="item-detail-wrapper">
-        <button @click.prevent="cancel" class="btn-close"><i class="fa fa-fw fa-5x fa-times"></i></button>
+        <button type="button" @click.prevent="cancel" class="btn-close"><i class="fa fa-fw fa-5x fa-times"></i></button>
         <div class="item-detail" :class="{ticket}">
             <div class="card card-default">
                 <div class="page-header m-2">
@@ -25,7 +25,7 @@
                 </template>
                 <div class="card-footer">
                     <div class="btn-group">
-                        <button :disabled="busy" :class="{disabled:busy}" type="button" @click.prevent="cancel" class="btn btn-primary btn-outline">OK</button>
+                        <button type="button" :disabled="busy" :class="{disabled:busy}" @click.prevent="cancel" class="btn btn-primary btn-outline">OK</button>
                     </div>
                 </div>
             </div>

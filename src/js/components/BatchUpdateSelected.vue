@@ -21,7 +21,7 @@
                     </div>
                     <div class="panel-footer">
                         <div class="btn-group">
-                            <button :disabled="busy" :class="{disabled:busy}" type="button" @click.prevent="cancel" class="btn btn-success btn-outline">OK</button>
+                            <button type="button" :disabled="busy" :class="{disabled:busy}" @click.prevent="cancel" class="btn btn-success btn-outline">OK</button>
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
             },
 
             success() {
-                flash.success('Password Reset Requested')
+                flash.success('Password Reset Requested');
 
                 this.busy = false;
                 this.visible = false;

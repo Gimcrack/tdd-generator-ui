@@ -8,7 +8,7 @@
         @deleted="deleted"
     >
         <template slot="menu">
-            <!--<button @click="toggleOpen" class="btn btn-success">Open Only</button>-->
+            <!--<button type="button" @click="toggleOpen" class="btn btn-success">Open Only</button>-->
         </template>
 
         <template slot="selection-dropdown-menu">

@@ -42,7 +42,7 @@
             >
                 {{ id }}<i class="fa fa-fw fa-external-link ml-1"></i>
             </a>
-            <button v-else style="min-width: 30px;" @click="$emit('toggle')" class="btn btn-xs text-monospace j-r" :class="btnClass">
+            <button type="button" v-else style="min-width: 30px; overflow: hidden; text-overflow: ellipsis; max-width:120px" @click="$emit('toggle')" class="btn btn-xs text-monospace j-r" :class="btnClass">
                 {{ id }}
             </button>
         </div>

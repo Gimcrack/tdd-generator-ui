@@ -10,7 +10,7 @@
 
             <auto-refresh @refresh="fetch" @countdown="updateCountdown"></auto-refresh>
 
-            <button v-if="toggles.new" :class="{ disabled : busy }" @click.prevent="$emit('new')" :disabled="busy" class="btn btn-success">
+            <button type="button" v-if="toggles.new" :class="{ disabled : busy }" @click.prevent="$emit('new')" :disabled="busy" class="btn btn-success">
                 <i class="fa fa-fw fa-circle-o-notch" :class="{'fa-spin' : busy}"></i>
                 <template v-if="params.newBtnText">{{ params.newBtnText}}</template>
                 <template v-else>New {{ properType }}</template>
@@ -32,7 +32,7 @@
             :layout-class="[ getTableHiddenColumnClasses,  {'table-sm' : compact}]"
         >
             <template slot="selection-dropdown" v-if="toggles.do_with_selected && hasDropdownMenuSlot">
-                <!--<button :id="`dropdown_toggle_${params.component}`" v-if="toggled.length" data-toggle="dropdown" role="button" aria-expanded="false" :class="busy ? 'disabled' : ''" class="dropdown-toggle btn-success btn">-->
+                <!--<button type="button" :id="`dropdown_toggle_${params.component}`" v-if="toggled.length" data-toggle="dropdown" role="button" aria-expanded="false" :class="busy ? 'disabled' : ''" class="dropdown-toggle btn-success btn">-->
                 <!--Do With Selected-->
                 <!--</button>-->
 
@@ -43,7 +43,7 @@
 
 
             <template slot="select-all">
-                <button v-if="toggles.do_with_selected || toggles.checklist" class="btn btn-xs btn-outline-primary">
+                <button type="button" v-if="toggles.do_with_selected || toggles.checklist" class="btn btn-xs btn-outline-primary">
                     <small>
                         <i @click="toggleAll" style="cursor:pointer; font-size:1.5em; line-height:1" class="fa fa-fw" :class="toggleAllClass"></i>
                     </small>
@@ -71,7 +71,7 @@
                         {{ viewingRecordsTxt }}
                         <template v-if="showClearFiltersBtn">(Filtered)</template>
                     </badge>
-                    <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning mr-2">
+                    <button type="button" @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning mr-2">
                         <small><i class="fa fa-fw fa-times"></i> Reset All Filters</small>
                     </button>
                     <badge class="p-2" type="badge-light" icon="fa-clock-o">
@@ -92,10 +92,10 @@
                     ></view-settings>
 
                     <div v-if="page_layout === 'page-grid'" class="btn-group ml-2">
-                        <button class="btn btn-xs z-0 btn-outline-primary" @click="showMeta">
+                        <button type="button" class="btn btn-xs z-0 btn-outline-primary" @click="showMeta">
                             <small><i class="fa fa-fw fa-plus"></i> Expand All</small>
                         </button>
-                        <button class="btn btn-xs z-0 btn-outline-primary" @click="hideMeta">
+                        <button type="button" class="btn btn-xs z-0 btn-outline-primary" @click="hideMeta">
                             <small><i class="fa fa-fw fa-minus"></i> Collapse All</small>
                         </button>
                     </div>
@@ -109,21 +109,21 @@
                     <div v-if="page_layout === 'page-scrum'" class="d-flex ml-2">
                         Group By
                         <div class="btn-group ml-2">
-                            <button class="btn btn-xs z-0"
+                            <button type="button" class="btn btn-xs z-0"
                                     :class="groupBy === 'status' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
                                     :disabled="groupBy === 'status'"
                                     @click="changeGroupBy('status')"
                             >
                                 <small>Status</small>
                             </button>
-                            <button class="btn btn-xs z-0"
+                            <button type="button" class="btn btn-xs z-0"
                                     :class="groupBy === 'priority' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
                                     :disabled="groupBy === 'priority'"
                                     @click="changeGroupBy('priority')"
                             >
                                 <small>Priority</small>
                             </button>
-                            <button class="btn btn-xs z-0"
+                            <button type="button" class="btn btn-xs z-0"
                                     :class="groupBy === 'urgency' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
                                     :disabled="groupBy === 'urgency'"
                                     @click="changeGroupBy('urgency')"
@@ -134,7 +134,7 @@
                     </div>
 
                     <div class="btn-group ml-2">
-                        <button v-if="layouts.scrum !== false"
+                        <button type="button" v-if="layouts.scrum !== false"
                                 class="btn btn-xs z-0"
                                 :class="page_layout === 'page-scrum' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
                                 :disabled="page_layout === 'page-scrum'"
@@ -142,7 +142,7 @@
                         >
                             <i class="fa fa-fw fa-columns"></i>
                         </button>
-                        <button v-if="layouts.cards !== false"
+                        <button type="button" v-if="layouts.cards !== false"
                                 class="btn btn-xs z-0"
                                 :class="page_layout === 'page-cards' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
                                 :disabled="page_layout === 'page-cards'"
@@ -150,7 +150,7 @@
                         >
                             <i class="fa fa-fw fa-th"></i>
                         </button>
-                        <button v-if="layouts.grid !== false"
+                        <button type="button" v-if="layouts.grid !== false"
                                 class="btn btn-xs z-0"
                                 :class="page_layout === 'page-grid' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
                                 :disabled="page_layout === 'page-grid'"
@@ -158,7 +158,7 @@
                         >
                             <i class="fa fa-fw fa-th-large"></i>
                         </button>
-                        <button v-if="layouts.table !== false"
+                        <button type="button" v-if="layouts.table !== false"
                                 class="btn btn-xs z-0"
                                 :class="page_layout === 'page-table' ? ['active','btn-primary','disabled'] : ['btn-outline-primary']"
                                 :disabled="page_layout === 'page-table'"
@@ -218,7 +218,7 @@
                         {{ viewingRecordsTxt }}
                         <template v-if="showClearFiltersBtn">(Filtered)</template>
                     </badge>
-                    <button @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning mr-2">
+                    <button type="button" @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning mr-2">
                         <small><i class="fa fa-fw fa-times"></i> Reset All Filters</small>
                     </button>
                     <badge class="p-2" type="badge-light" icon="fa-clock-o">
@@ -281,7 +281,8 @@
             });
 
             Bus.$on('UpdateFilters', (e) => {
-                this.updateFilter(e);
+                if ( this.isActivePage() )
+                    this.updateFilter(e);
             });
 
             Bus.$on('ShowChecked', (e) => {
@@ -469,6 +470,10 @@
         },
 
         methods : {
+
+            isActivePage() {
+                return this.$parent.$parent.$el.classList.contains('active');
+            },
 
             updateCountdown(value) {
                 if ( value === -1 )
