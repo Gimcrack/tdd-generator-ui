@@ -64,12 +64,12 @@ body.dark-theme {
 // light theme
 $body-bg : white;
 $body-color : $gray-800;
-$border-color : $blue;
-$hover-bg : rgba($blue,0.2);
-$brand-color : $blue;
-$navbar-bg : $light;
-$navbar-color : $blue;
-$navbar-tab-color : $blue;
+$border-color : transparent;
+$hover-bg : rgba($blue,0.5);
+$brand-color : $light; //$blue;
+$navbar-bg : #0095c6;; //$light;
+$navbar-color : $light; //$blue;
+$navbar-tab-color : lighten($blue,45); //$blue;
 $navbar-active-color : $gray-800;
 $card-bg : $gray-100;
 $menu-color: $gray-800;

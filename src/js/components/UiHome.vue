@@ -178,10 +178,17 @@
                             <div class="w-100 mb-2 border-bottom border-info">
                                 <div class="p-2 d-flex justify-content-center">
                                     <div class="flex-grow-1 align-self-center">Troubleshooting</div>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" @click="clearCache" class="btn btn-sm btn-info">
-                                            <i class="fa fa-fw fa-exclamation-triangle"></i> Clear Local Cache
-                                        </button>
+                                    <div class="d-flex flex-column">
+                                        <div class="btn-group flex-grow-1 mb-2" role="group">
+                                            <button type="button" @click="clearCache" class="btn btn-sm btn-info flex-grow-1">
+                                                <i class="fa fa-fw fa-exclamation-triangle"></i> Clear Local Cache
+                                            </button>
+                                        </div>
+                                        <div class="btn-group flex-grow-1" role="group">
+                                            <button type="button" @click="clearServerCache" class="btn btn-sm btn-info">
+                                                <i class="fa fa-fw fa-exclamation-triangle"></i> Clear Server Cache
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -286,6 +293,13 @@
 
             clearCache() {
                 Store.clearModels();
+            },
+
+            clearServerCache() {
+                Api.post('clearServerCache')
+                    .then(o => {
+                        flash.success('Server Cache Cleared');
+                    })
             },
 
             selectTab(tab) {
@@ -479,7 +493,7 @@
             }
 
             .main {
-                margin: 0 $padding;
+                margin: 0 7em;
                 max-width: 1800px;
                 width:90vw;
                 transition: all 0.3s linear;
@@ -489,7 +503,7 @@
                 position: fixed !important;
                 padding-top: $padding !important;
                 transition: all 0.3s linear;
-                width: $padding + (70/16) * 1em;
+                width: 135px; //$padding + (70/16) * 1em;
                 flex:1;
             }
 
