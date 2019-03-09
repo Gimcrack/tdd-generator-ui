@@ -146,29 +146,84 @@ export default {
         },
 
         fetch() {
+            // console.log('Launching Prefetch');
+
             if ( !! this.preFetch )
                 this.preFetch();
 
             if ( !! this.timeouts.fetch )
                 clearTimeout(this.timeouts.fetch);
 
+            // console.log('Setting Prefetch Timeout');
             this.timeouts.fetch = setTimeout( this.performFetch, 1000 );
         },
 
         performFetch() {
+
+            // console.log('Api Request');
             Api.get( this.params.endpoint, { params : this.$parent.fetch_params || null } )
                 .then( this.success, this.error )
         },
 
+        updateModel(model,updated) {
+
+            // do nothing if there are no changes
+            if ( _.isEqual(model,updated) ) {
+                // console.log('Rows are equal, doing nothing');
+                return;
+            }
+
+            // console.log('Rows have changed, updating');
+            Object.assign(model,updated);
+        },
+
+        updateModels(data) {
+            // remove models
+            this.models.forEach( o => {
+                if ( data.findIndex( (oo) => {
+                    return o.id === oo.id;
+                }) === -1 ) {
+                    // console.log('Removing old row');
+                    this.models.$remove(this.findModelById(o.id));
+                }
+            });
+
+            // add models and update
+            data.forEach(o => {
+                let index = this.findModelById(o.id);
+
+                // add
+                if (index === -1) {
+                    // console.log('Adding new row');
+                    this.models.push(o);
+                }
+
+                // update if dirty
+                else {
+                    // console.log('Updating row');
+                    this.updateModel(this.models[index], o);
+                }
+            });
+        },
+
         success(response) {
+            // console.log('Success');
+
             let data_key = this.params.data_key;
-            this.models = (!! data_key) ? response.data[data_key] : response.data;
+
+            // update models
+            this.updateModels((!! data_key) ? response.data[data_key] : response.data );
+
             this.last_refreshed = Date.now();
 
+            // console.log('Models are set');
+
             if ( ! this.toggles.dont_cache ) {
+                // console.log('Caching models');
                 this.cacheModels();
             }
 
+            // console.log('Executing post success');
             if ( !! this.postSuccess )
                 this.postSuccess();
         },
@@ -179,7 +234,7 @@ export default {
 
         error(error) {
             flash.error('There was an error performing the operation. See the console for more params');
-            console.error(error);
+            // console.error(error);
 
             if ( !! this.postError )
                 this.postError();
@@ -202,16 +257,16 @@ export default {
         },
 
         add( model ) {
-            //console.log('Calling add model');
+            // //console.log('Calling add model');
             let index = this.findModelById(model.entity.id);
 
             // if the model exists, replace it
             if ( index > -1 ) {
-                // console.log('Updating model');
+                // // console.log('Updating model');
                 this.models[index] = model.entity;
             }
             else {
-                // console.log('New model');
+                // // console.log('New model');
                 this.models.push(model.entity);
                 flash.success(`New ${model.type.$title_case()}: ${model.name}`);
             }
@@ -222,7 +277,7 @@ export default {
 
         model( event ) {
 
-            //console.log('event',event,this);
+            // //console.log('event',event,this);
 
             let entity = event[this.modelType],
                 friendly = this.params.model_friendly || 'name';
@@ -248,7 +303,7 @@ export default {
         listen() {
             Echo.channel(this.params.events.channel)
                 .listen( this.params.events.created, (event) => {
-                    //console.log('Created',event);
+                    // //console.log('Created',event);
 
                     this.add( this.model(event) );
 
@@ -256,7 +311,7 @@ export default {
                         this.postCreated(event);
                 })
                 .listen( this.params.events.destroyed, (event) => {
-                    //console.log('Destroyed',event);
+                    // //console.log('Destroyed',event);
 
                     this.remove( this.model(event) );
 
@@ -312,16 +367,21 @@ export default {
         preFetch() {
             this.busy = true;
             this.refresh_btn_text = 'Refreshing';
+            // console.log('Refreshing');
         },
 
         postSuccess() {
             this.refresh_btn_text = 'Refreshed';
 
-            sleep(1000).then( () => {
+            // console.log('post Success');
+
+            setTimeout( () => {
                 this.refresh_btn_text = 'Refresh';
                 this.busy = false;
+
+                // console.log('Refresh Done');
                 Bus.$emit('RefreshDone')
-            })
+            }, 300);
         },
 
         postError() {
@@ -371,7 +431,7 @@ export default {
                 clearTimeout(this.timeouts.cache);
             }
 
-            //console.info('Scheduling cache');
+            // //console.info('Scheduling cache');
             this.timeouts.cache = setTimeout(this.performCache, 5000);
         },
 
@@ -379,7 +439,7 @@ export default {
             if ( this.toggles.dont_cache )
                 return;
 
-            //console.info('Caching Models');
+            // //console.info('Caching Models');
             Store.set(this.getCacheKey('models'), JSON.stringify(this.models) );
             Store.set(this.getCacheKey('last_refreshed'), this.last_refreshed );
         },

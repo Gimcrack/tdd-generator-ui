@@ -78,6 +78,9 @@
             }
 
             Bus.$on('flash', (data) => {
+                    if ( this.new_messages.some(o => { return o.message === data.message && o.type === data.type }) )
+                        return;
+
                     this.new_messages.push(data);
                 }
             );
@@ -123,6 +126,7 @@
             },
 
             flash({ message, type }) {
+
                 let key = +Math.random();
                 let ts = +moment();
 
@@ -141,12 +145,10 @@
                 if ( this.archive.length > 100 )
                     this.archive.pop();
 
-                sleep(300).then(() => {
-                    this.messages.push({message, type, ts, key});
+                this.messages.push({message, type, ts, key});
 
-                    this.notify(message, type);
-                    this.show_badge = true;
-                });
+                this.notify(message, type);
+                this.show_badge = true;
             },
 
             notify(message, type) {
