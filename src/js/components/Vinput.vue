@@ -1,14 +1,14 @@
 <template>
     <div class="vinput">
-        <input :value="value" @keyup.enter="$emit('keyupEnter')" @input="$emit('input', $event.target.value)" type="text" class="form-control vinput__input" :placeholder="placeholder" />
+        <input :value="value" @keyup.enter="$emit('keyupEnter')" @input="debounceUpdate" type="text" class="form-control vinput__input" :placeholder="placeholder" />
         <div class="vinput__icon">
             <i class="fa fa-fw fa-2x" :class="this.icon"></i>
         </div>
         <button type="button" @click.prevent.stop="reset" v-show="value" class="vinput__reset btn btn-xs btn-danger btn-outline">
             <i class="fa fa-fw fa-times"></i>
-        </button>    
+        </button>
     </div>
-    
+
 </template>
 
 <script>
@@ -21,12 +21,28 @@
             'square'
         ],
 
+        data() {
+            return {
+                timeout : null,
+            }
+        },
+
         methods : {
             reset() {
                 this.$el.querySelector('input').value = '';
                 this.$emit('input','');
                 this.$emit('clear');
-            }
+            },
+
+            // wait for half a sec for typing to stop
+            debounceUpdate($event) {
+                if ( !! this.timeout )
+                    clearTimeout(this.timeout);
+
+                this.timeout = setTimeout( () => {
+                    this.$emit('input', $event.target.value);
+                }, 500);
+            },
         }
     }
 </script>
@@ -40,7 +56,7 @@
         .vinput__input {
             text-indent: 30px;
             /*font-size: 20px;*/
-            // height:40px; 
+            // height:40px;
             // border-style: solid;
             // border: 1px solid #ccd0d2;
             // //border-bottom:2px solid #CCC;

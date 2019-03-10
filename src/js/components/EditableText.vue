@@ -1,5 +1,5 @@
 <template>
-    <div @mouseover="showControls" @mouseout="hideControls" class="editable-text pl-4">
+    <div @mouseover="showControls" @mouseout="hideControls" class="editable-text">
 
         <div v-if="editing" class="editor position-relative d-flex">
             <button type="button" :disabled="busy" @click="save" :class="{disabled:busy}" class="btn btn-link btn-xs position-absolute" style="left: -40px; top: 5px;">

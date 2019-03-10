@@ -1,6 +1,6 @@
 
 <template>
-    <div class="page">
+    <div class="page" :class="{working}">
         <div class="page-header">
             <h2>{{ params.heading }}</h2>
             <button type="button" @click.prevent="fetch" :disabled="busy" :class="busy ? 'disabled' : ''" class="btn-primary btn">
@@ -82,8 +82,51 @@
                     </badge>
                     <div class="flex-fill"></div>
 
-                    <!-- right side -->
+                    <!-- middle -->
+                    <div class="pagination-controls d-flex">
 
+                        <button :disabled="pagination.page===1" @click="navigateFirst" class="btn btn-xs btn-outline-primary mr-2">
+                            <small><i class="fa fa-fw fa-angle-double-left"></i></small>
+                        </button>
+
+                        <button :disabled="pagination.page===1" @click="navigateBack" class="btn btn-xs btn-outline-primary mr-2">
+                            <small><i class="fa fa-fw fa-angle-left"></i></small>
+                        </button>
+
+                        <dropdown-menu
+                            :btnText="`Page ${this.pagination.page} / ${this.pagination.totalPages}`"
+                            :btnClass="['btn-xs','btn-outline-primary']"
+                            :smallText="true"
+                            class="mr-2"
+                        >
+                            <dropdown-item @clicked="navigate(i)" :key="i" v-for="i in pageRange">
+                                Page {{i}}
+                            </dropdown-item>
+                        </dropdown-menu>
+
+                        <button :disabled="pagination.page===pagination.totalPages" @click="navigateForward" class="btn btn-xs btn-outline-primary mr-2">
+                            <small><i class="fa fa-fw fa-angle-right"></i></small>
+                        </button>
+
+                        <button :disabled="pagination.page===pagination.totalPages" @click="navigateLast" class="btn btn-xs btn-outline-primary mr-4">
+                            <small><i class="fa fa-fw fa-angle-double-right"></i></small>
+                        </button>
+
+                        <dropdown-menu
+                            :btnText="`${this.pagination.rowsPerPage} Items Per Page`"
+                            :btnClass="['btn-xs','btn-outline-primary']"
+                            :smallText="true"
+                            class="mr-2"
+                        >
+                            <dropdown-item @clicked="perPage(i)" :key="i" v-for="i in [10,25,50,100,500]">
+                                {{i}} Items Per Page
+                            </dropdown-item>
+                        </dropdown-menu>
+                    </div>
+
+
+                    <!-- right side -->
+                    <div class="flex-fill"></div>
                     <view-settings
                         v-if="page_layout === 'page-table'"
                         :hidden-columns="hiddenColumns"
@@ -227,6 +270,52 @@
                     <badge v-if="countdown !== -1" class="ml-2 p-2" type="badge-light" icon="fa-clock-o">
                         {{ countdown }}
                     </badge>
+
+                    <!-- middle -->
+                    <div class="flex-fill"></div>
+
+                    <div class="pagination-controls d-flex">
+
+                        <button :disabled="pagination.page===1" @click="navigateFirst" class="btn btn-xs btn-outline-primary mr-2">
+                            <small><i class="fa fa-fw fa-angle-double-left"></i></small>
+                        </button>
+
+                        <button :disabled="pagination.page===1" @click="navigateBack" class="btn btn-xs btn-outline-primary mr-2">
+                            <small><i class="fa fa-fw fa-angle-left"></i></small>
+                        </button>
+
+                        <dropdown-menu
+                            :btnText="`Page ${this.pagination.page} / ${this.pagination.totalPages}`"
+                            :btnClass="['btn-xs','btn-outline-primary']"
+                            :smallText="true"
+                            class="mr-2"
+                        >
+                            <dropdown-item @clicked="navigate(i)" :key="i" v-for="i in pageRange">
+                                Page {{i}}
+                            </dropdown-item>
+                        </dropdown-menu>
+
+                        <button :disabled="pagination.page===pagination.totalPages" @click="navigateForward" class="btn btn-xs btn-outline-primary mr-2">
+                            <small><i class="fa fa-fw fa-angle-right"></i></small>
+                        </button>
+
+                        <button :disabled="pagination.page===pagination.totalPages" @click="navigateLast" class="btn btn-xs btn-outline-primary mr-4">
+                            <small><i class="fa fa-fw fa-angle-double-right"></i></small>
+                        </button>
+
+                        <dropdown-menu
+                            :btnText="`${this.pagination.rowsPerPage} Items Per Page`"
+                            :btnClass="['btn-xs','btn-outline-primary']"
+                            :smallText="true"
+                            class="mr-2"
+                        >
+                            <dropdown-item @clicked="perPage(i)" :key="i" v-for="i in [10,25,50,100,500]">
+                                {{i}} Items Per Page
+                            </dropdown-item>
+                        </dropdown-menu>
+                    </div>
+
+                    <div class="flex-fill"></div>
                 </div>
             </template>
 
@@ -403,6 +492,10 @@
 
         computed : {
 
+            pageRange() {
+                return _.range(1,this.pagination.totalPages+1);
+            },
+
             scrumGroups() {
                 if ( this.groupBy === 'status' ) return this.scrumStatuses;
                 if ( this.groupBy === 'priority' ) return this.scrumPriorities;
@@ -470,6 +563,32 @@
         },
 
         methods : {
+
+            perPage(items) {
+                Store.set(this.getCacheKey('rows_per_page'), items);
+
+                this.pagination.rowsPerPage = items;
+            },
+
+            navigateFirst() {
+                this.pagination.page = 1;
+            },
+
+            navigateBack() {
+                this.pagination.page--;
+            },
+
+            navigate(page) {
+                this.pagination.page = page;
+            },
+
+            navigateForward() {
+                this.pagination.page++;
+            },
+
+            navigateLast() {
+                this.pagination.page = this.pagination.totalPages;
+            },
 
             isActivePage() {
                 return this.$parent.$parent.$el.classList.contains('active');
@@ -619,6 +738,15 @@
 
 <style lang="scss">
     .page {
+        &.working {
+            .table,
+            .page-grid,
+            .page-cards,
+            .page-scrum {
+                opacity: 0.3;
+            }
+        }
+
         .page-header {
             padding: 1em 0;
 
@@ -693,6 +821,41 @@
             }
             &.hide-13 {
                 th:nth-child(13), td:nth-child(13) {
+                    display:none;
+                }
+            }
+            &.hide-14 {
+                th:nth-child(14), td:nth-child(14) {
+                    display:none;
+                }
+            }
+            &.hide-15 {
+                th:nth-child(15), td:nth-child(15) {
+                    display:none;
+                }
+            }
+            &.hide-16 {
+                th:nth-child(16), td:nth-child(16) {
+                    display:none;
+                }
+            }
+            &.hide-17 {
+                th:nth-child(17), td:nth-child(17) {
+                    display:none;
+                }
+            }
+            &.hide-18 {
+                th:nth-child(18), td:nth-child(18) {
+                    display:none;
+                }
+            }
+            &.hide-19 {
+                th:nth-child(19), td:nth-child(19) {
+                    display:none;
+                }
+            }
+            &.hide-20 {
+                th:nth-child(20), td:nth-child(20) {
                     display:none;
                 }
             }

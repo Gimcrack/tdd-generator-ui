@@ -11,12 +11,20 @@ export default {
             search : null,
             orderBy : 'name',
             asc : true,
-            timeouts : {}
+            timeouts : {},
+            pagination : {
+                page : 1,
+                rowsPerPage : 25,
+                totalPages : 1
+            },
+            working : false,
         }
     },
 
-    mounted() {
+    async mounted() {
         this.listen();
+
+        this.pagination.rowsPerPage = await this.getRowsPerPage();
 
         this.getInitialModels();
 
@@ -33,6 +41,8 @@ export default {
         },
 
         filtered() {
+            this.working = true;
+
             let reject = ( _.isEmpty(this.params.reject) ) ? { placeholder : 'gibberish-value' } : this.params.reject,
                 filters = this.filters,
                 models = _(this.models)
@@ -41,17 +51,31 @@ export default {
                     .filter( o => this.applyFilters(filters,o) )
                     .reject( reject )
                     .sortBy( (model) => {
-                            let item = this.getItemByModel(model);
+                            let item = this.getItemByModel(model),
+                                val;
 
                             if ( !! item && _.get(item,this.orderBy) ) {
-                                return _.get(item,this.orderBy)
+                                val = _.get(item,this.orderBy);
+                                return isNaN(val) ? String(val).toLowerCase() : +val;
                             }
 
-                            return _.get(model,this.orderBy);
+                            val = _.get(model,this.orderBy);
+                            return isNaN(val) ? String(val).toLowerCase() : +val;
                         }
-                    );
+                    ),
+                start = this.pagination.rowsPerPage*(this.pagination.page-1),
+                end = this.pagination.rowsPerPage*(this.pagination.page);
 
-            return (this.asc) ? models.value() : models.reverse().value();
+            this.pagination.totalPages = Math.ceil(models.value().length / this.pagination.rowsPerPage);
+
+            // reset the view to the first page;
+            if ( this.pagination.page > this.pagination.totalPages )
+                this.pagination.page = 1;
+
+            setTimeout( () => {
+                this.working = false
+            }, 150);
+            return (this.asc) ? models.value().slice(start,end) : models.reverse().value().slice(start,end);
         },
 
         modelType() {
@@ -404,6 +428,15 @@ export default {
             }
 
             return true;
+        },
+
+        async getRowsPerPage() {
+            let rpp = await Store.get(this.getCacheKey('rows_per_page'));
+
+            if ( isNaN(rpp) )
+                return 25;
+
+            return +rpp;
         },
 
         async getInitialModels() {

@@ -12,6 +12,14 @@
             </div>
         </template>
 
+        <template v-else-if="typeof cellData === 'string' && cellData.indexOf(':editable') > -1">
+            <editable-text :endpoint="endpoint" :name="cellData.replace(':editable','')" :initial="cellText"></editable-text>
+        </template>
+
+        <template v-else-if="cellData.editable">
+            <editable-text :endpoint="endpoint" :name="cellData.name" :initial="cellText"></editable-text>
+        </template>
+
         <template v-else>
             <badge v-if="cellData.badge && cellText" :type="cellData.badge_class" :style="cellData.badge_style">
                 {{ cellText }}
@@ -59,6 +67,10 @@
         },
 
         computed : {
+            endpoint() {
+                return this.cellData.endpoint || `${this.$parent.$parent.item.endpoint}/${this.model.id}`;
+            },
+
             cellText() {
                 if ( this.cellData.text )
                     return this.cellData.text;
@@ -67,7 +79,7 @@
                     return _.get(this.model,this.cellData.key);
 
                 if ( typeof this.cellData === 'string' )
-                    return _.get(this.model,this.cellData);
+                    return _.get(this.model,this.cellData.replace(':editable',''));
             },
 
             heading() {

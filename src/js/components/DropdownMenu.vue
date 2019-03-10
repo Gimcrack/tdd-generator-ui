@@ -18,8 +18,9 @@
             <button type="button" @click="toggleDropDown"
                     :class="btnClass"
                     class="btn z-0">
-                <i class="fa fa-fw" :class="icon"></i>
-                {{ btnText }}
+                <i v-if="icon" class="fa fa-fw" :class="icon"></i>
+                <small v-if="smallText">{{ btnText }}</small>
+                <span v-else>{{ btnText }}</span>
             </button>
         </div>
     </div>
@@ -32,7 +33,8 @@
         props : [
             'icon',
             'btnText',
-            'btnClass'
+            'btnClass',
+            'smallText'
         ],
 
         data() {
