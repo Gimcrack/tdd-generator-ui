@@ -57,7 +57,7 @@
                 if (this.ticket)
                     return `https://isupport.ad.matsugov.us/Rep/Incident/default.aspx?ID=${this.id}`;
 
-                return 'api/v1/' + this.endpoint + '/' + this.id
+                return this.endpoint + '/' + this.id
             }
         },
 

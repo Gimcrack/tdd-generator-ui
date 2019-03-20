@@ -83,48 +83,15 @@
                     <div class="flex-fill"></div>
 
                     <!-- middle -->
-                    <div class="pagination-controls d-flex">
-
-                        <button :disabled="pagination.page===1" @click="navigateFirst" class="btn btn-xs btn-outline-primary mr-2">
-                            <small><i class="fa fa-fw fa-angle-double-left"></i></small>
-                        </button>
-
-                        <button :disabled="pagination.page===1" @click="navigateBack" class="btn btn-xs btn-outline-primary mr-2">
-                            <small><i class="fa fa-fw fa-angle-left"></i></small>
-                        </button>
-
-                        <dropdown-menu
-                            :disabled="pagination.totalPages===1"
-                            :btnText="`Page ${this.pagination.page} / ${this.pagination.totalPages}`"
-                            :btnClass="['btn-xs','btn-outline-primary']"
-                            :smallText="true"
-                            class="mr-2"
-                            :class="{disabled:pagination.totalPages===1}"
-                        >
-                            <dropdown-item @clicked="navigate(i)" :key="i" v-for="i in pageRange">
-                                Page {{i}}
-                            </dropdown-item>
-                        </dropdown-menu>
-
-                        <button :disabled="pagination.page===pagination.totalPages" @click="navigateForward" class="btn btn-xs btn-outline-primary mr-2">
-                            <small><i class="fa fa-fw fa-angle-right"></i></small>
-                        </button>
-
-                        <button :disabled="pagination.page===pagination.totalPages" @click="navigateLast" class="btn btn-xs btn-outline-primary mr-4">
-                            <small><i class="fa fa-fw fa-angle-double-right"></i></small>
-                        </button>
-
-                        <dropdown-menu
-                            :btnText="`${this.pagination.rowsPerPage} Items Per Page`"
-                            :btnClass="['btn-xs','btn-outline-primary']"
-                            :smallText="true"
-                            class="mr-2"
-                        >
-                            <dropdown-item @clicked="perPage(i)" :key="i" v-for="i in [10,25,50,100,500]">
-                                {{i}} Items Per Page
-                            </dropdown-item>
-                        </dropdown-menu>
-                    </div>
+                    <pagination
+                        :pagination="pagination"
+                        @navigateFirst="navigateFirst"
+                        @navigateBack="navigateBack"
+                        @navigateForward="navigateForward"
+                        @navigateLast="navigateLast"
+                        @navigate="(event) => navigate(event.page)"
+                        @perPage="(event) => perPage(event.perPage)"
+                    ></pagination>
 
 
                     <!-- right side -->
@@ -276,46 +243,15 @@
                     <!-- middle -->
                     <div class="flex-fill"></div>
 
-                    <div class="pagination-controls d-flex">
-
-                        <button :disabled="pagination.page===1" @click="navigateFirst" class="btn btn-xs btn-outline-primary mr-2">
-                            <small><i class="fa fa-fw fa-angle-double-left"></i></small>
-                        </button>
-
-                        <button :disabled="pagination.page===1" @click="navigateBack" class="btn btn-xs btn-outline-primary mr-2">
-                            <small><i class="fa fa-fw fa-angle-left"></i></small>
-                        </button>
-
-                        <dropdown-menu
-                            :btnText="`Page ${this.pagination.page} / ${this.pagination.totalPages}`"
-                            :btnClass="['btn-xs','btn-outline-primary']"
-                            :smallText="true"
-                            class="mr-2"
-                        >
-                            <dropdown-item @clicked="navigate(i)" :key="i" v-for="i in pageRange">
-                                Page {{i}}
-                            </dropdown-item>
-                        </dropdown-menu>
-
-                        <button :disabled="pagination.page===pagination.totalPages" @click="navigateForward" class="btn btn-xs btn-outline-primary mr-2">
-                            <small><i class="fa fa-fw fa-angle-right"></i></small>
-                        </button>
-
-                        <button :disabled="pagination.page===pagination.totalPages" @click="navigateLast" class="btn btn-xs btn-outline-primary mr-4">
-                            <small><i class="fa fa-fw fa-angle-double-right"></i></small>
-                        </button>
-
-                        <dropdown-menu
-                            :btnText="`${this.pagination.rowsPerPage} Items Per Page`"
-                            :btnClass="['btn-xs','btn-outline-primary']"
-                            :smallText="true"
-                            class="mr-2"
-                        >
-                            <dropdown-item @clicked="perPage(i)" :key="i" v-for="i in [10,25,50,100,500]">
-                                {{i}} Items Per Page
-                            </dropdown-item>
-                        </dropdown-menu>
-                    </div>
+                    <pagination
+                            :pagination="pagination"
+                            @navigateFirst="navigateFirst"
+                            @navigateBack="navigateBack"
+                            @navigateForward="navigateForward"
+                            @navigateLast="navigateLast"
+                            @navigate="(event) => navigate(event.page)"
+                            @perPage="(event) => perPage(event.perPage)"
+                    ></pagination>
 
                     <div class="flex-fill"></div>
                 </div>
@@ -347,7 +283,9 @@
     import PageCards from './PageCards.vue';
     import ScrumColumn from './ScrumColumn.vue';
     import AutoRefresh from './AutoRefresh.vue';
+    import Pagination from './Pagination.vue';
     import VueSlider from 'vue-slider-component';
+
 
     export default {
         components: {
@@ -357,7 +295,8 @@
             PageCards,
             ScrumColumn,
             AutoRefresh,
-            VueSlider
+            VueSlider,
+            Pagination
         },
 
         mixins : [
@@ -493,10 +432,6 @@
         },
 
         computed : {
-
-            pageRange() {
-                return _.range(1,this.pagination.totalPages+1);
-            },
 
             scrumGroups() {
                 if ( this.groupBy === 'status' ) return this.scrumStatuses;
