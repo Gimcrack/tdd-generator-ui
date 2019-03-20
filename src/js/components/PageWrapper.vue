@@ -94,10 +94,12 @@
                         </button>
 
                         <dropdown-menu
+                            :disabled="pagination.totalPages===1"
                             :btnText="`Page ${this.pagination.page} / ${this.pagination.totalPages}`"
                             :btnClass="['btn-xs','btn-outline-primary']"
                             :smallText="true"
                             class="mr-2"
+                            :class="{disabled:pagination.totalPages===1}"
                         >
                             <dropdown-item @clicked="navigate(i)" :key="i" v-for="i in pageRange">
                                 Page {{i}}

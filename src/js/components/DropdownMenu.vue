@@ -2,7 +2,7 @@
     <div class="dropdown-menu-component position-relative">
         <div @click="toggleDropDown" :class="{active : dropdownOpen}" class="dropdown-wrapper"></div>
         <div class="btn-group">
-            <button type="button" @click="toggleDropDown"
+            <button :disabled="!!disabled" type="button" @click="toggleDropDown"
                     :class="btnClass"
                     class="btn border-right-0 z-0">
                 <i class="fa fa-ellipsis-v"></i>
@@ -15,7 +15,7 @@
                     </slot>
                 </div>
             </div>
-            <button type="button" @click="toggleDropDown"
+            <button :disabled="!!disabled" type="button" @click="toggleDropDown"
                     :class="btnClass"
                     class="btn z-0">
                 <i v-if="icon" class="fa fa-fw" :class="icon"></i>
@@ -31,6 +31,7 @@
         name: "DropdownMenu",
 
         props : [
+            'disabled',
             'icon',
             'btnText',
             'btnClass',

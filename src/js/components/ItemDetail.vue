@@ -74,7 +74,7 @@
 
             show() {
                 if ( ! this.ticket ) {
-                    Api.get(this.endpoint)
+                    Api.get(this.url)
                         .then(this.success, this.error);
 
                     return;
