@@ -444,9 +444,14 @@
                     num = ( this.showChecked || ! this.toggles.checklist ) ?
                     this.filtered.length :
                     this.filtered.length-this.toggledCount,
-                total = this.models.length;
+                total = this.models.length,
+                start = +this.pagination.start+1,
+                end = (num>this.pagination.end) ? +this.pagination.end : num;
 
-                return `Viewing ${ num } / ${ total } Records`;
+                if (end === 1)
+                    return `Viewing 1 / ${ total } Records`;
+
+                return `Viewing ${ start }-${ end } / ${ total } Records`;
             },
 
             hasDropdownMenuSlot () {

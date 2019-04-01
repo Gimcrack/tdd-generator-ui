@@ -272,8 +272,8 @@
     .table-hover {
         border-color: $body-color !important;
 
-        tbody:hover tr td,
-        tbody:hover tr td {
+        & > tbody:hover > tr > th,
+        & > tbody:hover > tr > td {
             background-color: $hover-bg;
         }
     }

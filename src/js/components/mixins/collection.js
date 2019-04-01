@@ -15,7 +15,9 @@ export default {
             pagination : {
                 page : 1,
                 rowsPerPage : 25,
-                totalPages : 1
+                totalPages : 1,
+                start : 1,
+                end : 25
             },
             working : false,
         }
@@ -62,20 +64,24 @@ export default {
                             val = _.get(model,this.orderBy);
                             return isNaN(val) ? String(val).toLowerCase() : +val;
                         }
-                    ),
-                start = this.pagination.rowsPerPage*(this.pagination.page-1),
-                end = this.pagination.rowsPerPage*(this.pagination.page);
+                    );
 
+            // calculate the total number of pages
             this.pagination.totalPages = Math.ceil(models.value().length / this.pagination.rowsPerPage);
 
             // reset the view to the first page;
             if ( this.pagination.page > this.pagination.totalPages )
                 this.pagination.page = 1;
 
+            // set start and end record
+            this.pagination.start = this.pagination.rowsPerPage*(this.pagination.page-1);
+            this.pagination.end = this.pagination.rowsPerPage*(this.pagination.page);
+
             setTimeout( () => {
                 this.working = false
             }, 150);
-            return (this.asc) ? models.value().slice(start,end) : models.reverse().value().slice(start,end);
+
+            return (this.asc) ? models.value().slice(this.pagination.start,this.pagination.end) : models.reverse().value().slice(this.pagination.start,this.pagination.end);
         },
 
         modelType() {
