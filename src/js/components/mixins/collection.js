@@ -325,7 +325,7 @@ export default {
         },
 
         listen() {
-            Echo.channel(this.params.events.channel)
+            Echo.private(this.params.events.channel)
                 .listen( this.params.events.created, (event) => {
                     // //console.log('Created',event);
 

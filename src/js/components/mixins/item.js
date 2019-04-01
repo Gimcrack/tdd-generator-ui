@@ -163,7 +163,7 @@ export default {
             let updated_event = ( typeof this.item.updated === 'object' ) ? this.item.updated.event : this.item.updated,
                 quiet = (typeof this.item.updated === 'object' ) ? !! this.item.updated.quiet : false;
 
-            Echo.channel(this.item.channel)
+            Echo.private(this.item.channel)
                 .listen(updated_event, (event) => {
                         return this.updatedEvent(event, quiet);
                     }
@@ -172,7 +172,7 @@ export default {
             if ( !! this.item.events ) {
                 this.item.events.forEach( ( e ) => {
 
-                    Echo.channel(this.item.channel)
+                    Echo.private(this.item.channel)
                         .listen( e.event, e.handler )
                 })
             }

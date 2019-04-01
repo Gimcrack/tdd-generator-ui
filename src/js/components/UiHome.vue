@@ -19,7 +19,7 @@
                          :id="tab.id"
                          :text="tab.text"
                          :icon="tab.icon"
-                         v-if="!tab.admin || user.admin_flag"
+                         v-if="(!tab.admin && ( !tab.editor || user.editor_flag)) || user.admin_flag"
                          @clicked="selectTab(tab)"
                          :active-tab="activeTab"
                          :has-subnav="tab.sub"
@@ -36,7 +36,7 @@
                              :id="tab.id"
                              :text="tab.text"
                              :icon="tab.icon"
-                             v-if="!tab.admin || user.admin_flag"
+                             v-if="(!tab.admin && ( !tab.editor || user.editor_flag)) || user.admin_flag"
                              @clicked="selectSub(tab)"
                              :active-tab="activeSub"
                     >
@@ -104,7 +104,8 @@
                                     <h4 class="mb-0">
                                         <i class="fa fa-fw fa-user"></i>
                                         <span class="mr-1">{{ short_name }}</span>
-                                        <span v-if="user.admin_flag" class="badge badge-primary">Admin</span>
+                                        <span v-if="user.admin_flag" class="badge badge-danger">Admin</span>
+                                        <span v-if="user.editor_flag" class="badge badge-warning">Editor</span>
                                     </h4>
                                 </div>
 
@@ -302,7 +303,20 @@
                     })
             },
 
+            checkPermissions(tab) {
+                if ( tab.admin && ! this.user.admin_flag )
+                    return false;
+
+                if ( tab.editor && ! ( this.user.editor_flag || this.user.admin_flag ) )
+                    return false;
+
+                return true;
+            },
+
             selectTab(tab) {
+                if ( ! this.checkPermissions(tab))
+                    return true;
+
                 this.activeTab = tab;
                 this.activeSub = {};
 
@@ -314,6 +328,9 @@
             },
 
             selectSub(tab) {
+                if ( ! this.checkPermissions(tab))
+                    return true;
+
                 this.activeSub = tab;
 
                 this.history();
@@ -340,19 +357,27 @@
             history() {
                 let sub = this.activeSub || null,
                     tab = this.activeTab,
-                    url = ( !! sub.id ) ? `/#${tab.id}/${sub.id}` : `/#${tab.id}`,
-                    title = ( !! sub.id ) ? `${tab.id.$ucfirst()} - ${sub.id.$ucfirst()}` : tab.id.$ucfirst();
+                    url = ( !! sub.id ) ? `/#/${tab.id}/${sub.id}` : `/#/${tab.id}`,
+                    title = ( !! sub.id ) ? `${tab.id.$ucfirst()} - ${sub.id.$ucfirst()}` : tab.id.$ucfirst(),
+                    parser = document.createElement('a'),
+                    pathname;
 
-                history.pushState( {tab : tab, sub : sub}, title, url);
+                parser.href = window.location.href;
+                pathname = parser.pathname.replace(/\/$/,'');
+
+                history.pushState( {tab : tab, sub : sub}, title, pathname + url);
             },
 
             setInitialTab() {
-                let tab = location.hash.replace('#','');
+                let tab = location.hash.replace('#/','');
                 if ( !! tab )
                 {
                     let parts = tab.split('/'),
                         selectedTab = this.menu.filter(o => o.id === parts[0])[0],
                         selectedSub = ( parts[1] ) ? selectedTab.sub.filter( o => o.id === parts[1] )[0] : null;
+
+                    if ( ! ( this.checkPermissions(selectedTab) || this.checkPermissions(selectedSub) ) )
+                        return this.setDefaultTab();
 
                     if ( selectedTab )
                         this.selectTab( selectedTab );
@@ -361,10 +386,14 @@
                         this.selectSub( selectedSub );
                 }
                 else {
-                    sleep(500).then(() => {
-                        this.selectTab( this.menu[0] );
-                    });
+                    this.setDefaultTab();
                 }
+            },
+
+            setDefaultTab() {
+                sleep(500).then(() => {
+                    this.selectTab( this.menu.filter(tab => this.checkPermissions(tab))[0] );
+                });
             },
 
             getUISettings() {

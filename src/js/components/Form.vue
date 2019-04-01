@@ -294,22 +294,22 @@
                 // figure out what happened
                 switch (response.config.method.toLowerCase()) {
                     case 'post' : // new
-                        operation = 'Created';
+                        operation = 'Creating';
                         break;
 
                     case 'patch' :
                     case 'put' :
-                        operation = 'Updated';
+                        operation = 'Updating';
                         break;
 
                     case 'delete' :
-                        operation = 'Deleted';
+                        operation = 'Deleting';
                         break;
                 }
 
                 switch(type) {
                     case 'success' :
-                        return flash.success(`${name} ${operation} Successfully`);
+                        return flash.success(`${operation} ${name} ...`);
                 }
             },
 

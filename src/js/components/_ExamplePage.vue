@@ -183,7 +183,7 @@
                         //     Event : Handler
                         //  }
                         //  will result in
-                        //  Echo.channel('disks')
+                        //  Echo.private('disks')
                         //      .listen(Event,Handler)
 
                         // other : {
