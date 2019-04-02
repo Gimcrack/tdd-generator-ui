@@ -342,6 +342,7 @@
                         type : '',
                         heading : 'Page Heading',
                         data_key : null,
+                        primary_key : 'id',
                         order : 'name',
                         orderDir : true,
                         columns : [],

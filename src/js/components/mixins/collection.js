@@ -209,18 +209,28 @@ export default {
 
         updateModels(data) {
             // remove models
+
+            let remove = [];
+
+            // identify the models to remove
             this.models.forEach( o => {
-                if ( data.findIndex( (oo) => {
-                    return o.id === oo.id;
-                }) === -1 ) {
-                    // console.log('Removing old row');
-                    this.models.$remove(this.findModelById(o.id));
-                }
+                let idx = data.findIndex( (oo) => {
+                    return o[this.params.primary_key || 'id'] === oo[this.params.primary_key || 'id'];
+                });
+
+                // don't remove until the forEach is done
+                if ( idx === -1 )
+                    remove.push(o[this.params.primary_key || 'id']);
+            });
+
+            // now remove the models
+            remove.forEach( o => {
+                this.models.$remove(this.findModelById(o));
             });
 
             // add models and update
             data.forEach(o => {
-                let index = this.findModelById(o.id);
+                let index = this.findModelById(o[this.params.primary_key || 'id']);
 
                 // add
                 if (index === -1) {
@@ -272,12 +282,12 @@ export default {
 
         findModelById(id) {
             return this.models.findIndex( (model) => {
-                return model.id === id;
+                return model[this.params.primary_key || 'id'] === id;
             });
         },
 
         remove(model) {
-            let index = this.findModelById(model.entity.id);
+            let index = this.findModelById(model.entity[this.params.primary_key || 'id']);
             if ( index > -1 ) this.models.$remove(index);
 
             flash.warning(`${model.type.$title_case()} Removed: ${model.name}`);
@@ -288,7 +298,7 @@ export default {
 
         add( model ) {
             // //console.log('Calling add model');
-            let index = this.findModelById(model.entity.id);
+            let index = this.findModelById(model.entity[this.params.primary_key || 'id']);
 
             // if the model exists, replace it
             if ( index > -1 ) {
