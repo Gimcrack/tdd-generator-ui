@@ -69,7 +69,6 @@
                 <div class="d-flex align-items-center header-sort-button flex-fill">
                     <badge class="p-2 mr-2" icon="fa-info" :type="[ showClearFiltersBtn ? 'badge-warning' : 'badge-light']">
                         {{ viewingRecordsTxt }}
-                        <template v-if="showClearFiltersBtn">(Filtered)</template>
                     </badge>
                     <button type="button" @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning mr-2">
                         <small><i class="fa fa-fw fa-times"></i> Reset All Filters</small>
@@ -228,7 +227,6 @@
                 <div class="d-flex align-items-center header-sort-button">
                     <badge class="p-2 mr-2" icon="fa-info" :type="[ showClearFiltersBtn ? 'badge-warning' : 'badge-light']">
                         {{ viewingRecordsTxt }}
-                        <template v-if="showClearFiltersBtn">(Filtered)</template>
                     </badge>
                     <button type="button" @click="clearFilter" v-if="showClearFiltersBtn" class="btn btn-xs btn-warning mr-2">
                         <small><i class="fa fa-fw fa-times"></i> Reset All Filters</small>
@@ -443,16 +441,22 @@
             viewingRecordsTxt() {
                 let
                     num = ( this.showChecked || ! this.toggles.checklist ) ?
-                    this.filtered.length :
-                    this.filtered.length-this.toggledCount,
+                    this.pagination.totalRows :
+                    this.pagination.totalRows-this.toggledCount,
                 total = this.models.length,
                 start = +this.pagination.start+1,
                 end = (num>this.pagination.end) ? +this.pagination.end : num;
 
-                if (end === 1)
-                    return `Viewing 1 / ${ total } Records`;
+                if ( end === 0 )
+                    return ( num === total ) ? 'Viewing 0 Records' : `Viewing 0 Records [${ total-num } hidden by filters]`;
 
-                return `Viewing ${ start }-${ end } / ${ total } Records`;
+                if (end === 1)
+                    return (num === total ) ? `Viewing 1 / ${ total } Records` : `Viewing 1 / ${ total } Records [${ total-num } hidden by filters]`;
+
+                if ( num === total)
+                    return `Viewing ${ start }-${ end } / ${ total } Records`;
+
+                return `Viewing ${ start }-${ end } / ${ num } Records [${ total-num } hidden by filters]`;
             },
 
             hasDropdownMenuSlot () {

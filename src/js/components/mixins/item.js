@@ -160,11 +160,17 @@ export default {
         },
 
         listen() {
+            if ( ! this.item.channel )
+                return false;
+            
             let updated_event = ( typeof this.item.updated === 'object' ) ? this.item.updated.event : this.item.updated,
                 quiet = (typeof this.item.updated === 'object' ) ? !! this.item.updated.quiet : false;
 
             Echo.private(this.item.channel)
                 .listen(updated_event, (event) => {
+
+                        Bus.$emit(updated_event, event );
+                        console.log(updated_event, event);
                         return this.updatedEvent(event, quiet);
                     }
                 );

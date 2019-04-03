@@ -17,7 +17,8 @@ export default {
                 rowsPerPage : 25,
                 totalPages : 1,
                 start : 1,
-                end : 25
+                end : 25,
+                totalRows : 0
             },
             working : false,
         }
@@ -76,10 +77,15 @@ export default {
             // set start and end record
             this.pagination.start = this.pagination.rowsPerPage*(this.pagination.page-1);
             this.pagination.end = this.pagination.rowsPerPage*(this.pagination.page);
+            this.pagination.totalRows = models.value().length;
 
             setTimeout( () => {
                 this.working = false
             }, 150);
+
+            setTimeout( () => {
+                this.setToggled();
+            }, 300);
 
             return (this.asc) ? models.value().slice(this.pagination.start,this.pagination.end) : models.reverse().value().slice(this.pagination.start,this.pagination.end);
         },
@@ -341,30 +347,36 @@ export default {
         },
 
         listen() {
-            Echo.private(this.params.events.channel)
-                .listen( this.params.events.created, (event) => {
-                    // //console.log('Created',event);
+            if ( !! this.params.events.channel ) {
 
-                    this.add( this.model(event) );
+                Echo.private(this.params.events.channel)
+                    .listen(this.params.events.created, (event) => {
+                        // //console.log('Created',event);
 
-                    if ( !! this.postCreated )
-                        this.postCreated(event);
-                })
-                .listen( this.params.events.destroyed, (event) => {
-                    // //console.log('Destroyed',event);
+                        this.add(this.model(event));
 
-                    this.remove( this.model(event) );
+                        if (!!this.postCreated)
+                            this.postCreated(event);
+                    })
+                    .listen(this.params.events.destroyed, (event) => {
+                        // //console.log('Destroyed',event);
 
-                    if ( !! this.postDeleted )
-                        this.postDeleted(event);
-                });
+                        this.remove(this.model(event));
 
-            let other = this.params.events.other;
-            if ( !! other ) {
-                for( let type in other ) {
-                    Echo.channel(this.params.events.channel)
-                        .listen( type, (event) => { other[type](event) } );
+                        if (!!this.postDeleted)
+                            this.postDeleted(event);
+                    });
+
+                let other = this.params.events.other;
+                if (!!other) {
+                    for (let type in other) {
+                        Echo.channel(this.params.events.channel)
+                            .listen(type, (event) => {
+                                other[type](event)
+                            });
+                    }
                 }
+                
             }
 
             let g = this.params.events.global;
