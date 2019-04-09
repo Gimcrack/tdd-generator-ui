@@ -85,6 +85,9 @@
                     case 'button' :
                         return 'formButton';
 
+                    case 'image' :
+                        return 'formImage';
+
                     default :
                         return 'formControl';
                 }

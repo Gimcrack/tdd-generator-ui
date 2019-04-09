@@ -74,6 +74,19 @@ $popper-background-color: mintcream;
     background: #ffffdb !important;
 }
 
+.bg-half-transparent {
+    background: rgba(0,0,0,0.5);
+}
+
+.-mx-2 {
+    margin-left : -0.5rem;
+    margin-right: -0.5rem;
+}
+
+.-mx-1 {
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+}
 
 
 @import "media";

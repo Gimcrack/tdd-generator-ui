@@ -38,6 +38,7 @@ export default function(Vue) {
     Vue.component('dropdownMenu',require('./src/js/components/DropdownMenu.vue').default);
     Vue.component('formFieldGroup',require('./src/js/components/FormFieldGroup.vue') .default);
     Vue.component('formMenu',require('./src/js/components/FormMenu.vue').default);
+    Vue.component('formImage', require('./src/js/components/FormImage.vue').default);
     Vue.component('formControl', require('./src/js/components/FormControl.vue').default);
     Vue.component('formSelect', require('./src/js/components/FormSelect.vue').default);
     Vue.component('formTextarea', require('./src/js/components/FormTextarea.vue').default);
