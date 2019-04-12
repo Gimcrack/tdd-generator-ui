@@ -74,8 +74,12 @@ $popper-background-color: mintcream;
     background: #ffffdb !important;
 }
 
+.border-transparent {
+    border-color: transparent !important;
+}
+
 .bg-half-transparent {
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.5) !important;
 }
 
 .-mx-2 {
@@ -88,5 +92,20 @@ $popper-background-color: mintcream;
     margin-right: -0.25rem;
 }
 
+.text-shadow {
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+}
+
+.indent-reset {
+    text-indent: unset !important;
+}
+
+.min-h-25 {
+    min-height: 25% !important;
+}
+
+.min-h-75 {
+    min-height: 75% !important;
+}
 
 @import "media";

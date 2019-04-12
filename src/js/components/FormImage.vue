@@ -1,9 +1,6 @@
 <template>
     <div :class="['form-group', (show_invalid) ? 'is-invalid' : '', 'tdd-generator-form-control']">
-        <label class="btn btn-sm" :class="[ selected ? 'btn-success' : 'btn-secondary']" :for="id">
-            <i class="fa fa-fw fa-upload"></i>
-            {{ label }}
-        </label>
+
 
         <input
             type="file"
@@ -17,18 +14,57 @@
             accept="image/*"
         >
 
-        <div v-if="previews.length" class="d-flex flex-wrap -mx-2">
+        <div class="d-flex flex-wrap -mx-2">
 
-            <div v-for="(preview,idx) in previews" :key="idx"
-                class="m-2 d-flex align-items-end position-relative shadow"
-                 style="width:180px;height:180px;background-size:cover;background-repeat:no-repeat;overflow:hidden;border-radius:0.5rem;"
+            <div v-if="previews.length" v-for="(preview,idx) in previews" :key="idx"
+                class="m-2 d-flex align-items-end position-relative shadow preview-image"
                  :style="{ backgroundImage : `url('${preview}')`}">
-                <div class="text-white text-small bg-half-transparent w-100 h-25 d-flex align-items-center justify-content-center text-shadow">
-                    {{ files[idx].name }}
+
+                <div :class="[editing ? 'min-h-75' : 'min-h-25', files[idx].featured ? 'border-warning' : 'border-transparent' ]" class="border text-white text-small bg-half-transparent w-100 d-flex flex-grow align-items-center justify-content-center text-shadow image-menu">
+                    <div @click="editing=true" v-if="! editing" style="cursor:pointer"  class="caption m-2 d-flex flex-column align-items-center justify-content-center">
+                        {{ files[idx].caption || files[idx].name }}
+                        <div class="description">
+                            <em>
+                                {{ files[idx].description }}
+                            </em>
+                        </div>
+                        <div v-if="files[idx].featured" class="text-warning text-shadow mt-2">
+                            <i class="fa fa-fw fa-check mr-1"></i>
+                            Featured Image
+                        </div>
+                    </div>
+
+                    <div v-else class="menu d-flex flex-column w-100 h-100 p-2 align-items-start justify-content-between">
+                        <input type="text" placeholder="Caption" v-model="files[idx].caption" class="form-control small p-2 bg-half-transparent text-white indent-reset mb-2 border-transparent">
+
+                        <textarea name="" placeholder="Description" v-model="files[idx].description" class="form-control small p-2 bg-half-transparent text-white indent-reset mb-2 border-transparent" rows="2"></textarea>
+
+                        <label class="form-control small d-flex align-items-center justify-content-start p-2 bg-half-transparent border-transparent text-white mb-2">
+                            <input v-model="files[idx].featured" type="checkbox" class="mr-2">
+                            Featured Image
+                        </label>
+
+                        <div class="d-flex w-100 justify-content-end">
+                            <button @click="editing=false" class="btn btn-link text-white">
+                                <i class="fa fa-fw fa-check"></i>
+                                Save
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
 
-                <i class="fa fa-fw fa-times text-danger position-absolute" style="top:10px;right:10px;cursor:pointer"></i>
+                <i @click="remove(idx)" class="fa fa-fw fa-times fa-2x text-shadow text-white position-absolute" style="top:10px;right:10px;cursor:pointer"></i>
             </div>
+
+            <label class="m-2 d-flex align-items-end position-relative shadow preview-image upload-button" :for="id">
+                <div class="text-white text-small bg-half-transparent w-100 h-25 d-flex align-items-center justify-content-center text-shadow">
+                    <i class="fa fa-fw fa-image mr-2"></i>
+                    {{ label }}
+                </div>
+
+                <i class="fa fa-fw fa-plus fa-2x text-shadow text-white position-absolute" style="top:10px;right:10px;cursor:pointer"></i>
+            </label>
         </div>
 
         <div v-if="show_invalid && !! invalid_rule.help" class="invalid-feedback">
@@ -96,6 +132,8 @@
                         [ 'minLength', [2], 'Please enter a valid value' ]
                     ],
                 },
+                show_icons : [],
+                editing : false
             }
         },
 
@@ -113,6 +151,11 @@
         },
 
         methods : {
+
+            remove(index) {
+                Vue.delete(this.files,index);
+                Vue.delete(this.previews,index);
+            },
 
             reset() {
                 //console.log('Resetting');
@@ -165,7 +208,13 @@
             update($event) {
 
                 for(let ii = 0; ii<this.$refs.fileInput.files.length; ii++) {
-                    this.files.push(this.$refs.fileInput.files[ii]);
+                    let file = this.$refs.fileInput.files[ii];
+
+                    this.files.push( Object.assign(file, {
+                        caption : file.name,
+                        description : "",
+                        featured : false
+                    }));
                 }
 
                 this.getPreviews(this.$refs.fileInput.files);
@@ -296,6 +345,8 @@
 
 <style lang="scss">
 
+    @import "../../sass/variables";
+
     .tdd-generator-form-control {
         .input-file {
             width: 0.1px;
@@ -304,6 +355,40 @@
             overflow: hidden;
             position: absolute;
             z-index: -1;
+        }
+
+        .upload-button {
+            background: url("../../img/placeholder.png") center rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s linear;
+
+            &:hover,
+            &.hover {
+                background-color: rgba($brand-green,0.1);
+                color: $brand-green !important;
+            }
+        }
+
+        .preview-image {
+            width:240px;
+            height:240px;
+            background-size:cover;
+            background-repeat:no-repeat;
+            overflow:hidden;
+            border-radius:0.5rem;
+
+            & > .image-menu {
+                transition: all 0.3s linear;
+            }
+
+            &.hover > i,
+            &:hover > i {
+                display: block;
+            }
+
+            & > i {
+                display: none;
+            }
         }
     }
 </style>
