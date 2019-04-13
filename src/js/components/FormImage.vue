@@ -9,38 +9,37 @@
             :name="name"
             :multiple="multiple"
             @input="update"
-            :value="value"
             ref="fileInput"
             accept="image/*"
         >
 
         <div class="d-flex flex-wrap -mx-2">
 
-            <div v-if="previews.length" v-for="(preview,idx) in previews" :key="idx"
-                class="m-2 d-flex align-items-end position-relative shadow preview-image"
-                 :style="{ backgroundImage : `url('${preview}')`}">
+            <div v-if="value.length" v-for="(existing,idx) in value" :key="idx"
+                 class="m-2 d-flex align-items-end position-relative shadow preview-image"
+                 :style="{ backgroundImage : `url('/storage/${existing.path}')`}">
 
-                <div :class="[editing ? 'min-h-75' : 'min-h-25', files[idx].featured ? 'border-warning' : 'border-transparent' ]" class="border text-white text-small bg-half-transparent w-100 d-flex flex-grow align-items-center justify-content-center text-shadow image-menu">
+                <div :class="[editing ? 'min-h-75' : 'min-h-25', existing.featured_flag ? 'border-warning' : 'border-transparent' ]" class="border text-white text-small bg-half-transparent w-100 d-flex flex-grow align-items-center justify-content-center text-shadow image-menu">
                     <div @click="editing=true" v-if="! editing" style="cursor:pointer"  class="caption m-2 d-flex flex-column align-items-center justify-content-center">
-                        {{ files[idx].caption || files[idx].name }}
+                        {{ existing.caption }}
                         <div class="description">
                             <em>
-                                {{ files[idx].description }}
+                                {{ existing.description }}
                             </em>
                         </div>
-                        <div v-if="files[idx].featured" class="text-warning text-shadow mt-2">
+                        <div v-if="existing.featured_flag" class="text-warning text-shadow mt-2">
                             <i class="fa fa-fw fa-check mr-1"></i>
                             Featured Image
                         </div>
                     </div>
 
                     <div v-else class="menu d-flex flex-column w-100 h-100 p-2 align-items-start justify-content-between">
-                        <input type="text" placeholder="Caption" v-model="files[idx].caption" class="form-control small p-2 bg-half-transparent text-white indent-reset mb-2 border-transparent">
+                        <input type="text" placeholder="Caption" v-model="existing.caption" class="form-control small p-2 bg-half-transparent text-white indent-reset mb-2 border-transparent">
 
-                        <textarea name="" placeholder="Description" v-model="files[idx].description" class="form-control small p-2 bg-half-transparent text-white indent-reset mb-2 border-transparent" rows="2"></textarea>
+                        <textarea name="" placeholder="Description" v-model="existing.description" class="form-control small p-2 bg-half-transparent text-white indent-reset mb-2 border-transparent" rows="2"></textarea>
 
                         <label class="form-control small d-flex align-items-center justify-content-start p-2 bg-half-transparent border-transparent text-white mb-2">
-                            <input v-model="files[idx].featured" type="checkbox" class="mr-2">
+                            <input v-model="existing.featured_flag" type="checkbox" class="mr-2">
                             Featured Image
                         </label>
 
@@ -55,6 +54,59 @@
                 </div>
 
                 <i @click="remove(idx)" class="fa fa-fw fa-times fa-2x text-shadow text-white position-absolute" style="top:10px;right:10px;cursor:pointer"></i>
+
+            </div>
+
+            <div v-if="previews.length" v-for="(preview,idx) in previews" :key="idx"
+                class="m-2 d-flex align-items-end position-relative shadow preview-image"
+                 :style="{ backgroundImage : `url('${preview}')`}">
+
+                <div :class="[editing ? 'min-h-75' : 'min-h-25', files[idx].featured_flag ? 'border-warning' : 'border-transparent' ]" class="border text-white text-small bg-half-transparent w-100 d-flex flex-grow align-items-center justify-content-center text-shadow image-menu">
+                    <div @click="editing=true" v-if="! editing" style="cursor:pointer"  class="caption m-2 d-flex flex-column align-items-center justify-content-center">
+                        {{ files[idx].meta.caption || files[idx].name }}
+                        <div class="description">
+                            <em>
+                                {{ files[idx].meta.description }}
+                            </em>
+                        </div>
+                        <div v-if="files[idx].meta.featured_flag" class="text-warning text-shadow mt-2">
+                            <i class="fa fa-fw fa-check mr-1"></i>
+                            Featured Image
+                        </div>
+                    </div>
+
+                    <div v-else class="menu d-flex flex-column w-100 h-100 p-2 align-items-start justify-content-between">
+                        <input type="text" placeholder="Caption" v-model="files[idx].meta.caption" class="form-control small p-2 bg-half-transparent text-white indent-reset mb-2 border-transparent">
+
+                        <textarea name="" placeholder="Description" v-model="files[idx].meta.description" class="form-control small p-2 bg-half-transparent text-white indent-reset mb-2 border-transparent" rows="2"></textarea>
+
+                        <label class="form-control small d-flex align-items-center justify-content-start p-2 bg-half-transparent border-transparent text-white mb-2">
+                            <input v-model="files[idx].meta.featured_flag" type="checkbox" class="mr-2">
+                            Featured Image
+                        </label>
+
+                        <div class="d-flex w-100 justify-content-end">
+                            <button @click="editing=false" class="btn btn-link text-white">
+                                <i class="fa fa-fw fa-check"></i>
+                                Save
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <i @click="remove(idx)" class="fa fa-fw fa-times fa-2x text-shadow text-white position-absolute" style="top:10px;right:10px;cursor:pointer"></i>
+
+                <div v-if="!! errors[`${name}.${idx}`]" class="invalid-feedback position-absolute">
+                    <i class="fa fa-fw fa-times-circle-o text-danger fa-5x mb-2"></i>
+                    <div class="my-3 text-center text-white">
+                        {{ errors[`${name}.${idx}`][0] }}
+                    </div>
+                    <button @click="remove(idx)" class="btn btn-sm btn-danger">
+                        <i class="fa fa-fw fa-times"></i>
+                        Remove
+                    </button>
+                </div>
             </div>
 
             <label class="m-2 d-flex align-items-end position-relative shadow preview-image upload-button" :for="id">
@@ -67,13 +119,7 @@
             </label>
         </div>
 
-        <div v-if="show_invalid && !! invalid_rule.help" class="invalid-feedback">
-            {{ invalid_rule.help }}
-        </div>
 
-        <div v-if="!! errors[name]" class="invalid-feedback">
-            {{ errors[name][0] }}
-        </div>
     </div>
 </template>
 
@@ -155,6 +201,9 @@
             remove(index) {
                 Vue.delete(this.files,index);
                 Vue.delete(this.previews,index);
+
+                //Bus.$emit('UpdateFormControl', { key : this.name, value : '' });
+                Bus.$emit('UpdateFormFileControl', { key : this.name, value : this.files });
             },
 
             reset() {
@@ -211,15 +260,20 @@
                     let file = this.$refs.fileInput.files[ii];
 
                     this.files.push( Object.assign(file, {
-                        caption : file.name,
-                        description : "",
-                        featured : false
+                        meta : {
+                            caption : file.name,
+                            description : "",
+                            featured_flag : 0
+                        }
                     }));
                 }
 
                 this.getPreviews(this.$refs.fileInput.files);
 
-                return Bus.$emit('UpdateFormControl', { key : this.name, value : this.$refs.fileInput.value });
+                Bus.$emit('UpdateFormControl', { key : this.name, value : this.$refs.fileInput.value });
+                Bus.$emit('UpdateFormFileControl', { key : this.name, value : this.files });
+
+                return;
             },
 
             getPreviews(files) {
@@ -328,8 +382,11 @@
             },
 
             show_invalid() {
+
+
                 return !! this.invalid_rule.show_message ||
-                    !! this.errors[this.name];
+                    !! this.errors[this.name]
+                    || Object.keys(this.errors).some(o => { return o.indexOf(this.name) > -1 });
             },
 
             invalid_rule() {
@@ -388,6 +445,17 @@
 
             & > i {
                 display: none;
+            }
+
+            .invalid-feedback {
+                display: flex !important;
+                height: 100%;
+                width: 100%;
+                background: rgba(0,0,0,0.7);
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                margin: 0;
             }
         }
     }

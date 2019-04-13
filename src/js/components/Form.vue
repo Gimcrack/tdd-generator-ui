@@ -117,6 +117,7 @@
                     revertable : this.revertable,
                     resetable : this.resetable,
                     deletable : this.deletable,
+                    has_files : !! this.form_params.toggles.files
                 }
             },
 
@@ -153,7 +154,7 @@
                 Bus.$on('ShowForm', (e) => {
 
                     this.form_params = Object.assign(
-                        {},
+                        { files : {} },
                         this.form_defaults,
                         this.$root.form_definitions[e.type]
                     );
@@ -170,6 +171,11 @@
 
                 Bus.$on('UpdateFormControl', (e) => {
                     this.form_params.form[e.key] = e.value;
+                    this.checkDirty();
+                });
+
+                Bus.$on('UpdateFormFileControl', e => {
+                    this.form_params.files[e.key] = e.value;
                     this.checkDirty();
                 });
 
@@ -285,6 +291,7 @@
             },
 
             flashMessage(response, type) {
+
                 let name = (response.data.model) ? response.data.model.name || null : null;
                 let operation = '';
 
@@ -292,17 +299,25 @@
                 name = name ? "'" + name + "'" : 'Record';
 
                 // figure out what happened
-                switch (response.config.method.toLowerCase()) {
-                    case 'post' : // new
+                switch (true) {
+                    case response.status === 201 : // new
                         operation = 'Creating';
                         break;
 
-                    case 'patch' :
-                    case 'put' :
+                    case response.status === 202 && response.config.method.toLowerCase() === 'post' : // update
                         operation = 'Updating';
                         break;
 
-                    case 'delete' :
+                    case response.config.method.toLowerCase() === 'post' : // new
+                        operation = 'Creating';
+                        break;
+
+                    case response.config.method.toLowerCase() === 'patch' :
+                    case response.config.method.toLowerCase() === 'put' :
+                        operation = 'Updating';
+                        break;
+
+                    case response.config.method.toLowerCase() === 'delete' :
                         operation = 'Deleting';
                         break;
                 }
@@ -340,16 +355,52 @@
             },
 
             post() {
-                if ( this.editing ) {
-                    let id = ( this.form_params.id_key  ) ? this.model[this.form_params.id_key] : this.model.id;
 
-                    Api.patch(this.form_params.endpoint + '/' + id, this.form_params.form)
-                        .then(this.success, this.fail);
-                }
-                else {
-                    Api.post(this.form_params.endpoint, this.form_params.form)
-                        .then( this.success, this.fail );
-                }
+                Api[this.getVerb()](this.getEndpoint(), this.getFormData())
+                    .then(this.success, this.fail);
+            },
+
+
+            getVerb() {
+                return this.toggles.has_files || ! this.editing ?
+                    'post' :
+                    'patch';
+            },
+
+            getId() {
+                let key = this.form_params.id_key || 'id';
+
+                return this.editing ? this.model[key] : '';
+            },
+
+            getEndpoint() {
+                return this.form_params.endpoint + '/' + this.getId();
+            },
+
+            getFormData() {
+                if ( ! this.toggles.has_files )
+                    return this.form_params.form;
+
+                // prepare the payload
+                let frmData = new FormData(),
+                    params = this.form_params.inputs.flatMap(o => o.fields);
+
+                frmData.append('_method', this.editing ? 'PATCH' : 'POST');
+
+                params.forEach( o => {
+                    if ( o.type !== 'file' && o.type !== 'image' )
+                        frmData.append(o.name, this.form_params.form[o.name]);
+                    else
+                        this.form_params.files[o.name].forEach( (oo,i) => {
+                            frmData.append(`${o.name}[${i}]`, oo);
+
+                            for (let prop in oo.meta) {
+                                frmData.append(`${o.name}__meta[${i}][${prop}]`,oo.meta[prop]);
+                            }
+                        } )
+                });
+
+                return frmData;
             },
 
             save() {
@@ -412,6 +463,7 @@
 
 
             .invalid-feedback {
+                display:block !important;
                 position: relative;
                 width: unset;
                 text-align: left;
