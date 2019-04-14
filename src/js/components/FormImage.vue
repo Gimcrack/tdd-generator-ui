@@ -14,119 +14,64 @@
         >
 
         <div class="d-flex flex-wrap -mx-2">
+            <!-- Failed Images -->
 
-            <div v-if="value.length" v-for="(existing,idx) in value" :key="idx"
-                 class="m-2 d-flex align-items-end position-relative shadow preview-image"
-                 :style="{ backgroundImage : `url('/storage/${existing.path}')`}">
+            <div v-for="file in failed" :key="file.name"
+                 class="m-2 d-flex align-items-end position-relative shadow preview-image failed-image"
+                 :style="{ backgroundImage : `url('${file.preview}')`}">
+                <!--<i @click="remove(file)" class="fa fa-fw fa-times fa-2x text-shadow text-white position-absolute" style="top:10px;right:10px;cursor:pointer"></i>-->
 
-                <div :class="[editing ? 'min-h-75' : 'min-h-25', existing.featured_flag ? 'border-warning' : 'border-transparent' ]" class="border text-white text-small bg-half-transparent w-100 d-flex flex-grow align-items-center justify-content-center text-shadow image-menu">
-                    <div @click="editing=true" v-if="! editing" style="cursor:pointer"  class="caption m-2 d-flex flex-column align-items-center justify-content-center">
-                        {{ existing.caption }}
-                        <div class="description">
-                            <em>
-                                {{ existing.description }}
-                            </em>
-                        </div>
-                        <div v-if="existing.featured_flag" class="text-warning text-shadow mt-2">
-                            <i class="fa fa-fw fa-check mr-1"></i>
-                            Featured Image
-                        </div>
-                    </div>
-
-                    <div v-else class="menu d-flex flex-column w-100 h-100 p-2 align-items-start justify-content-between">
-                        <input type="text" placeholder="Caption" v-model="existing.caption" class="form-control small p-2 bg-half-transparent text-white indent-reset mb-2 border-transparent">
-
-                        <textarea name="" placeholder="Description" v-model="existing.description" class="form-control small p-2 bg-half-transparent text-white indent-reset mb-2 border-transparent" rows="2"></textarea>
-
-                        <label class="form-control small d-flex align-items-center justify-content-start p-2 bg-half-transparent border-transparent text-white mb-2">
-                            <input v-model="existing.featured_flag" type="checkbox" class="mr-2">
-                            Featured Image
-                        </label>
-
-                        <div class="d-flex w-100 justify-content-end">
-                            <button @click="editing=false" class="btn btn-link text-white">
-                                <i class="fa fa-fw fa-check"></i>
-                                Save
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <i @click="remove(idx)" class="fa fa-fw fa-times fa-2x text-shadow text-white position-absolute" style="top:10px;right:10px;cursor:pointer"></i>
-
-            </div>
-
-            <div v-if="previews.length" v-for="(preview,idx) in previews" :key="idx"
-                class="m-2 d-flex align-items-end position-relative shadow preview-image"
-                 :style="{ backgroundImage : `url('${preview}')`}">
-
-                <div :class="[editing ? 'min-h-75' : 'min-h-25', files[idx].featured_flag ? 'border-warning' : 'border-transparent' ]" class="border text-white text-small bg-half-transparent w-100 d-flex flex-grow align-items-center justify-content-center text-shadow image-menu">
-                    <div @click="editing=true" v-if="! editing" style="cursor:pointer"  class="caption m-2 d-flex flex-column align-items-center justify-content-center">
-                        {{ files[idx].meta.caption || files[idx].name }}
-                        <div class="description">
-                            <em>
-                                {{ files[idx].meta.description }}
-                            </em>
-                        </div>
-                        <div v-if="files[idx].meta.featured_flag" class="text-warning text-shadow mt-2">
-                            <i class="fa fa-fw fa-check mr-1"></i>
-                            Featured Image
-                        </div>
-                    </div>
-
-                    <div v-else class="menu d-flex flex-column w-100 h-100 p-2 align-items-start justify-content-between">
-                        <input type="text" placeholder="Caption" v-model="files[idx].meta.caption" class="form-control small p-2 bg-half-transparent text-white indent-reset mb-2 border-transparent">
-
-                        <textarea name="" placeholder="Description" v-model="files[idx].meta.description" class="form-control small p-2 bg-half-transparent text-white indent-reset mb-2 border-transparent" rows="2"></textarea>
-
-                        <label class="form-control small d-flex align-items-center justify-content-start p-2 bg-half-transparent border-transparent text-white mb-2">
-                            <input v-model="files[idx].meta.featured_flag" type="checkbox" class="mr-2">
-                            Featured Image
-                        </label>
-
-                        <div class="d-flex w-100 justify-content-end">
-                            <button @click="editing=false" class="btn btn-link text-white">
-                                <i class="fa fa-fw fa-check"></i>
-                                Save
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <i @click="remove(idx)" class="fa fa-fw fa-times fa-2x text-shadow text-white position-absolute" style="top:10px;right:10px;cursor:pointer"></i>
-
-                <div v-if="!! errors[`${name}.${idx}`]" class="invalid-feedback position-absolute">
+                <div v-if="!! file.errors" class="invalid-feedback position-absolute">
                     <i class="fa fa-fw fa-times-circle-o text-danger fa-5x mb-2"></i>
                     <div class="my-3 text-center text-white">
-                        {{ errors[`${name}.${idx}`][0] }}
+                        {{ file.errors[0] }}
                     </div>
-                    <button @click="remove(idx)" class="btn btn-sm btn-danger">
+                    <button @click="remove_failed(file)" class="btn btn-sm btn-danger">
                         <i class="fa fa-fw fa-times"></i>
                         Remove
                     </button>
                 </div>
             </div>
 
-            <label class="m-2 d-flex align-items-end position-relative shadow preview-image upload-button" :for="id">
-                <div class="text-white text-small bg-half-transparent w-100 h-25 d-flex align-items-center justify-content-center text-shadow">
+            <label class="m-2 d-flex align-items-end position-relative text-small shadow preview-image upload-button" :for="id">
+                <div class="text-white bg-half-transparent w-100 h-25 d-flex align-items-center justify-content-center text-shadow">
                     <i class="fa fa-fw fa-image mr-2"></i>
                     {{ label }}
                 </div>
 
                 <i class="fa fa-fw fa-plus fa-2x text-shadow text-white position-absolute" style="top:10px;right:10px;cursor:pointer"></i>
             </label>
+
+            <!-- Pending Images -->
+            <form-image-preview
+                :file="file"
+                :form="form"
+                v-if="files.length"
+                v-for="file in files"
+                :key="file.name || file.caption"
+                @uploaded="refresh(file)"
+            ></form-image-preview>
+
+            <!-- Existing Images -->
+
+            <image-model :model="existing" endpoint="images" v-if="value.length" v-for="existing in value" :key="existing.id"></image-model>
+
         </div>
-
-
     </div>
 </template>
 
 <script>
     //import Dropzone from 'dropzone';
 
+    import ImageModel from './ImageModel.vue';
+    import FormImagePreview from "./FormImagePreview";
+
     export default {
+
+        components : {
+            FormImagePreview,
+            ImageModel
+        },
 
         mounted() {
             //this.dz = new Dropzone('.dropzone', this.definition.upload);
@@ -160,17 +105,16 @@
             },
 
             errors : {
-                required : false,
-                default : () => {}
+                required : true,
+                default : null
             }
-
         },
 
         data() {
             return {
                 help_message : '',
                 files : [],
-                previews : [],
+                failed : [],
                 validation : {
                     settings : [],
                     rules : [],
@@ -179,7 +123,8 @@
                     ],
                 },
                 show_icons : [],
-                editing : false
+                editing : false,
+                timeouts : []
             }
         },
 
@@ -198,12 +143,18 @@
 
         methods : {
 
-            remove(index) {
-                Vue.delete(this.files,index);
-                Vue.delete(this.previews,index);
+            remove(file) {
+                Vue.delete(this.files, this.files.indexOf(file));
+                // Vue.delete(this.previews,index);
+
+                this.$refs.fileInput.value = '';
 
                 //Bus.$emit('UpdateFormControl', { key : this.name, value : '' });
-                Bus.$emit('UpdateFormFileControl', { key : this.name, value : this.files });
+                //Bus.$emit('UpdateFormFileControl', { key : this.name, value : this.files });
+            },
+
+            remove_failed(file) {
+                Vue.delete(this.failed, this.failed.indexOf(file));
             },
 
             reset() {
@@ -260,43 +211,61 @@
                     let file = this.$refs.fileInput.files[ii];
 
                     this.files.push( Object.assign(file, {
+                        preview : null,
                         meta : {
                             caption : file.name,
                             description : "",
-                            featured_flag : 0
+                            featured_flag : 0,
+                            errors : null,
+                            busy : false,
+                            uploaded : false,
                         }
                     }));
                 }
 
-                this.getPreviews(this.$refs.fileInput.files);
+                this.$refs.fileInput.value = '';
 
-                Bus.$emit('UpdateFormControl', { key : this.name, value : this.$refs.fileInput.value });
-                Bus.$emit('UpdateFormFileControl', { key : this.name, value : this.files });
+                // this.uploadFiles();
+
+
+                //Bus.$emit('UpdateFormControl', { key : this.name, value : this.$refs.fileInput.value });
+                //Bus.$emit('UpdateFormFileControl', { key : this.name, value : this.files });
 
                 return;
             },
 
-            getPreviews(files) {
-                if ( ! files || ! files.length )
-                    return false;
+            refresh(file) {
+                if ( ! this.form.editing )
+                    return;
 
-                for ( let ii = 0; ii<files.length; ii++ )
-                {
-                    this.getPreview(files[ii]);
-                }
+                file.uploaded = true;
+
+                if ( this.timeouts.refresh ) clearTimeout(this.timeouts.refresh);
+
+                this.timeouts.refresh = setTimeout(this.performRefresh, 2000);
             },
 
-            getPreview(file) {
-                let rdr = new FileReader();
-                rdr.onload = (e => {
-                    this.previews.push(e.target.result);
-                });
+            performRefresh() {
+                console.log('Refreshing form meta data');
+                Api.get(this.form.getEndpoint())
+                    .then( response => {
+                        Bus.$emit('RefreshFormControl', { key : this.name, value : response.data[this.name] });
+                        //this.value = response.data[this.name];
 
-                rdr.readAsDataURL(file);
-            }
+                        this.files.filter(file => file.uploaded).forEach(file => {
+                           this.remove(file);
+                        });
+
+                        this.$forceUpdate();
+                    })
+            },
         },
 
         computed : {
+
+            form() {
+                return this.$parent.$parent;
+            },
 
             selected() {
                 return this.value && this.value.length;
@@ -307,11 +276,11 @@
             },
 
             label() {
-                if ( this.files && this.files.length > 1 )
-                    return this.files.length + ' Files Selected';
-
-                if ( this.files && this.files[0] )
-                    return this.files[0].name;
+                // if ( this.files && this.files.length > 1 )
+                //     return this.files.length + ' Files Selected';
+                //
+                // if ( this.files && this.files[0] )
+                //     return this.files[0].name;
 
                 return this.definition.label || this.definition.name.$ucfirst();
             },
@@ -427,8 +396,8 @@
         }
 
         .preview-image {
-            width:240px;
-            height:240px;
+            width:190px;
+            height:190px;
             background-size:cover;
             background-repeat:no-repeat;
             overflow:hidden;

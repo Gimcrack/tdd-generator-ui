@@ -169,6 +169,12 @@
                     //Vue.nextTick(() => this.controls[0].focus());
                 });
 
+                Bus.$on('RefreshFormControl', (e) => {
+                    this.form_params.form[e.key] = e.value;
+                    this.model[e.key] = e.value;
+                    this.checkDirty();
+                });
+
                 Bus.$on('UpdateFormControl', (e) => {
                     this.form_params.form[e.key] = e.value;
                     this.checkDirty();
