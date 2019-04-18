@@ -44,13 +44,12 @@
         data() {
             return {
                 showGridControls : false,
-                zoom : 100,
             }
         },
 
         methods : {
             toggleGridControls() {
-                this.showGridControls = !this.showGridControls;
+                this.showGridControls = ! this.showGridControls;
             },
         }
     }

@@ -15,6 +15,11 @@
             Save
         </button>
 
+        <button type="button" v-show="toggles.refresh" @click.prevent="$emit('refresh')" :disabled="! toggles.refresh" :class="{ disabled : ! toggles.refresh}" class="btn-primary btn">
+            <i class="fa fa-fw fa-circle-o-notch" :class="{'fa-spin' : busy}"></i>
+            Refresh
+        </button>
+
         <button type="button" v-show="toggles.revertable" @click.prevent="$emit('revert')" :disabled="! toggles.can_revert" :class="{ disabled : ! toggles.can_revert}" class="btn-warning btn">
             <i class="fa fa-fw fa-refresh" :class="{'fa-spin' : busy}"></i>
             Revert

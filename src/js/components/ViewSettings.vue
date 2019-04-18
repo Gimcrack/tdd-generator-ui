@@ -39,6 +39,12 @@
     export default {
 
         props : {
+            defaultHidden : {
+                default() {
+                    return [];
+                }
+            },
+
             hiddenColumns : {
                 default() {
                     return []
@@ -85,7 +91,7 @@
             },
 
             showReset() {
-                return this.hidden !== null && this.hidden.length > 0;
+                return ! _.isEqual(this.hidden,this.defaultHidden) ;
             }
         },
 
@@ -99,7 +105,7 @@
             },
 
             reset() {
-                this.hidden = [];
+                this.hidden = this.defaultHidden;
                 this.update();
             }
         }

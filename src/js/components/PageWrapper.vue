@@ -98,6 +98,7 @@
                     <view-settings
                         v-if="page_layout === 'page-table'"
                         :hidden-columns="hiddenColumns"
+                        :default-hidden="params.hidden_columns"
                         :options="hiddenColumnsOptions"
                         @update="updateHiddenColumns"
                     ></view-settings>
@@ -191,6 +192,7 @@
                         :key="model.id"
                         :model-props="params.modelProps"
                         :columns="params.columns"
+                        :zoom="zoom"
                         @ToggledHasChanged="setToggled">
                     </component>
                 </template>
@@ -301,7 +303,7 @@
             mixins.collection
         ],
 
-        async mounted() {
+        mounted() {
             this.$parent.page = this;
 
             Bus.$on('ToggleCompactView', () => {
@@ -317,6 +319,11 @@
                 this.showChecked = e;
             });
 
+            Bus.$on('ChangeZoom', (e) => {
+                this.zoom = e.zoom;
+                Store.set( this.getCacheKey('card_zoom'), this.zoom)
+            });
+
             this.getInitialHiddenColumns();
 
             this.getInitialState();
@@ -328,9 +335,7 @@
 
             this.formatLastRefreshed();
 
-            this.zoom = await Store.get( this.getCacheKey('cards_zoom'), 100);
-
-            Bus.$emit('ChangeZoom', { zoom : this.zoom } );
+            this.getInitialZoom();
         },
 
         props : {
@@ -381,7 +386,7 @@
             }
         },
 
-        data() {
+       data() {
             return {
                 orderBy : this.params.order || 'name',
                 asc : ( this.params.orderDir !== null ) ? this.params.orderDir : true,
@@ -510,6 +515,13 @@
         },
 
         methods : {
+
+            getInitialZoom() {
+                Store.get(this.getCacheKey('card_zoom'))
+                    .then(zoom => {
+                        this.zoom = zoom;
+                    });
+            },
 
             perPage(items) {
                 Store.set(this.getCacheKey('rows_per_page'), items);

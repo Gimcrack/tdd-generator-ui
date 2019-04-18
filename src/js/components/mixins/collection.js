@@ -80,7 +80,11 @@ export default {
             this.pagination.totalRows = models.value().length;
 
             setTimeout( () => {
-                this.working = false
+                Bus.$emit('ChangeZoom', { zoom : this.zoom});
+            }, 50);
+
+            setTimeout( () => {
+                this.working = false;
             }, 150);
 
             setTimeout( () => {
@@ -370,7 +374,7 @@ export default {
                 let other = this.params.events.other;
                 if (!!other) {
                     for (let type in other) {
-                        Echo.channel(this.params.events.channel)
+                        Echo.private(this.params.events.channel)
                             .listen(type, (event) => {
                                 other[type](event)
                             });

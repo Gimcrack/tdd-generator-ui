@@ -1,6 +1,11 @@
 <template>
-    <div class="m-2 d-flex align-items-end position-relative shadow preview-image"
+    <div v-if="show" class="m-2 d-flex align-items-end position-relative shadow preview-image"
             :style="{ backgroundImage : `url('/storage/${meta.path}')`}">
+
+        <div v-if="busy" class="position-absolute w-100 h-100 bg-half-transparent text-white d-flex flex-column align-items-center justify-content-center">
+            <div class="mb-2">{{ message }}</div>
+            <i class="fa fa-spin fa-circle-notch fa-5x"></i>
+        </div>
 
         <div :class="[editing ? 'min-h-75' : 'min-h-25', meta.featured_flag ? 'border-warning' : 'border-transparent' ]"
              class="border text-white text-small bg-half-transparent w-100 d-flex flex-grow align-items-center justify-content-center text-shadow image-menu">
@@ -28,6 +33,10 @@
                 </label>
 
                 <div class="d-flex w-100 justify-content-end">
+                    <button @click="del" class="btn btn-link text-white">
+                        <i class="fa fa-fw fa-times"></i>
+                        Delete
+                    </button>
                     <button @click="save" class="btn btn-link text-white">
                         <i class="fa fa-fw fa-check"></i>
                         Save
@@ -48,7 +57,7 @@
                 required : true
             },
 
-            endpoint : {
+            form : {
                 required : true
             }
         },
@@ -63,27 +72,66 @@
             return {
                 busy : false,
                 meta : Object.assign({}, this.model),
-                editing : false
+                editing : false,
+                message : '',
+                show : true
             }
         },
 
         methods : {
             save() {
                 this.busy = true;
+                this.message = 'Updating...';
 
-                Api.patch(this.endpoint + '/' + this.model.id, this.meta)
+                Api.patch(this.endpoint, this.meta)
                     .then( this.success, this.fail );
             },
 
+            del() {
+                swal({
+                    title : "Are you sure?",
+                    text : "The image will be deleted.",
+                    showCancelButton : true,
+                }).then(res => {
+                    if ( res.dismiss === "cancel" )
+                        return;
+
+                    this.performDelete();
+                });
+            },
+
+            performDelete() {
+                this.busy = true;
+                this.message = 'Deleting...';
+
+                Api.delete(this.endpoint)
+                    .then(this.deleted, this.fail)
+            },
+
             success(response) {
-                console.log('Success');
                 this.editing = false;
                 this.busy = false;
+                this.$emit('updated');
+                flash.success('Image updated');
+            },
+
+            deleted(response) {
+                this.editing = false;
+                this.busy = false;
+                this.show = false;
+                this.$emit('updated');
+                flash.success('Image removed');
             },
 
             fail(error) {
                 console.error(error);
                 this.busy = false;
+            }
+        },
+
+        computed : {
+            endpoint() {
+                return this.form.getEndpoint() + `/images/${this.model.id}`;
             }
         }
     }

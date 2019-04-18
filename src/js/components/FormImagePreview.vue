@@ -31,10 +31,18 @@
             <div class="my-3 text-center text-white">
                 {{ errors[0] }}
             </div>
-            <button @click="$emit('remove')" class="btn btn-sm btn-danger">
-                <i class="fa fa-fw fa-times"></i>
-                Remove
-            </button>
+
+            <div class="d-flex">
+                <button @click="$emit('remove')" class="btn btn-xs btn-danger mr-2 text-small">
+                    <i class="fa fa-fw fa-times"></i>
+                    Remove
+                </button>
+                <button @click="upload" class="btn btn-xs btn-primary text-small">
+                    <i class="fa fa-fw fa-refresh"></i>
+                    Retry
+                </button>
+
+            </div>
         </div>
     </div>
 
@@ -71,6 +79,7 @@
             upload() {
                 this.busy = true;
                 this.message = 'Uploading...';
+                this.errors = null;
 
                 Api.post(this.endpoint, this.formData())
                     .then( (response) => {
@@ -79,7 +88,7 @@
 
                         this.$emit('uploaded');
 
-                        //this.form.success();
+                        flash.success('Image uploaded successfully');
                     } , this.fail );
             },
 

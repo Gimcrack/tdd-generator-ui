@@ -32,7 +32,7 @@
                     <div v-if="show_meta"
                          class="d-flex mt-3 item-grid__meta align-items-center justify-content-between flex-wrap bg-white-transparent text-dark rounded"
                     >
-                        <div class="m-2" v-for="cell,i in meta" :key="i">
+                        <div class="m-2" v-for="(cell,i) in meta" :key="i">
                             <item-meta
                                :cell-data="cell"
                                :model="model"

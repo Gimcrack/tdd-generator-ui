@@ -6,8 +6,8 @@
                 :show-popper.sync="show_popper"
                 placement="bottom"
             >
-                <div :style="cardStyle" class="item-cards btn position-relative card-shadow d-flex white-space-normal"
-                     v-if="show" ref="row" :class="[{sticky, toggled}, itemBorder]"
+                <div :style="cardStyle" class="item-cards position-relative card-shadow d-flex white-space-normal bg-half-transparent rounded-lg"
+                     v-if="show" ref="row" :class="[{sticky, toggled}, itemBorder, { btn : ! toggles.no_popper }]"
                 >
 
                     <div @click="togglePopper" class="card-body justify-content-center d-flex">
@@ -15,7 +15,7 @@
 
                         <transition name="bounce">
                             <div v-if="show_meta"
-                                 class="d-flex item-cards__meta align-items-center justify-content-center flex-wrap"
+                                 class="d-flex item-cards__meta align-items-center justify-content-center flex-wrap w-100 h-100"
                             >
                                 <slot name="cardBody">
                                     <i v-if="icon" class="fa fa-fw" :class="icon"></i>
@@ -68,10 +68,6 @@
                 this.show_meta = false;
             });
 
-            Bus.$on('ChangeZoom', (e) => {
-                this.zoom = e.zoom;
-            });
-
             Bus.$on('ClosePopper', (e) => {
                 if ( e.id === this.id )
                     this.show_popper = false;
@@ -122,7 +118,7 @@
             },
             icon : {
                 default : false
-            }
+            },
         },
 
         data() {
@@ -131,7 +127,6 @@
                 show : true,
                 page : this.$parent.$parent.$parent,
                 show_meta : ! this.$slots['row2'],
-                zoom : 100,
                 show_popper : false
             }
         },
@@ -139,6 +134,10 @@
         computed : {
             busy() {
                 return this.updating || this.deleting;
+            },
+
+            zoom() {
+                return this.$parent.zoom;
             },
 
             model() {
@@ -159,6 +158,9 @@
         methods: {
 
             togglePopper() {
+                if ( this.toggles.no_popper )
+                    return false;
+
                 this.show_popper = ! this.show_popper;
             },
 

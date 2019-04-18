@@ -14,6 +14,10 @@ export default {
         columns : {
             required : true
         },
+
+        zoom : {
+            default : 150
+        },
     },
 
     watch : {

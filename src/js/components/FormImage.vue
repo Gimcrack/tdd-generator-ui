@@ -14,25 +14,7 @@
         >
 
         <div class="d-flex flex-wrap -mx-2">
-            <!-- Failed Images -->
-
-            <div v-for="file in failed" :key="file.name"
-                 class="m-2 d-flex align-items-end position-relative shadow preview-image failed-image"
-                 :style="{ backgroundImage : `url('${file.preview}')`}">
-                <!--<i @click="remove(file)" class="fa fa-fw fa-times fa-2x text-shadow text-white position-absolute" style="top:10px;right:10px;cursor:pointer"></i>-->
-
-                <div v-if="!! file.errors" class="invalid-feedback position-absolute">
-                    <i class="fa fa-fw fa-times-circle-o text-danger fa-5x mb-2"></i>
-                    <div class="my-3 text-center text-white">
-                        {{ file.errors[0] }}
-                    </div>
-                    <button @click="remove_failed(file)" class="btn btn-sm btn-danger">
-                        <i class="fa fa-fw fa-times"></i>
-                        Remove
-                    </button>
-                </div>
-            </div>
-
+            <!-- Upload Button -->
             <label class="m-2 d-flex align-items-end position-relative text-small shadow preview-image upload-button" :for="id">
                 <div class="text-white bg-half-transparent w-100 h-25 d-flex align-items-center justify-content-center text-shadow">
                     <i class="fa fa-fw fa-image mr-2"></i>
@@ -50,11 +32,19 @@
                 v-for="file in files"
                 :key="file.name || file.caption"
                 @uploaded="refresh(file)"
+                @remove="remove(file)"
             ></form-image-preview>
 
             <!-- Existing Images -->
 
-            <image-model :model="existing" endpoint="images" v-if="value.length" v-for="existing in value" :key="existing.id"></image-model>
+            <image-model
+                :model="existing"
+                :form="form"
+                v-if="value.length"
+                v-for="existing in value"
+                :key="existing.id"
+                @updated="refresh"
+            ></image-model>
 
         </div>
     </div>
@@ -238,7 +228,8 @@
                 if ( ! this.form.editing )
                     return;
 
-                file.uploaded = true;
+                if ( file )
+                    file.uploaded = true;
 
                 if ( this.timeouts.refresh ) clearTimeout(this.timeouts.refresh);
 

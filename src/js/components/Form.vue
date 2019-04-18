@@ -1,6 +1,10 @@
 <template>
     <div v-if="show" class="form-wrapper">
+
         <div class="form">
+            <div v-if="busy" class="form-busy bg-half-transparent position-absolute w-100 h-100 z-1 d-flex justify-content-center align-items-center">
+                <i class="fa fa-spin fa-5x fa-refresh"></i>
+            </div>
             <div class="page p-2">
                 <div class="page-header m-2">
                     <h2>{{ heading }}</h2>
@@ -17,6 +21,7 @@
                     @reset="revert"
                     @cancel="cancel"
                     @destroy="destroy"
+                    @refresh="refresh"
                 ></form-menu>
 
                 <div class="field-groups">
@@ -42,6 +47,7 @@
                     @reset="revert"
                     @cancel="cancel"
                     @destroy="destroy"
+                    @refresh="refresh"
                     class="mt-3 mb-2 mr-2"
                 ></form-menu>
             </div>
@@ -67,7 +73,9 @@
 
                 model : null,
 
-                form_params : {},
+                form_params : {
+                    toggles : {}
+                },
 
                 form_definitions : {},
 
@@ -117,7 +125,8 @@
                     revertable : this.revertable,
                     resetable : this.resetable,
                     deletable : this.deletable,
-                    has_files : !! this.form_params.toggles.files
+                    has_files : !! this.form_params.toggles.files,
+                    refresh : !! this.form_params.toggles.refresh
                 }
             },
 
@@ -211,6 +220,21 @@
                         return;
                     this.close();
                 });
+            },
+
+            refresh() {
+                console.log('Refreshing form meta data');
+                this.busy = true;
+
+                Api.get(this.getEndpoint())
+                    .then( response => {
+
+                        this.model = Object.assign({},response.data);
+                        this.busy = false;
+                        this.loadModel();
+
+                        this.$forceUpdate();
+                    })
             },
 
             conditionsMet(group) {
@@ -362,15 +386,8 @@
 
             post() {
 
-                Api[this.getVerb()](this.getEndpoint(), this.getFormData())
+                Api[ this.editing ? 'patch' : 'post'](this.getEndpoint(), this.getFormData())
                     .then(this.success, this.fail);
-            },
-
-
-            getVerb() {
-                return this.toggles.has_files || ! this.editing ?
-                    'post' :
-                    'patch';
             },
 
             getId() {
@@ -384,29 +401,29 @@
             },
 
             getFormData() {
-                if ( ! this.toggles.has_files )
-                    return this.form_params.form;
 
-                // prepare the payload
-                let frmData = new FormData(),
-                    params = this.form_params.inputs.flatMap(o => o.fields);
+                return this.form_params.form;
 
-                frmData.append('_method', this.editing ? 'PATCH' : 'POST');
-
-                params.forEach( o => {
-                    if ( o.type !== 'file' && o.type !== 'image' )
-                        frmData.append(o.name, this.form_params.form[o.name]);
-                    else
-                        this.form_params.files[o.name].forEach( (oo,i) => {
-                            frmData.append(`${o.name}[${i}]`, oo);
-
-                            for (let prop in oo.meta) {
-                                frmData.append(`${o.name}__meta[${i}][${prop}]`,oo.meta[prop]);
-                            }
-                        } )
-                });
-
-                return frmData;
+                // // prepare the payload
+                // let frmData = new FormData(),
+                //     params = this.form_params.inputs.flatMap(o => o.fields);
+                //
+                // frmData.append('_method', this.editing ? 'PATCH' : 'POST');
+                //
+                // params.forEach( o => {
+                //     if ( o.type !== 'file' && o.type !== 'image' )
+                //         frmData.append(o.name, this.form_params.form[o.name]);
+                //     else
+                //         this.form_params.files[o.name].forEach( (oo,i) => {
+                //             frmData.append(`${o.name}[${i}]`, oo);
+                //
+                //             for (let prop in oo.meta) {
+                //                 frmData.append(`${o.name}__meta[${i}][${prop}]`,oo.meta[prop]);
+                //             }
+                //         } )
+                // });
+                //
+                // return frmData;
             },
 
             save() {
