@@ -515,7 +515,7 @@ export default {
                 text : "This operation cannot be undone.",
                 showCancelButton : true,
             }).then(res => {
-                if ( res.dismiss === "cancel" )
+                if ( !! res.dismiss )
                     return;
 
                 this.busy = true;

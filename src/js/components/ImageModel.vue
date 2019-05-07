@@ -93,7 +93,7 @@
                     text : "The image will be deleted.",
                     showCancelButton : true,
                 }).then(res => {
-                    if ( res.dismiss === "cancel" )
+                    if ( !! res.dismiss )
                         return;
 
                     this.performDelete();

@@ -216,7 +216,7 @@
                     text : "Unsaved changes will be lost.",
                     showCancelButton : true,
                 }).then(res => {
-                    if ( res.dismiss === "cancel" )
+                    if ( !! res.dismiss )
                         return;
                     this.close();
                 });
@@ -314,7 +314,7 @@
                     text : "Unsaved changes will be lost.",
                     showCancelButton : true,
                 }).then(res => {
-                    if ( res.dismiss === "cancel" )
+                    if ( !! res.dismiss )
                         return;
                     this.loadModel();
                 });
@@ -445,7 +445,7 @@
                     text : "This action cannot be undone.",
                     showCancelButton : true,
                 }).then(res => {
-                    if ( res.dismiss === "cancel" )
+                    if ( !! res.dismiss )
                         return;
 
                     this.busy = true;
