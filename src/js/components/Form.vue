@@ -223,7 +223,7 @@
             },
 
             refresh() {
-                console.log('Refreshing form meta data');
+                //console.log('Refreshing form meta data');
                 this.busy = true;
 
                 Api.get(this.getEndpoint())

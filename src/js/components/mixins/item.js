@@ -140,7 +140,7 @@ export default {
         },
 
         updatedEvent(event, quiet) {
-            console.log('Updated', event);
+            //console.log('Updated', event);
 
             let model = this.eventModel(event);
 
@@ -180,7 +180,7 @@ export default {
                 .listen(updated_event, (event) => {
 
                         Bus.$emit(updated_event, event );
-                        console.log(updated_event, event);
+                        //console.log(updated_event, event);
                         return this.updatedEvent(event, quiet);
                     }
                 );

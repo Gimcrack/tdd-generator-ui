@@ -134,14 +134,14 @@
     }
 
     .slide-fade-enter-active {
-        transition: all .3s ease;
+        transition: all .2s ease;
     }
     .slide-fade-leave-active {
-        transition: all 3.8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
     }
     .slide-fade-enter, .slide-fade-leave-to
         /* .slide-fade-leave-active below version 2.1.8 */ {
-        transform: translateX(10px);
+        transform: scaleY(0) translateY(-50%);
         opacity: 0;
     }
 
@@ -154,12 +154,14 @@
     @keyframes bounce-in {
         0% {
             transform: scaleY(0);
+            opacity: 0;
         }
         50% {
             transform: scaleY(1.2);
         }
         100% {
             transform: scaleY(1);
+            opacity: 1;
         }
     }
     /*

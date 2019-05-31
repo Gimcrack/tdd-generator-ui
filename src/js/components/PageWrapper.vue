@@ -186,6 +186,7 @@
             <template v-if="page_layout === 'page-table' || page_layout === 'page-grid' || page_layout === 'page-cards'">
                 <template v-if="filtered.length > 0 && filtered.length < 500" v-for="model in filtered" >
                     <component
+                            v-show="!working"
                         :is="params.component || params.type"
                         :item-layout="item_layout"
                         :initial="model"
@@ -211,6 +212,7 @@
                                 :count="filtered.filter(o => o[groupBy].indexOf(status) > -1).length"
                             >
                             <component
+                                    v-show="!working"
                                 v-for="model in filtered.filter(o => o[groupBy].indexOf(status) > -1)"
                                 :is="params.component || params.type"
                                 :item-layout="item_layout"

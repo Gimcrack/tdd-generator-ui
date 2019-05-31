@@ -237,7 +237,7 @@
             },
 
             performRefresh() {
-                console.log('Refreshing form meta data');
+                //console.log('Refreshing form meta data');
                 Api.get(this.form.getEndpoint())
                     .then( response => {
                         Bus.$emit('RefreshFormControl', { key : this.name, value : response.data[this.name] });

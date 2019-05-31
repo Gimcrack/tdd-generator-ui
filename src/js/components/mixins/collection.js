@@ -37,9 +37,7 @@ export default {
             if ( this.page_layout === 'page-cards' ) return 'item-cards';
         },
 
-        filtered() {
-            this.working = true;
-
+        filtered_models() {
             let reject = ( _.isEmpty(this.params.reject) ) ? { placeholder : 'gibberish-value' } : this.params.reject,
                 filters = this.filters,
                 models = _(this.models)
@@ -61,8 +59,14 @@ export default {
                         }
                     );
 
+            return (this.asc) ? models.value() : models.reverse().value();
+        },
+
+        filtered() {
+            this.working = true;
+
             // calculate the total number of pages
-            this.pagination.totalPages = Math.ceil(models.value().length / this.pagination.rowsPerPage);
+            this.pagination.totalPages = Math.ceil(this.filtered_models.length / this.pagination.rowsPerPage);
 
             // reset the view to the first page;
             if ( this.pagination.page > this.pagination.totalPages )
@@ -71,21 +75,15 @@ export default {
             // set start and end record
             this.pagination.start = this.pagination.rowsPerPage*(this.pagination.page-1);
             this.pagination.end = this.pagination.rowsPerPage*(this.pagination.page);
-            this.pagination.totalRows = models.value().length;
+            this.pagination.totalRows = this.filtered_models.length;
 
             setTimeout( () => {
                 Bus.$emit('ChangeZoom', { zoom : this.zoom});
+                this.working = false;
+                this.setToggled();
             }, 50);
 
-            setTimeout( () => {
-                this.working = false;
-            }, 150);
-
-            setTimeout( () => {
-                this.setToggled();
-            }, 300);
-
-            return (this.asc) ? models.value().slice(this.pagination.start,this.pagination.end) : models.reverse().value().slice(this.pagination.start,this.pagination.end);
+            return this.filtered_models.slice(this.pagination.start,this.pagination.end);
         },
 
         modelType() {
