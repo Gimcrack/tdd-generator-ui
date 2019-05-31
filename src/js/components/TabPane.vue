@@ -5,8 +5,9 @@
     >
         <div v-if="tab.pane" >
             <component
-                :is="tab.pane.component"
-                v-bind="tab.pane.options"
+                    ref="component"
+                    :is="tab.pane.component"
+                    v-bind="tab.pane.options"
             ></component>
         </div>
         <slot></slot>

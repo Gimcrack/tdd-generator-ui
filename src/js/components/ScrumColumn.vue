@@ -106,6 +106,15 @@
             }
         }
 
+        &.scrum-reopened {
+            background: rgba(#6f42c1, 0.03);
+            border: 1px solid rgba(#6f42c1, 0.15);
+            .header-shadow {
+                background: rgba(#6f42c1, 0.10);
+                border-bottom: 1px solid rgba(#6f42c1, 0.15);
+            }
+        }
+
         &.scrum-pending {
             background: rgba($brand-yellow, 0.03);
             border: 1px solid rgba($brand-yellow, 0.15);

@@ -79,6 +79,9 @@
                     case 'textarea' :
                         return 'formTextarea';
 
+                    case 'wysiwyg' :
+                        return 'formWysiwyg';
+
                     case 'date' :
                         return 'formDatepicker';
 
@@ -87,6 +90,9 @@
 
                     case 'image' :
                         return 'formImage';
+
+                    case 'html' :
+                        return 'formHtml';
 
                     default :
                         return 'formControl';

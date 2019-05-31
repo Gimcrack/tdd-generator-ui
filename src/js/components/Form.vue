@@ -276,6 +276,23 @@
                 this.checkDirty();
             },
 
+            getDirty() {
+                return  _.keys(this.form_params.form)
+                    .filter( k => {
+                        let old_val = typeof this.model[k] !== 'undefined' ? this.model[k] : undefined,
+                            new_val = this.form_params.form[k] || undefined;
+
+                        return ! _.isEqual(old_val,new_val)
+                    })
+                    .map( k => {
+                        return {
+                            k,
+                            old : this.model[k],
+                            'new' : this.form_params.form[k]
+                        }
+                    })
+            },
+
             checkDirty() {
                 this.errors = {};
 
@@ -287,7 +304,12 @@
                 else {
                     // the form is dirty if any of the input values are changed from the model values
                     this.dirty = _.keys(this.form_params.form)
-                        .map( k => { return ! _.isEqual(this.form_params.form[k],this.model[k]) } )
+                        .map( k => {
+                            let old_val = typeof this.model[k] !== 'undefined' ? this.model[k] : undefined,
+                                new_val = this.form_params.form[k] || undefined;
+
+                            return ! _.isEqual(old_val,new_val)
+                        })
                         .some( v => !! v );
                 }
             },
@@ -369,6 +391,10 @@
                     this.model = Object.assign({}, response.data.model);
                     this.editing = true;
                     this.checkDirty();
+                }
+
+                if( this.form_params.success ) {
+                    this.form_params.success(Object.assign( {}, this.model, this.form_params.form));
                 }
 
                 if ( this.close_after_api )
@@ -476,7 +502,7 @@
             max-height:90vh;
             margin: 5vh auto;
             width: 90vw;
-            max-width: 960px;
+            max-width: 1140px;
             border-radius: 6px;
 
             .field-groups {

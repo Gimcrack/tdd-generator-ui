@@ -29,9 +29,17 @@
             </vue-multiselect>
 
             <form-button
-                class="ml-2"
-                v-if="definition.btn"
-                :definition="definition.btn"
+                    class="ml-2"
+                    v-if="definition.btn && ! definition.btn.length"
+                    :definition="definition.btn"
+            ></form-button>
+
+            <form-button
+                    class="ml-2"
+                    v-if="definition.btn && definition.btn.length"
+                    v-for="(btn,idx) in definition.btn"
+                    :definition="btn"
+                    :key="idx"
             ></form-button>
 
             <form-button
@@ -139,7 +147,9 @@
                     icon : 'fa-refresh',
                     fn : () => {
                         this.clearCache();
-                        this.initSelect();
+                        this.initSelect()
+
+                        return sleep(1250);
                     }
                 }
             }
@@ -218,6 +228,9 @@
                 if ( ! value ) {
                     value = ( this.params.multiple ) ? [] : null;
                 }
+
+                if ( typeof this.definition.onChange === 'function' )
+                    this.definition.onChange(value);
 
                 Bus.$emit('UpdateFormControl', { key : this.name, value } );
             },

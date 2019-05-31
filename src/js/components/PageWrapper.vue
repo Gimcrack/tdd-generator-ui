@@ -303,41 +303,6 @@
             mixins.collection
         ],
 
-        mounted() {
-            this.$parent.page = this;
-
-            Bus.$on('ToggleCompactView', () => {
-                this.compact = !this.compact;
-            });
-
-            Bus.$on('UpdateFilters', (e) => {
-                if ( this.isActivePage() )
-                    this.updateFilter(e);
-            });
-
-            Bus.$on('ShowChecked', (e) => {
-                this.showChecked = e;
-            });
-
-            Bus.$on('ChangeZoom', (e) => {
-                this.zoom = e.zoom;
-                Store.set( this.getCacheKey('card_zoom'), this.zoom)
-            });
-
-            this.getInitialHiddenColumns();
-
-            this.getInitialState();
-
-            if ( this.intervals.formatLastRefreshed )
-                clearInterval(this.intervals.formatLastRefreshed);
-
-            this.intervals.formatLastRefreshed = setInterval(this.formatLastRefreshed,10000);
-
-            this.formatLastRefreshed();
-
-            this.getInitialZoom();
-        },
-
         props : {
             params : {
                 default() {
@@ -386,7 +351,7 @@
             }
         },
 
-       data() {
+        data() {
             return {
                 orderBy : this.params.order || 'name',
                 asc : ( this.params.orderDir !== null ) ? this.params.orderDir : true,
@@ -405,6 +370,7 @@
                 zoom : 100,
                 scrumStatuses : [
                     'Open',
+                    'Reopened',
                     'Pending',
                     'In Progress',
                     'Follow Up',

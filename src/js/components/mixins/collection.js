@@ -21,18 +21,12 @@ export default {
                 totalRows : 0
             },
             working : false,
+            initialized : false
         }
     },
 
     async mounted() {
-        this.listen();
-
-        this.pagination.rowsPerPage = await this.getRowsPerPage();
-
-        this.getInitialModels();
-
-        this.getInitialLastRefreshed();
-        //this.fetch();
+        await this.initialize();
     },
 
     computed : {
@@ -104,6 +98,52 @@ export default {
     },
 
     methods : {
+
+        async initialize() {
+            this.$parent.page = this;
+
+            Bus.$on('ToggleCompactView', () => {
+                this.compact = !this.compact;
+            });
+
+            Bus.$on('UpdateFilters', (e) => {
+                if ( this.isActivePage() )
+                    this.updateFilter(e);
+            });
+
+            Bus.$on('ShowChecked', (e) => {
+                this.showChecked = e;
+            });
+
+            Bus.$on('ChangeZoom', (e) => {
+                this.zoom = e.zoom;
+                Store.set( this.getCacheKey('card_zoom'), this.zoom)
+            });
+
+            this.getInitialHiddenColumns();
+
+            //this.getInitialState();
+
+            this.getInitialModels();
+
+            if ( this.intervals.formatLastRefreshed )
+                clearInterval(this.intervals.formatLastRefreshed);
+
+            this.intervals.formatLastRefreshed = setInterval(this.formatLastRefreshed,10000);
+
+            this.formatLastRefreshed();
+
+            this.getInitialZoom();
+
+            this.listen();
+
+            this.pagination.rowsPerPage = await this.getRowsPerPage();
+
+            this.getInitialLastRefreshed();
+            //this.fetch();
+
+            this.initialized = true;
+        },
 
         getInitialState() {
             let key = this.params.endpoint,
@@ -283,8 +323,22 @@ export default {
         },
 
         error(error) {
-            flash.error('There was an error performing the operation. See the console for more params');
-            // console.error(error);
+            switch(error.response.status) {
+                case 422 : // unprocessable entity
+                    flash.error( _(error.response.data.errors).values().value().join('\n'));
+                    break;
+
+                default :
+                    flash.error('There was an error performing the operation. See the console for more information.');
+                    flash.error('Server returned: Error ' + error.response.status + ":" + error.response.statusText);
+                    if ( error.response.data.message )
+                        flash.error(error.response.data.message);
+                    break;
+            }
+
+            console.error(error.response);
+
+            // flash.error('There was an error performing the operation. See the console for more params');
 
             if ( !! this.postError )
                 this.postError();
@@ -353,7 +407,7 @@ export default {
         listen() {
             if ( !! this.params.events.channel ) {
 
-                Echo.private(this.params.events.channel)
+                Echo.channel(this.params.events.channel)
                     .listen(this.params.events.created, (event) => {
                         // //console.log('Created',event);
 
@@ -374,7 +428,7 @@ export default {
                 let other = this.params.events.other;
                 if (!!other) {
                     for (let type in other) {
-                        Echo.private(this.params.events.channel)
+                        Echo.channel(this.params.events.channel)
                             .listen(type, (event) => {
                                 other[type](event)
                             });
@@ -472,11 +526,18 @@ export default {
         },
 
         async getInitialModels() {
-            if (this.toggles.dont_cache) return [];
+            if (this.toggles.dont_cache) {
+                this.fetch();
+                return [];
+            }
 
             let models = await Store.get(this.getCacheKey('models'), "[]");
+                models = (typeof models === "string") ? JSON.parse(models) : models;
 
-            this.models = (typeof models === "string") ? JSON.parse(models) : models;
+            if ( ! models.length )
+                return this.fetch();
+
+            this.models = models;
         },
 
         async getInitialLastRefreshed() {

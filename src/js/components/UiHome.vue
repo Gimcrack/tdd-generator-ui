@@ -50,24 +50,17 @@
             <div class="main">
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <template
-                            v-for="tab in menu"
-                    >
+<!--                    <template-->
+<!--                            v-for="tab in menu"-->
+<!--                    >-->
                         <tab-pane
-                                :key="tab.id"
-                                :tab="tab"
-                                :active-tab="activeTab"
+                                ref="pane"
+                                v-if="activeContent && ( (!activeContent.admin && ( !activeContent.editor || user.editor_flag)) || user.admin_flag )"
+                                :tab="activeContent"
+                                :active-tab="activeContent"
                         >
                         </tab-pane>
-                        <tab-pane
-                                v-if="tab.sub"
-                                v-for="sub in tab.sub"
-                                :key="sub.id"
-                                :tab="sub"
-                                :active-tab="activeSub"
-                        >
-                        </tab-pane>
-                    </template>
+<!--                    </template>-->
                 </div>
             </div>
 
@@ -124,19 +117,19 @@
                                 </div>
                             </div>
 
-                            <div class="w-100 mb-2 border-bottom border-info">
-                                <div class="p-2 d-flex justify-content-center">
-                                    <span class="flex-grow-1 align-self-center">Layout</span>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" @click="updateUi('layout','wide')" class="btn btn-sm btn-info" :class="{active : ui.layout=='wide'}">
-                                            <i class="fa fa-fw fa-desktop"></i> Wide
-                                        </button>
-                                        <button type="button" @click="updateUi('layout','narrow')" class="btn btn-sm btn-info" :class="{active : ui.layout=='narrow'}">
-                                            <i class="fa fa-fw fa-tablet"></i> Narrow
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+<!--                            <div class="w-100 mb-2 border-bottom border-info">-->
+<!--                                <div class="p-2 d-flex justify-content-center">-->
+<!--                                    <span class="flex-grow-1 align-self-center">Layout</span>-->
+<!--                                    <div class="btn-group" role="group">-->
+<!--                                        <button type="button" @click="updateUi('layout','wide')" class="btn btn-sm btn-info" :class="{active : ui.layout=='wide'}">-->
+<!--                                            <i class="fa fa-fw fa-desktop"></i> Wide-->
+<!--                                        </button>-->
+<!--                                        <button type="button" @click="updateUi('layout','narrow')" class="btn btn-sm btn-info" :class="{active : ui.layout=='narrow'}">-->
+<!--                                            <i class="fa fa-fw fa-tablet"></i> Narrow-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="w-100 mb-2 border-bottom border-info">
                                 <div class="p-2 d-flex justify-content-center">
                                     <div class="flex-grow-1 align-self-center">Theme</div>
@@ -366,6 +359,8 @@
                 pathname = parser.pathname.replace(/\/$/,'');
 
                 history.pushState( {tab : tab, sub : sub}, title, pathname + url);
+
+
             },
 
             setInitialTab() {

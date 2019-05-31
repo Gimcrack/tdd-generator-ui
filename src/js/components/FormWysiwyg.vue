@@ -1,41 +1,11 @@
 <template>
-    <div :class="['form-group', (show_invalid) ? 'is-invalid' : '', 'tdd-generator-form-control']">
-        <label :for="name" v-if="label && type !== 'hidden'">{{ label }}</label>
+    <div class="form-group form-wysiwyg" :class="{ 'is-invalid' : show_invalid }">
+        <label :for="name" v-if="label">{{ label }}</label>
 
-        <div class="d-flex position-relative">
-            <input
-                @keydown.enter.stop.prevent="enter"
-                @input="update"
-                :value="value"
-                :class="class_object"
-                :type="type"
-                :placeholder="placeholder"
-                :ref="name"
-                :name="name"
-                :id="name"
-                :readonly="readonly"
-                :min="definition.min"
-                :max="definition.max"
-            >
-
-            <form-button
-                class="ml-2"
-                v-if="definition.btn && ! definition.btn.length"
-                :definition="definition.btn"
-            ></form-button>
-
-            <form-button
-                class="ml-2"
-                v-if="definition.btn && definition.btn.length"
-                v-for="(btn,idx) in definition.btn"
-                :definition="btn"
-                :key="idx"
-            ></form-button>
-        </div>
-
-        <div v-if="type !== 'hidden'" class="icon is-small">
-            <i :class="['fa', (show_invalid) ? 'fa-warning' : icon ]"></i>
-        </div>
+        <vue-editor
+            @input="update"
+            v-model="content"
+        ></vue-editor>
 
         <div v-if="show_invalid && !! invalid_rule.help" class="invalid-feedback">
             {{ invalid_rule.help }}
@@ -51,7 +21,19 @@
     //import Rule from './Rule.class.js';
     //window.Rule = Rule;
 
+    import { VueEditor } from 'vue2-editor'
+
     export default {
+
+        components : {
+            VueEditor
+        },
+
+        watch : {
+            value(val) {
+                this.content = val;
+            }
+        },
 
         props : {
 
@@ -69,16 +51,12 @@
                         validate : null,
                         enter : null,
                         className : null,
-                        readonly : null
                     }
                 }
             },
 
             value : {
                 required : true,
-                default() {
-                    return this.definition.value;
-                }
             },
 
             errors : {
@@ -90,6 +68,8 @@
 
         data() {
             return {
+                original_value : this.value,
+                content : this.value,
                 help_message : '',
                 validation : {
                     settings : [],
@@ -108,10 +88,12 @@
 
             this.$parent.controls[ this.name ] = this;
             this.$parent.controls_array.push(this);
+        },
 
-            if ( !! this.value ) {
-                Bus.$emit('UpdateFormControl', { key : this.name, value : this.value });
-            }
+        mounted() {
+            sleep(500).then(() => {
+                Bus.$emit('UpdateFormControl', { key : this.name, value : this.original_value });
+            });
         },
 
         methods : {
@@ -123,13 +105,7 @@
             },
 
             focus() {
-                if ( this.type !== 'textarea' ) {
-                    this.$el.querySelector('input').focus();
-                }
-                else
-                {
-                    this.$el.querySelector('textarea').focus();
-                }
+                this.$el.querySelector('textarea').focus();
             },
 
             check_validation_settings() {
@@ -144,12 +120,12 @@
                 }
             },
 
-            populate_rules() { 
+            populate_rules() {
 
                 this.check_validation_settings();
-                
+
                 if ( ! this.should_validate ) return false;
-                
+
                 this.validation.rules = [];
 
                 this.validation.settings.forEach( args => {
@@ -165,33 +141,11 @@
             },
 
             update($event) {
-                let value;
-
-                if ( this.type !== 'select' ) {
-                    if ( $event.target && $event.target.value )
-                        value = $event.target.value;
-                    else if ( $event.value )
-                        value = $event.valuel;
-                    else
-                        value = $event;
-
-                    return Bus.$emit('UpdateFormControl', { key : this.name, value });
-                }
-
-                value = this.selectOptionsData.multiple ?
-                    this.selectOptionsData.value.map( o => o.id ) :
-                    this.selectOptionsData.value.id;
-
-                Bus.$emit('UpdateFormControl', { key : this.name, value : value || null } );
-
+                return Bus.$emit('UpdateFormControl', { key : this.name, value : this.content });
             },
         },
 
         computed : {
-
-            readonly() {
-                return !! this.definition.readonly;
-            },
 
             label() {
                 return this.definition.label || this.definition.name.$ucfirst();
@@ -230,11 +184,11 @@
             },
 
             class_object() {
-                return [ 
-                    this.className, 
-                    { 
-                        'form-control' : true, 
-                        'has-success' : this.valid, 
+                return [
+                    this.className,
+                    {
+                        'form-control' : true,
+                        'has-success' : this.valid,
                         'is-invalid' : this.show_invalid
                     }
                 ];
@@ -243,7 +197,7 @@
             should_validate() {
                 return this.required && this.validation.settings.length;
             },
-            
+
             valid() {
                 if ( ! this.should_validate ) return true;
 
@@ -263,7 +217,7 @@
                 if ( this.valid ) return new Rule();
 
                 return _(this.validation.rules)
-                        .find( rule => { return ! rule.valid } )
+                    .find( rule => { return ! rule.valid } )
             },
         },
 
@@ -271,9 +225,28 @@
 </script>
 
 <style lang="scss">
-    .tdd-generator-form-control {
-        .form-control {
-            text-indent : 20px;
+    .form-wysiwyg {
+        &.is-invalid {
+            .quillWrapper {
+                border: 1px solid #c63100 !important;
+            }
+        }
+
+        .quillWrapper {
+            border-radius: 5px !important;
+            border: 1px solid #e8e8e8 !important;
+        }
+
+        .ql-editor {
+            background: white !important;
+        }
+
+        .ql-toolbar.ql-snow {
+            border: none !important;
+        }
+
+        .ql-container.ql-snow {
+            border: none !important;;
         }
     }
 </style>

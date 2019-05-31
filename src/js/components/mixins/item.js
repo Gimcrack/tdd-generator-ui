@@ -140,7 +140,7 @@ export default {
         },
 
         updatedEvent(event, quiet) {
-            //console.log('Updated', event);
+            console.log('Updated', event);
 
             let model = this.eventModel(event);
 
@@ -148,6 +148,12 @@ export default {
 
             if ( !! this.$parent.$parent.add ) {
                 this.$parent.$parent.add(model);
+                //this.$parent.orderBy = null;
+                //this.$parent.orderBy = 'id';
+            }
+
+            if ( !! this.$parent.$parent.$parent.add ) {
+                this.$parent.$parent.$parent.add(model);
                 //this.$parent.orderBy = null;
                 //this.$parent.orderBy = 'id';
             }
@@ -170,7 +176,7 @@ export default {
             let updated_event = ( typeof this.item.updated === 'object' ) ? this.item.updated.event : this.item.updated,
                 quiet = (typeof this.item.updated === 'object' ) ? !! this.item.updated.quiet : false;
 
-            Echo.private(this.item.channel)
+            Echo.channel(this.item.channel)
                 .listen(updated_event, (event) => {
 
                         Bus.$emit(updated_event, event );
@@ -182,7 +188,7 @@ export default {
             if ( !! this.item.events ) {
                 this.item.events.forEach( ( e ) => {
 
-                    Echo.private(this.item.channel)
+                    Echo.channel(this.item.channel)
                         .listen( e.event, e.handler )
                 })
             }

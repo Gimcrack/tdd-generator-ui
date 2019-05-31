@@ -33,6 +33,7 @@
     "vue-popper-component": "^0.1.0",
     "vue-portal": "^1.0.0",
     "vue-slider-component": "^2.8.2",
+    "vue2-editor": "^2.6.6",
     "vuejs-datepicker": "^1.5.3"
   }
 }
