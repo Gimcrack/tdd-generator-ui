@@ -274,7 +274,7 @@
             .right-border-cover {
                 position: absolute;
                 right:-2px;
-                width:2px;
+                width:3px;
                 background: white;
                 height: 8px;
                 bottom:0;

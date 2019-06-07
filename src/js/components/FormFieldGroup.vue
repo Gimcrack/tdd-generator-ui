@@ -85,6 +85,9 @@
                     case 'date' :
                         return 'formDatepicker';
 
+                    case 'datetime' :
+                        return 'formDatetimepicker';
+
                     case 'button' :
                         return 'formButton';
 

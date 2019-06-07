@@ -43,6 +43,7 @@ export default function(Vue) {
     Vue.component('formSelect', require('./src/js/components/FormSelect.vue').default);
     Vue.component('formTextarea', require('./src/js/components/FormTextarea.vue').default);
     Vue.component('formDatepicker', require('./src/js/components/FormDatepicker.vue').default);
+    Vue.component('formDatetimepicker', require('./src/js/components/FormDatetimepicker.vue').default);
     Vue.component('formButton', require('./src/js/components/FormButton.vue').default);
     Vue.component('formHtml', require('./src/js/components/FormHtml.vue').default);
     Vue.component('FormWysiwyg', require('./src/js/components/FormWysiwyg').default);
