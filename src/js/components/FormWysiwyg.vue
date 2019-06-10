@@ -235,10 +235,12 @@
         .quillWrapper {
             border-radius: 5px !important;
             border: 1px solid #e8e8e8 !important;
+            background: white !important;
+            overflow: hidden;
         }
 
-        .ql-editor {
-            background: white !important;
+        .ql-toolbar {
+            background: #e8e8e8 !important;
         }
 
         .ql-toolbar.ql-snow {
