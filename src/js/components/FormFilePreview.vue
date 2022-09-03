@@ -1,6 +1,6 @@
 <template>
     <div class="m-2 d-flex align-items-end position-relative shadow preview-image"
-        :style="{ backgroundPosition : 'center', backgroundImage : `url('${file.preview}')`}">
+        :style="{ backgroundImage : `url('${file.preview}')`}">
 
         <div v-if="busy" class="position-absolute w-100 h-100 bg-half-transparent text-white d-flex flex-column align-items-center justify-content-center">
             <div class="mb-2">{{ message }}</div>
@@ -19,7 +19,7 @@
                 </div>
                 <div v-if="file.meta.featured_flag" class="text-warning text-shadow mt-2">
                     <i class="fa fa-fw fa-check mr-1"></i>
-                    Featured Image
+                    Featured File
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
 
 <script>
     export default {
-        name: "FormImagePreview",
+        name: "FormFilePreview",
 
         props : {
             file : {
@@ -88,7 +88,7 @@
 
                         this.$emit('uploaded');
 
-                        flash.success('Image uploaded successfully');
+                        flash.success('File uploaded successfully');
                     } , this.fail );
             },
 
@@ -96,19 +96,16 @@
                 this.busy = false;
                 this.errors = _.values(error.response.data.errors)[0];
 
-                if ( error.response.status !== 422 )
-                    this.$emit('remove');
+                flash.error("Oops. There was a problem uploading that file. Please try again.");
 
-                this.$emit('failed');
-
-                flash.danger('Oops. There was a problem uploading that image.');
+                this.$emit('failed')
             },
 
             formData() {
                 // prepare the payload
                 let frmData = new FormData();
 
-                frmData.append(`image`, this.file);
+                frmData.append(`file`, this.file);
 
                 for (let prop in this.file.meta) {
                     frmData.append(prop,this.file.meta[prop]);
@@ -135,7 +132,7 @@
 
         computed : {
             endpoint() {
-                return this.form.getEndpoint() + '/images';
+                return this.form.getEndpoint() + '/files';
             }
         }
 

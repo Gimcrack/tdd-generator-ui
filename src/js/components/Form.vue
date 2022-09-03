@@ -279,10 +279,10 @@
             getDirty() {
                 return  _.keys(this.form_params.form)
                     .filter( k => {
-                        let old_val = typeof this.model[k] !== 'undefined' ? this.model[k] : undefined,
-                            new_val = this.form_params.form[k] || undefined;
+                        //let old_val = typeof this.model[k] !== 'undefined' ? this.model[k] : undefined,
+                        //    new_val = this.form_params.form[k] || undefined;
 
-                        return ! _.isEqual(old_val,new_val)
+                        return ! _.isEqual(this.model[k],this.form_params.form[k])
                     })
                     .map( k => {
                         return {
@@ -304,13 +304,12 @@
                 else {
                     // the form is dirty if any of the input values are changed from the model values
                     this.dirty = _.keys(this.form_params.form)
-                        .map( k => {
-                            let old_val = typeof this.model[k] !== 'undefined' ? this.model[k] : undefined,
-                                new_val = this.form_params.form[k] || undefined;
+                        .some( k => {
+                            //let old_val = typeof this.model[k] !== 'undefined' ? this.model[k] : undefined,
+                            //    new_val = this.form_params.form[k] || undefined;
 
-                            return ! _.isEqual(old_val,new_val)
-                        })
-                        .some( v => !! v );
+                            return ! _.isEqual(this.model[k],this.form_params.form[k]);
+                        });
                 }
             },
 

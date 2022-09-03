@@ -225,7 +225,7 @@
                 else
                     value = $event[this.params.trackBy];
 
-                if ( ! value ) {
+                if ( value === null ) {
                     value = ( this.params.multiple ) ? [] : null;
                 }
 

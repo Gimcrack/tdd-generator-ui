@@ -1,5 +1,5 @@
 <template>
-    <button type="button" @click="handler" class="btn" :class="btnType">
+    <button :disabled="disabled" type="button" @click="handler" class="btn" :class="btnType">
         <i class="fa fa-fw" :class="[ icon, { 'fa-spin' : busy } ]"></i>
         {{ label }}
     </button>
@@ -12,6 +12,10 @@
             definition : {
                 required : true,
             },
+
+            disabled : {
+                default : false
+            }
         },
 
         data() {

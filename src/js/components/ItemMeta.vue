@@ -17,7 +17,8 @@
         </template>
 
         <template v-else-if="cellData.editable">
-            <editable-text :endpoint="endpoint" :name="cellData.name" :initial="cellText"></editable-text>
+            <editable-text :endpoint="endpoint" :name="cellData.name" :cell-class="cellData.badge_class"
+                           :cell-style="cellData.badge_style" :initial="cellText" :default-value="cellData.defaultValue"></editable-text>
         </template>
 
         <template v-else>
@@ -39,6 +40,8 @@
             cellData : {
                 default() {
                     return {
+                        name: null,
+                        defaultValue: '',
                         key : null,
                         badge : false,
                         badge_class : null,
@@ -80,6 +83,8 @@
 
                 if ( typeof this.cellData === 'string' )
                     return _.get(this.model,this.cellData.replace(':editable',''));
+
+                return null;
             },
 
             heading() {

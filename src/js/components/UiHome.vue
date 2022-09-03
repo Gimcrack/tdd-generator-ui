@@ -297,6 +297,9 @@
             },
 
             checkPermissions(tab) {
+                if ( ! tab )
+                    return false;
+
                 if ( tab.admin && ! this.user.admin_flag )
                     return false;
 

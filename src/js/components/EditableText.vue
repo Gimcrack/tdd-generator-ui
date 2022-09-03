@@ -1,5 +1,5 @@
 <template>
-    <div @mouseover="showControls" @mouseout="hideControls" class="editable-text">
+    <div @mouseover="showControls" @mouseout="hideControls" class="editable-text" style="min-width: 40px;">
 
         <div v-if="editing" class="editor position-relative d-flex">
             <button type="button" :disabled="busy" @click="save" :class="{disabled:busy}" class="btn btn-link btn-xs position-absolute" style="left: -40px; top: 5px;">
@@ -15,7 +15,7 @@
             <button type="button" v-show="show_controls" class="btn btn-link btn-xs position-absolute" style="left:-20px">
                 <i class="fa fa-edit"></i>
             </button>
-            <div class="p-1" :style="{ borderBottom : show_controls ? '2px solid teal' : '2px solid transparent' }" v-text="value"></div>
+            <div class="p-1" :style="{ ...cellStyle, borderBottom : show_controls ? '2px solid teal' : '2px solid transparent' }" :class="cellClass"  v-html="value || defaultValue"></div>
         </div>
     </div>
 </template>
@@ -26,12 +26,15 @@
         props : [
             'initial',
             'endpoint',
-            'name'
+            'name',
+            'cellClass',
+            'cellStyle',
+            'defaultValue'
         ],
 
         watch : {
             initial() {
-                this.value = this.initial || '';
+                this.value = this.initial;
             }
         },
 

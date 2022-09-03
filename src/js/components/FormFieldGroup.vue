@@ -9,7 +9,7 @@
         <div v-if="group.fields.length" class="col-lg-9 field-group-fields">
             <component
                 :is="componentType(def)"
-                v-for="def,key in group.fields"
+                v-for="(def,key) in group.fields"
                 v-if="showField(def)"
                 :key="key"
                 :definition="def"
@@ -93,6 +93,13 @@
 
                     case 'image' :
                         return 'formImage';
+
+                    case 'file' :
+                        return 'formFile';
+
+                    case 'links' :
+                    case 'link' :
+                        return 'formLink';
 
                     case 'html' :
                         return 'formHtml';
